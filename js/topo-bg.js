@@ -1,12 +1,13 @@
-// Animated topographic-line background for the hero card.
-// Progressive enhancement only: if WebGL isn't available, the user prefers
-// reduced motion, or the module fails to load, the static CSS background
-// (assets/img/hero-bg.webp) stays visible and nothing here runs.
+// Animated topographic-line background, applied to every dark card
+// (hero, team/story, CTA, footer). Progressive enhancement only: if WebGL
+// isn't available, the user prefers reduced motion, or the module fails to
+// load, the static CSS background (assets/img/hero-bg.webp) stays visible
+// on each card and nothing here runs.
 (() => {
   "use strict";
 
-  const hero = document.querySelector(".hero");
-  if (!hero) return;
+  const targets = Array.from(document.querySelectorAll(".hero, .section-dark, .cta-band, .site-footer"));
+  if (!targets.length) return;
 
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
@@ -23,6 +24,7 @@
   const FRAG = /* glsl */ `
     precision highp float;
     uniform float uTime;
+    uniform float uSeed;
     uniform vec2 uResolution;
 
     vec3 permute(vec3 x) { return mod(((x * 34.0) + 1.0) * x, 289.0); }
@@ -54,7 +56,7 @@
 
     void main() {
       vec2 uv = gl_FragCoord.xy / uResolution.xy;
-      vec2 p = (uv - 0.5) * vec2(uResolution.x / uResolution.y, 1.0) * 1.6;
+      vec2 p = (uv - 0.5) * vec2(uResolution.x / uResolution.y, 1.0) * 1.6 + uSeed;
       float t = uTime * 0.025;
 
       float warpX = snoise(p * 0.5 + vec2(t * 0.6, -t * 0.4));
@@ -79,36 +81,64 @@
     }
   `;
 
-  let renderer, scene, camera, material, canvas;
+  const clockStart = performance.now();
+  const instances = [];
   let raf = null;
-  let running = false;
-  const clock = { start: performance.now() };
 
-  function size() {
-    const rect = hero.getBoundingClientRect();
-    const w = Math.max(1, Math.round(rect.width));
-    const h = Math.max(1, Math.round(rect.height));
-    renderer.setSize(w, h, false);
-    material.uniforms.uResolution.value.set(w, h);
+  function tick(now) {
+    const t = (now - clockStart) / 1000;
+    for (const inst of instances) {
+      if (!inst.running) continue;
+      inst.material.uniforms.uTime.value = t;
+      inst.renderer.render(inst.scene, inst.camera);
+    }
+    raf = requestAnimationFrame(tick);
   }
 
-  function frame(now) {
-    if (!running) return;
-    material.uniforms.uTime.value = (now - clock.start) / 1000;
-    renderer.render(scene, camera);
-    raf = requestAnimationFrame(frame);
+  function ensureLoop() {
+    if (raf === null) raf = requestAnimationFrame(tick);
   }
 
-  function start() {
-    if (running) return;
-    running = true;
-    raf = requestAnimationFrame(frame);
-  }
+  function makeInstance(THREE, el, seed) {
+    const renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: "low-power" });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+    const canvas = renderer.domElement;
+    canvas.className = "topo-canvas";
+    canvas.setAttribute("aria-hidden", "true");
+    el.prepend(canvas);
 
-  function stop() {
-    running = false;
-    if (raf) cancelAnimationFrame(raf);
-    raf = null;
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    const material = new THREE.ShaderMaterial({
+      vertexShader: VERT,
+      fragmentShader: FRAG,
+      uniforms: {
+        uTime: { value: 0 },
+        uSeed: { value: seed },
+        uResolution: { value: new THREE.Vector2(1, 1) },
+      },
+    });
+    scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material));
+
+    const inst = { el, renderer, scene, camera, material, running: true };
+
+    const resize = () => {
+      const rect = el.getBoundingClientRect();
+      const w = Math.max(1, Math.round(rect.width));
+      const h = Math.max(1, Math.round(rect.height));
+      renderer.setSize(w, h, false);
+      material.uniforms.uResolution.value.set(w, h);
+    };
+    resize();
+    new ResizeObserver(resize).observe(el);
+
+    const io = new IntersectionObserver(
+      (entries) => { inst.running = entries[0].isIntersecting; },
+      { threshold: 0 }
+    );
+    io.observe(el);
+
+    return inst;
   }
 
   async function init() {
@@ -116,42 +146,22 @@
     try {
       THREE = await import("https://unpkg.com/three@0.160.0/build/three.module.js");
     } catch {
-      return; // offline / CDN blocked — static background stays
+      return; // offline / CDN blocked — static backgrounds stay
     }
 
-    renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: "low-power" });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
-    canvas = renderer.domElement;
-    canvas.className = "hero-canvas";
-    canvas.setAttribute("aria-hidden", "true");
-    hero.prepend(canvas);
-
-    scene = new THREE.Scene();
-    camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-
-    material = new THREE.ShaderMaterial({
-      vertexShader: VERT,
-      fragmentShader: FRAG,
-      uniforms: {
-        uTime: { value: 0 },
-        uResolution: { value: new THREE.Vector2(1, 1) },
-      },
+    targets.forEach((el, index) => {
+      instances.push(makeInstance(THREE, el, index * 12.5));
     });
 
-    scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material));
-
-    size();
-    new ResizeObserver(size).observe(hero);
-
-    const io = new IntersectionObserver(
-      (entries) => (entries[0].isIntersecting ? start() : stop()),
-      { threshold: 0 }
-    );
-    io.observe(hero);
+    ensureLoop();
 
     document.addEventListener("visibilitychange", () => {
-      if (document.hidden) stop();
-      else if (hero.getBoundingClientRect().bottom > 0) start();
+      if (document.hidden) {
+        if (raf) cancelAnimationFrame(raf);
+        raf = null;
+      } else {
+        ensureLoop();
+      }
     });
   }
 
