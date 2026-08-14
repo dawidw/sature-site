@@ -110,6 +110,7 @@ button {
   align-items: center;
   gap: 8px;
   font-size: 16px;
+  line-height: 1.25;
   font-weight: 500;
   letter-spacing: -0.022em;
   color: var(--muted);
@@ -143,7 +144,7 @@ button {
 .section-title {
   font-family: var(--font);
   font-size: clamp(26px, 3vw, 40px);
-  line-height: 1.15;
+  line-height: 1.2;
   font-weight: 500;
   letter-spacing: -0.022em;
 }
@@ -157,7 +158,9 @@ button {
   padding: 13px 22px;
   border-radius: 999px;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.022em;
   transition: transform 0.15s var(--ease), background 0.15s var(--ease), color 0.15s var(--ease), border-color 0.15s var(--ease);
   white-space: nowrap;
 }
@@ -208,6 +211,11 @@ button {
   font-size: 17px;
   letter-spacing: -0.01em;
 }
+.brand-logo {
+  height: 32px;
+  width: auto;
+  display: block;
+}
 
 .main-nav {
   display: flex;
@@ -223,7 +231,9 @@ button {
   gap: 8px;
   padding: 8px 16px;
   border-radius: 999px;
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.022em;
   font-weight: 500;
   color: var(--muted);
   transition: color 0.15s var(--ease), background 0.15s var(--ease);
@@ -282,8 +292,8 @@ button {
 .hero-title {
   position: relative;
   font-family: var(--font);
-  font-size: clamp(40px, 6vw, 72px);
-  line-height: 1.04;
+  font-size: clamp(34px, 5vw, 56px);
+  line-height: 1.2;
   letter-spacing: -0.022em;
   font-weight: 500;
   margin-bottom: 20px;
@@ -370,7 +380,7 @@ button {
 /* ==========================================================================
    Sections
    ========================================================================== */
-.section { padding: 128px 0; }
+.section { padding: 200px 0; }
 
 .team-wrap { padding-block: 32px; }
 
@@ -392,7 +402,8 @@ button {
 }
 
 .about-copy p {
-  font-size: 18px;
+  font-size: 16px;
+  letter-spacing: -0.019em;
   color: var(--muted);
   max-width: 440px;
   margin-bottom: 24px;
@@ -484,6 +495,7 @@ button {
 .story-copy h3 {
   font-family: var(--font);
   font-size: 24px;
+  line-height: 1.333;
   font-weight: 500;
   letter-spacing: -0.022em;
   margin-bottom: 12px;
@@ -508,7 +520,9 @@ button {
   font-family: var(--font-serif);
   font-style: italic;
   font-size: 24px;
-  font-weight: 600;
+  line-height: 1.333;
+  letter-spacing: -0.022em;
+  font-weight: 500;
   margin-bottom: 4px;
 }
 .stat dd {
@@ -542,7 +556,9 @@ button {
   display: block;
   padding: 12px 16px;
   border-radius: var(--radius-md);
-  font-size: 15px;
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.022em;
   font-weight: 500;
   color: var(--muted);
   transition: background 0.15s var(--ease), color 0.15s var(--ease);
@@ -565,6 +581,7 @@ button {
   font-family: var(--font-serif);
   font-style: italic;
   font-size: 24px;
+  line-height: 1.333;
   font-weight: 500;
   letter-spacing: -0.022em;
   margin-bottom: 12px;
@@ -739,10 +756,10 @@ button {
 }
 .cta-inner h2 {
   font-family: var(--font);
-  font-size: clamp(28px, 4vw, 44px);
+  font-size: clamp(26px, 3vw, 40px);
   font-weight: 500;
   letter-spacing: -0.022em;
-  line-height: 1.15;
+  line-height: 1.2;
   color: rgba(255, 255, 255, 0.7);
 }
 .cta-inner h2 strong { color: #fff; font-weight: 700; }
@@ -768,7 +785,9 @@ button {
   justify-content: space-between;
   gap: 16px;
   padding: 24px 28px;
-  font-size: 18px;
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.022em;
   font-weight: 600;
   text-align: left;
 }
@@ -909,7 +928,7 @@ button {
   .hero-actions { flex-direction: column; align-items: stretch; }
   .hero-actions .btn { justify-content: center; }
 
-  .section { padding: 64px 0; }
+  .section { padding: 96px 0; }
   .section-dark { padding: 40px 24px; }
   .cta-band { padding: 56px 24px; }
   .site-footer { padding: 48px 24px 24px; }
