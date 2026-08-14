@@ -32,29 +32,59 @@
     });
   });
 
-  // Services scroll-spy
-  const navLinks = Array.from(document.querySelectorAll("#services-nav-list a"));
-  const blocks = navLinks
-    .map((link) => document.querySelector(link.getAttribute("href")))
-    .filter(Boolean);
+  // Scroll-spy: highlights the nav link matching whichever section is in view,
+  // and updates instantly on click rather than waiting for scroll to settle.
+  function setupScrollSpy(linkSelector) {
+    const links = Array.from(document.querySelectorAll(linkSelector));
+    const sections = links
+      .map((link) => document.querySelector(link.getAttribute("href")))
+      .filter(Boolean);
 
-  if (navLinks.length && blocks.length && "IntersectionObserver" in window) {
+    if (!links.length || !sections.length) return;
+
     const setActive = (id) => {
-      navLinks.forEach((link) => {
+      links.forEach((link) => {
         link.classList.toggle("is-active", link.getAttribute("href") === `#${id}`);
       });
     };
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) setActive(visible.target.id);
-      },
-      { rootMargin: "-40% 0px -50% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
-    );
+    links.forEach((link) => {
+      link.addEventListener("click", () => {
+        setActive(link.getAttribute("href").slice(1));
+      });
+    });
 
-    blocks.forEach((block) => observer.observe(block));
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+          if (visible) setActive(visible.target.id);
+        },
+        { rootMargin: "-40% 0px -50% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
+      );
+      sections.forEach((section) => observer.observe(section));
+    }
+  }
+
+  setupScrollSpy("#services-nav-list a");
+  setupScrollSpy("#main-nav a");
+
+  // Work carousel — click advances by one card, wraps back to start at the end
+  const workViewport = document.querySelector(".work-carousel-viewport");
+  const workCarousel = document.getElementById("work-carousel");
+  const workNext = document.getElementById("work-next");
+  if (workViewport && workCarousel && workNext) {
+    workNext.addEventListener("click", () => {
+      const card = workCarousel.querySelector(".work-card");
+      if (!card) return;
+      const step = card.getBoundingClientRect().width + 20; // card width + gap
+      const atEnd = workViewport.scrollLeft + workViewport.clientWidth >= workViewport.scrollWidth - 10;
+      workViewport.scrollTo({
+        left: atEnd ? 0 : workViewport.scrollLeft + step,
+        behavior: "smooth",
+      });
+    });
   }
 })();
