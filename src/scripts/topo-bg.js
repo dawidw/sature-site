@@ -150,7 +150,7 @@
     // pixels and stair-step no matter how the shader antialiases them.
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     const canvas = renderer.domElement;
-    canvas.className = "topo-canvas";
+    canvas.className = "bg-canvas topo-canvas";
     canvas.setAttribute("aria-hidden", "true");
     el.prepend(canvas);
 
