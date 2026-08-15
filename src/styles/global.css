@@ -427,7 +427,7 @@ button {
 .hero {
   position: relative;
   overflow: hidden;
-  background: var(--background-dark) url('/assets/img/hero-bg.webp') center / cover no-repeat;
+  background: var(--background-dark);
   border-radius: var(--radius-40);
   padding: 88px 24px 100px;
   text-align: center;
@@ -437,8 +437,7 @@ button {
   position: relative;
   z-index: 1;
 }
-.bg-canvas,
-.topo-canvas {
+.bg-canvas {
   position: absolute;
   inset: 0;
   z-index: 0;
@@ -448,9 +447,8 @@ button {
   pointer-events: none;
 }
 
-/* Sits over the contour layer — same z-index, later in the document — and
-   under the hero's content, which the rule above lifts to z-index 1. */
-.gradient-canvas { opacity: 0.15; }
+/* Sits under the hero's content, which the rule above lifts to z-index 1. */
+.gradient-canvas { opacity: 0.5; }
 
 .hero-title {
   position: relative;
@@ -560,7 +558,7 @@ button {
 
 .section-dark {
   position: relative;
-  background: var(--background-dark) url('/assets/img/hero-bg.webp') center / cover no-repeat;
+  background: var(--background-dark);
   border-radius: var(--radius-40);
   overflow: hidden;
   padding: 96px 56px;
@@ -973,7 +971,7 @@ button {
 .cta-wrap { padding-block: 32px; }
 .cta-band {
   position: relative;
-  background: var(--background-dark) url('/assets/img/hero-bg.webp') center / cover no-repeat;
+  background: var(--background-dark);
   border-radius: var(--radius-40);
   overflow: hidden;
   padding: 120px 24px;
@@ -1073,7 +1071,7 @@ button {
 .footer-wrap { padding: 32px 0 56px; }
 .site-footer {
   position: relative;
-  background: var(--background-dark) url('/assets/img/hero-bg.webp') center / cover no-repeat;
+  background: var(--background-dark);
   border-radius: var(--radius-40);
   overflow: hidden;
   color: var(--text-on-dark);
