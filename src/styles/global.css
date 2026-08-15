@@ -421,7 +421,7 @@ button {
   overflow: hidden;
   background: var(--background-dark) url('/assets/img/hero-bg.webp') center / cover no-repeat;
   border-radius: var(--radius-40);
-  padding: 88px 24px 40px;
+  padding: 88px 24px 100px;
   text-align: center;
   color: var(--text-on-dark);
 }

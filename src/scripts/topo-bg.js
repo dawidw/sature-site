@@ -57,7 +57,7 @@
     void main() {
       vec2 uv = gl_FragCoord.xy / uResolution.xy;
       float aspect = uResolution.x / uResolution.y;
-      vec2 p = (uv - 0.5) * vec2(aspect, 1.0) * 1.6 + uSeed;
+      vec2 p = (uv - 0.5) * vec2(aspect, 1.0) * 2.2 + uSeed;
       float t = uTime * 0.025;
 
       // Gentle warp only — enough that the contours don't read as a regular
@@ -66,22 +66,36 @@
       float warpY = snoise(p * 0.5 + vec2(-t * 0.4, t * 0.5) + 8.2);
       vec2 warped = p + 0.07 * vec2(warpX, warpY);
 
-      float n = snoise(warped * 0.75 + vec2(0.0, t * 0.35)) * 0.7
-              + snoise(warped * 1.6 - vec2(t * 0.3, 0.0)) * 0.3;
+      float n = snoise(warped * 0.85 + vec2(0.0, t * 0.35)) * 0.55
+              + snoise(warped * 1.8 - vec2(t * 0.3, 0.0)) * 0.22;
 
-      float bands = fract(n * 2.6);
+      // A gentle tilt under the noise. Pure noise has plateaus — flat patches
+      // where no contour can cross — and that is what bunched the whole
+      // pattern into one corner. Adding a plane guarantees a non-zero
+      // gradient everywhere, so lines run right across the card while the
+      // noise still bends them into ridges and basins.
+      n += dot(warped, vec2(0.80, 0.55));
+
+      float bands = fract(n * 4.0);
       float d = min(bands, 1.0 - bands);
-      float contour = 1.0 - smoothstep(0.0, 0.018, d);
+
+      // Line width measured in screen space, not in noise-value space. With a
+      // fixed threshold the stroke thins out wherever the field's gradient is
+      // steep, drops below a pixel and breaks into stair-steps; fwidth keeps
+      // every contour the same width and lets it antialias against its
+      // neighbours.
+      float w = fwidth(d);
+      float contour = 1.0 - smoothstep(0.0, w * 1.0, d);
 
       // Only the lines fade toward the edges; the card's own darkness stays
       // flat. The pattern is strongest in the middle and dissolves into the
       // surface instead of stopping at a visible border.
       float radial = length((uv - 0.5) * vec2(aspect, 1.0));
-      float falloff = smoothstep(0.95, 0.08, radial);
+      float falloff = smoothstep(1.25, 0.1, radial);
 
       vec3 base = vec3(0.035, 0.035, 0.035);
       vec3 lineColor = vec3(1.0, 1.0, 1.0);
-      vec3 col = base + contour * lineColor * 0.17 * falloff;
+      vec3 col = base + contour * lineColor * 0.20 * falloff;
 
       gl_FragColor = vec4(col, 1.0);
     }
@@ -107,7 +121,9 @@
 
   function makeInstance(THREE, el, seed) {
     const renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: "low-power" });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+    // Hairlines need the full device ratio; capped below it they land between
+    // pixels and stair-step no matter how the shader antialiases them.
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     const canvas = renderer.domElement;
     canvas.className = "topo-canvas";
     canvas.setAttribute("aria-hidden", "true");
@@ -118,6 +134,9 @@
     const material = new THREE.ShaderMaterial({
       vertexShader: VERT,
       fragmentShader: FRAG,
+      // fwidth() in the fragment shader — core on WebGL2, an extension on
+      // WebGL1, where the shader won't compile without this flag.
+      extensions: { derivatives: true },
       uniforms: {
         uTime: { value: 0 },
         uSeed: { value: seed },
