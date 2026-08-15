@@ -138,6 +138,10 @@
      ---------------------------------------------------------------------- */
   /* Brand orange: favicon dot, focus ring, testimonial company name. */
   --accent: #ff5a2c;
+  /* Border on dark panels. The design calls this gray/700 (#3d3d3d), which is
+     not the documented neutral/700 (#262626) — a second grey ramp exists in
+     the file that the style guide doesn't cover. */
+  --border-dark-card: #3d3d3d;
   /* Muted text on dark backgrounds. The guide's text/on-dark-muted (#545454)
      fails contrast on --background-dark, so the page uses white at 60%. */
   --text-on-dark-soft: rgba(255, 255, 255, 0.6);
@@ -614,12 +618,18 @@ button {
 /* One panel holds all three portraits. It carries the same colour as the card
    behind it, so only the shadow separates them — and being opaque, it also
    keeps the animated background from moving underneath the photos. */
+/* Spec: Figma node 1:3844 "team-cards" — 1128 wide, 20px padding, 16px gap,
+   32px radius, 1px #3d3d3d border, Effect/shadow-md. The fill matches the card
+   behind it, so the border does the separating; the shadow is a black at 10%
+   on a near-black surface and is close to invisible by itself. Being opaque
+   also keeps the animated contours from crawling under the photos. */
 .team-panel {
-  max-width: 1040px;
+  max-width: 1128px;
   margin: 0 auto 64px;
-  padding: var(--space-16);
+  padding: var(--space-20);
   background: var(--background-dark);
-  border-radius: var(--radius-24);
+  border: 1px solid var(--border-dark-card);
+  border-radius: var(--radius-32);
   box-shadow: var(--shadow-md);
 }
 
@@ -642,7 +652,7 @@ button {
   height: auto;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  border-radius: var(--radius-16);
+  border-radius: var(--radius-24);
   margin-bottom: var(--space-16);
 }
 
@@ -663,10 +673,13 @@ button {
 .avatar-c { background: linear-gradient(135deg, #1c1c1c, #4a4a4a); }
 .avatar-sm { width: 36px; height: 36px; font-size: 12px; }
 
+/* Heading 3 from the style guide — the design applies that exact text style. */
 .team-name {
-  font-size: 13px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.75);
+  font-size: var(--fs-h3);
+  line-height: calc(var(--lh-h3) / var(--fs-h3));
+  letter-spacing: var(--ls-h3);
+  font-weight: var(--weight-medium);
+  color: var(--text-on-dark);
   text-align: center;
 }
 

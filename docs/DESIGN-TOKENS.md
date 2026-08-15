@@ -14,7 +14,15 @@ zgadywania.
 
 ## Decyzje wymagające potwierdzenia
 
-### 1. Letter-spacing: procenty, nie piksele
+### 1. Letter-spacing: procenty, nie piksele — POTWIERDZONE
+
+**Rozstrzygnięte.** `get_design_context` na komponencie zespołu (node `1:3844`)
+zwraca dla nazwiska `tracking-[-0.528px]` przy `text-[24px]`, ze stylem tekstu
+Heading 3. `0.528 / 24 = 0.022`, czyli dokładnie **−2,2%**. Wartości w
+dokumentacji są procentami, mimo że opisy drukują przy nich „px". Zapis `em` w
+`global.css` jest poprawny i nie wymaga zmiany.
+
+Oryginalne rozumowanie, dla kontekstu:
 
 Dokumentacja opisuje tracking jako `-2.2px`, `-1.9px`, `-1.5px`. W kodzie
 zapisane jest to jako `-0.022em`, `-0.019em`, `-0.015em` — czyli **procenty**.
@@ -62,6 +70,7 @@ Używane na stronie, nieopisane w Figmie. Widoczne też na dole `/styleguide`.
 | --- | --- | --- |
 | `#ff5a2c` (`--accent`) | favicon, focus ring, nazwa firmy w testimonialu | dodać jako `brand/accent` |
 | `rgba(255,255,255,.6)` (`--text-on-dark-soft`) | tekst drugorzędny na ciemnym tle | guide ma `text/on-dark-muted: #545454`, co na `--background-dark` daje kontrast ~1.6:1 (poniżej WCAG AA); albo poprawić token w Figmie, albo udokumentować wariant alpha |
+| `#3d3d3d` (`--border-dark-card`) | obramowanie panelu ze zdjęciami zespołu | design nazywa to `gray/700`; w pliku istnieje druga rampa szarości, której style guide nie opisuje — ujednolicić z `neutral/*` albo udokumentować |
 | `#3ecf5e` | zielona kropka „Accepting projects" i jej poświata | dodać `status/positive` |
 | gradienty avatarów | inicjały w testimonialach | udokumentować albo zastąpić zdjęciami |
 

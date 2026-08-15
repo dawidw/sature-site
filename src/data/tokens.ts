@@ -151,6 +151,12 @@ export const UNDOCUMENTED = [
     where: "Tekst drugorzędny na ciemnym tle — guide ma tu #545454, co nie przechodzi kontrastu.",
   },
   {
+    name: "border-dark-card",
+    value: "#3d3d3d",
+    where:
+      "Obramowanie panelu ze zdjęciami zespołu. Design nazywa to gray/700 — inna rampa niż udokumentowana neutral/700 (#262626).",
+  },
+  {
     name: "— (bez tokenu)",
     value: "#3ecf5e",
     where: "Zielona kropka „Accepting projects” + jej pulsująca poświata.",
