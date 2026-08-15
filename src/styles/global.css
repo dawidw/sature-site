@@ -739,10 +739,14 @@ button {
 }
 
 /* Services */
+/* Spec: Figma node 8:10362 — a 264px menu, a 552px column and 120px between
+   them, the pair centred as one 936px block rather than stretched to the
+   layout width. */
 .services-layout {
   display: grid;
-  grid-template-columns: 240px 1fr;
-  gap: 56px;
+  grid-template-columns: 264px 552px;
+  justify-content: center;
+  gap: 120px;
   margin-top: 320px;
 }
 
@@ -751,31 +755,34 @@ button {
   top: 96px;
   align-self: start;
 }
+/* The menu is a 24px tray with 4px of breathing room; each item is a full
+   pill, so the corners inside never echo the corners outside. */
 .services-nav ul {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--space-4);
   background: var(--nav-background);
-  border-radius: var(--radius-40);
-  padding: 8px;
+  border-radius: var(--radius-24);
+  padding: var(--space-4);
 }
 .services-nav a {
   display: block;
-  padding: 12px 16px;
-  border-radius: var(--radius-16);
-  font-size: 16px;
-  line-height: 1.25;
-  letter-spacing: -0.022em;
-  font-weight: 500;
-  color: var(--text-secondary);
-  transition: background 0.15s var(--ease), color 0.15s var(--ease);
-}
-.services-nav a:hover { color: var(--text-primary); }
-.services-nav a.is-active {
-  background: var(--surface-primary);
+  padding: var(--space-12) var(--space-16);
+  border-radius: var(--radius-full);
+  font-size: var(--fs-label);
+  line-height: var(--lh-label);
+  letter-spacing: var(--ls-label);
+  font-weight: var(--weight-medium);
   color: var(--text-primary);
-  font-weight: 600;
-  box-shadow: var(--shadow-xs);
+  transition: background 0.15s var(--ease);
+}
+/* Not in the design, which defines no hover state — without it the menu gives
+   no feedback at all before the click lands. */
+.services-nav a:hover:not(.is-active) {
+  background: rgba(255, 255, 255, 0.55);
+}
+.services-nav a.is-active {
+  background: var(--nav-item-background);
 }
 
 .services-content {
