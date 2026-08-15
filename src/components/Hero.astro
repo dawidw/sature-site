@@ -1,0 +1,42 @@
+---
+import type { Hero } from "../data/types";
+
+interface Props {
+  hero: Hero;
+}
+
+const { hero } = Astro.props;
+---
+
+<section class="hero-wrap wrap" id="top">
+  <div class="hero">
+    <p class="eyebrow eyebrow-light badge">
+      <span class="dot" aria-hidden="true"></span>
+      {hero.badge}
+    </p>
+    <h1 class="hero-title">{hero.titleLead}<br /><em>{hero.titleAccent}</em></h1>
+    <p class="hero-sub">{hero.sub}</p>
+    <div class="hero-actions">
+      {
+        hero.actions.map((action) => (
+          <a class={`btn btn-${action.variant}`} href={action.href}>
+            {action.label}
+          </a>
+        ))
+      }
+    </div>
+
+    <div class="hero-logos">
+      <p class="hero-logos-label">{hero.logosLabel}</p>
+      <ul class="logo-row" aria-label="Press and companies Sature has worked with">
+        {
+          hero.logos.map((logo) => (
+            <li class={logo.className}>
+              {logo.letters ? logo.letters.map((letter) => <span>{letter}</span>) : logo.label}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,52 @@
+---
+import type { SiteContent } from "../data/types";
+
+interface Props {
+  faq: SiteContent["faq"];
+}
+
+const { faq } = Astro.props;
+---
+
+<section class="section" id="faq">
+  <div class="wrap wrap-narrow">
+    <h2 class="section-title center">{faq.title}</h2>
+
+    <div class="accordion" id="accordion">
+      {
+        faq.items.map((item, index) => {
+          const panelId = `faq-${index + 1}`;
+          return (
+            <div class="accordion-item">
+              <h3>
+                <button
+                  class="accordion-trigger"
+                  aria-expanded={item.open ? "true" : "false"}
+                  aria-controls={panelId}
+                >
+                  {item.question}
+                  <span class="chev-wrap">
+                    <svg class="chev" viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        d="M6 9l6 6 6-6"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        fill="none"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </h3>
+              <div class="accordion-panel" id={panelId} hidden={!item.open}>
+                {item.answer.map((paragraph) => (
+                  <p>{paragraph}</p>
+                ))}
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>

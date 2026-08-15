@@ -1,0 +1,65 @@
+---
+import type { SiteContent } from "../data/types";
+import { TEAM } from "../data/types";
+
+interface Props {
+  services: SiteContent["services"];
+}
+
+const { services } = Astro.props;
+---
+
+<section class="section" id="services">
+  <div class="wrap">
+    <h2 class="section-title display center">
+      {services.title} <span class="muted-text">{services.titleMuted}</span>
+    </h2>
+
+    <div class="services-layout">
+      <nav class="services-nav" aria-label="Services">
+        <ul id="services-nav-list">
+          {
+            services.items.map((service, index) => (
+              <li>
+                <a href={`#${service.id}`} class={index === 0 ? "is-active" : undefined}>
+                  {service.navLabel}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="services-content" id="services-content">
+        {
+          services.items.map((service) => (
+            <article class="service-block" id={service.id}>
+              <h3>{service.title}</h3>
+              <p>{service.intro}</p>
+              {service.groups.map((group) => (
+                <div class="check-group">
+                  <p class="check-group-label">{group.label}</p>
+                  <ul class="check-list">
+                    {group.items.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+              {service.quotes.map((quote) => (
+                <blockquote class="mini-quote">
+                  <span class="mini-avatars" aria-hidden="true">
+                    {quote.people.map((id) => (
+                      <img src={TEAM[id].photo} alt="" />
+                    ))}
+                  </span>
+                  <p>{quote.text}</p>
+                </blockquote>
+              ))}
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

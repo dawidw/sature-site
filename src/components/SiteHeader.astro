@@ -1,0 +1,52 @@
+---
+import BrandLogo from "./BrandLogo.astro";
+
+// Section links are fixed across versions — they mirror the page's own
+// anchors, so they live here rather than in the content files.
+const links = [
+  { label: "Home", href: "#top", icon: "nav-home", active: true },
+  { label: "About us", href: "#about", icon: "nav-about" },
+  { label: "Services", href: "#services", icon: "nav-services" },
+  { label: "Testimonials", href: "#testimonials", icon: "nav-testimonials" },
+  { label: "FAQ", href: "#faq", icon: "nav-faq" },
+];
+---
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <BrandLogo />
+
+    <nav class="main-nav" id="main-nav" aria-label="Primary">
+      {
+        links.map((link) => (
+          <a href={link.href} class={link.active ? "is-active" : undefined}>
+            <img src={`/assets/img/icons/${link.icon}.svg`} alt="" width="20" height="20" />
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="header-actions">
+      <a class="btn btn-dark btn-sm" href="#contact">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path
+            d="M4 12L20 4L13 20L11 13L4 12Z"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linejoin="round"></path>
+        </svg>
+        Book a call
+      </a>
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-expanded="false"
+        aria-controls="main-nav"
+        aria-label="Toggle menu"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>

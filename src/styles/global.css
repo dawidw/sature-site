@@ -302,7 +302,7 @@ button {
 .hero {
   position: relative;
   overflow: hidden;
-  background: var(--ink) url('../assets/img/hero-bg.webp') center / cover no-repeat;
+  background: var(--ink) url('/assets/img/hero-bg.webp') center / cover no-repeat;
   border-radius: var(--radius-lg);
   padding: 88px 24px 40px;
   text-align: center;
@@ -421,7 +421,7 @@ button {
 
 .section-dark {
   position: relative;
-  background: var(--ink) url('../assets/img/hero-bg.webp') center / cover no-repeat;
+  background: var(--ink) url('/assets/img/hero-bg.webp') center / cover no-repeat;
   border-radius: var(--radius-lg);
   overflow: hidden;
   padding: 96px 56px;
@@ -817,7 +817,7 @@ button {
 .cta-wrap { padding-block: 32px; }
 .cta-band {
   position: relative;
-  background: var(--ink) url('../assets/img/hero-bg.webp') center / cover no-repeat;
+  background: var(--ink) url('/assets/img/hero-bg.webp') center / cover no-repeat;
   border-radius: var(--radius-lg);
   overflow: hidden;
   padding: 120px 24px;
@@ -917,7 +917,7 @@ button {
 .footer-wrap { padding: 32px 0 56px; }
 .site-footer {
   position: relative;
-  background: var(--ink) url('../assets/img/hero-bg.webp') center / cover no-repeat;
+  background: var(--ink) url('/assets/img/hero-bg.webp') center / cover no-repeat;
   border-radius: var(--radius-lg);
   overflow: hidden;
   color: #fff;

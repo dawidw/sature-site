@@ -1,0 +1,31 @@
+---
+import type { SiteContent } from "../data/types";
+
+interface Props {
+  about: SiteContent["about"];
+  industries: SiteContent["industries"];
+}
+
+const { about, industries } = Astro.props;
+---
+
+<section class="section" id="about">
+  <div class="wrap">
+    <p class="eyebrow-serif center">{about.eyebrow}</p>
+    <h2 class="section-title display center">{about.title}</h2>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-copy">
+        <p>{industries.lead}</p>
+        <ul class="tag-list" aria-label="Industries">
+          {industries.tags.map((tag) => <li>{tag}</li>)}
+        </ul>
+      </div>
+      <div class="about-visual" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>

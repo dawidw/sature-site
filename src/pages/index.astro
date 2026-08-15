@@ -1,0 +1,28 @@
+---
+// Version 1 — mirrors the original index.html.
+// Sections are listed here rather than in a shared page component so the two
+// versions can diverge in structure, not just in copy.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import About from "../components/About.astro";
+import Team from "../components/Team.astro";
+import Services from "../components/Services.astro";
+import Testimonials from "../components/Testimonials.astro";
+import Work from "../components/Work.astro";
+import Cta from "../components/Cta.astro";
+import Faq from "../components/Faq.astro";
+import Contact from "../components/Contact.astro";
+import { v1 as content } from "../data/v1";
+---
+
+<BaseLayout meta={content.meta} footer={content.footer}>
+  <Hero hero={content.hero} />
+  <About about={content.about} industries={content.industries} />
+  <Team team={content.team} />
+  <Services services={content.services} />
+  <Testimonials testimonials={content.testimonials} />
+  <Work work={content.work} />
+  <Cta cta={content.cta} />
+  <Faq faq={content.faq} />
+  <Contact contact={content.contact} />
+</BaseLayout>

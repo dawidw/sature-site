@@ -1,0 +1,16 @@
+---
+import { splitEmoji } from "../lib/emoji";
+
+interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+const parts = splitEmoji(text);
+---
+
+{
+  parts.map((part) =>
+    part.isEmoji ? <span aria-hidden="true">{part.text}</span> : <Fragment>{part.text}</Fragment>
+  )
+}
