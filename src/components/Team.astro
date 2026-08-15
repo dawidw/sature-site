@@ -14,23 +14,25 @@ const { team } = Astro.props;
   <div class="section-dark">
     <p class="section-title center on-dark"><RichText text={team.title} /></p>
 
-    <ul class="team-grid" aria-label="Team">
-      {
-        team.members.map((id) => (
-          <li class="team-card">
-            <img
-              class="avatar-photo"
-              src={TEAM[id].photo}
-              alt={TEAM[id].name}
-              width="200"
-              height="200"
-              loading="lazy"
-            />
-            <span class="team-name">{TEAM[id].name}</span>
-          </li>
-        ))
-      }
-    </ul>
+    <div class="team-panel">
+      <ul class="team-grid" aria-label="Team">
+        {
+          team.members.map((id) => (
+            <li class="team-card">
+              <img
+                class="avatar-photo"
+                src={TEAM[id].photo}
+                alt={TEAM[id].name}
+                width="200"
+                height="200"
+                loading="lazy"
+              />
+              <span class="team-name">{TEAM[id].name}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
 
     <div class="story-grid">
       <div class="story-copy">

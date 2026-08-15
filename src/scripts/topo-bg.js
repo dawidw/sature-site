@@ -6,7 +6,25 @@
 (() => {
   "use strict";
 
-  const targets = Array.from(document.querySelectorAll(".hero, .section-dark, .cta-band, .site-footer"));
+  // Where the contours are densest on each card, in UV space (0,0 is the
+  // bottom-left corner). Everything away from that point fades out, so the
+  // pattern reads as one lit area rather than an evenly busy texture.
+  //
+  // The seed picks which part of the noise field a card samples. It is set per
+  // card rather than derived from DOM order because it decides whether any
+  // lines actually fall near the focus point: on the team card, seed 52 puts
+  // the densest contours in the bottom-right corner, where seed 12.5 left it
+  // nearly blank.
+  const TARGETS = [
+    { selector: ".hero", focus: [0.5, 0.5], seed: 0 },
+    { selector: ".section-dark", focus: [0.82, 0.18], seed: 52 },
+    { selector: ".cta-band", focus: [0.5, 0.5], seed: 25 },
+    { selector: ".site-footer", focus: [0.5, 0.5], seed: 38 },
+  ];
+
+  const targets = TARGETS.flatMap(({ selector, focus, seed }) =>
+    Array.from(document.querySelectorAll(selector), (el) => ({ el, focus, seed }))
+  );
   if (!targets.length) return;
 
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -26,6 +44,7 @@
     uniform float uTime;
     uniform float uSeed;
     uniform vec2 uResolution;
+    uniform vec2 uFocus;
 
     vec3 permute(vec3 x) { return mod(((x * 34.0) + 1.0) * x, 289.0); }
 
@@ -87,13 +106,19 @@
       float w = fwidth(d);
       float contour = 1.0 - smoothstep(0.0, w * 1.0, d);
 
-      // Only the lines fade toward the edges; the card's own darkness stays
-      // flat. The pattern is strongest in the middle and dissolves into the
-      // surface instead of stopping at a visible border.
-      float radial = length((uv - 0.5) * vec2(aspect, 1.0));
-      float falloff = smoothstep(1.25, 0.1, radial);
+      // Only the lines fade away from the focus point; the card's own
+      // darkness stays flat, so the pattern dissolves into the surface
+      // instead of stopping at a visible border.
+      // Distance in UV, deliberately not corrected for aspect: these cards
+      // range from wide (hero) to very tall (team + story + stats), and
+      // scaling x by the aspect would flatten the falloff onto one axis, so a
+      // corner focus stopped reading as a corner.
+      float radial = length(uv - uFocus);
+      float falloff = smoothstep(1.0, 0.05, radial);
 
-      vec3 base = vec3(0.035, 0.035, 0.035);
+      // Matches --background-dark (#0d0d0d) exactly: the canvas covers the
+      // card, so any other value would quietly override the token.
+      vec3 base = vec3(0.051, 0.051, 0.051);
       vec3 lineColor = vec3(1.0, 1.0, 1.0);
       vec3 col = base + contour * lineColor * 0.20 * falloff;
 
@@ -119,7 +144,7 @@
     if (raf === null) raf = requestAnimationFrame(tick);
   }
 
-  function makeInstance(THREE, el, seed) {
+  function makeInstance(THREE, el, seed, focus) {
     const renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: "low-power" });
     // Hairlines need the full device ratio; capped below it they land between
     // pixels and stair-step no matter how the shader antialiases them.
@@ -141,6 +166,7 @@
         uTime: { value: 0 },
         uSeed: { value: seed },
         uResolution: { value: new THREE.Vector2(1, 1) },
+        uFocus: { value: new THREE.Vector2(focus[0], focus[1]) },
       },
     });
     scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material));
@@ -174,8 +200,8 @@
       return; // offline / CDN blocked — static backgrounds stay
     }
 
-    targets.forEach((el, index) => {
-      instances.push(makeInstance(THREE, el, index * 12.5));
+    targets.forEach(({ el, focus, seed }) => {
+      instances.push(makeInstance(THREE, el, seed, focus));
     });
 
     ensureLoop();

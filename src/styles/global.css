@@ -611,31 +611,39 @@ button {
 }
 
 /* Team */
+/* One panel holds all three portraits. It carries the same colour as the card
+   behind it, so only the shadow separates them — and being opaque, it also
+   keeps the animated background from moving underneath the photos. */
+.team-panel {
+  max-width: 1040px;
+  margin: 0 auto 64px;
+  padding: var(--space-16);
+  background: var(--background-dark);
+  border-radius: var(--radius-24);
+  box-shadow: var(--shadow-md);
+}
+
 .team-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  max-width: 640px;
-  margin: 0 auto 64px;
+  gap: var(--space-16);
 }
 .team-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-16);
-  padding: 10px 10px 18px;
-  overflow: hidden;
 }
 
 .avatar-photo {
   width: 100%;
+  /* The img carries height="200" as a presentation hint, which outranks
+     aspect-ratio; without this the frame renders 320x200, not square. */
+  height: auto;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  border-radius: var(--radius-12);
-  margin-bottom: 14px;
+  border-radius: var(--radius-16);
+  margin-bottom: var(--space-16);
 }
 
 .avatar {
