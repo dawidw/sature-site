@@ -56,12 +56,15 @@
 
     void main() {
       vec2 uv = gl_FragCoord.xy / uResolution.xy;
-      vec2 p = (uv - 0.5) * vec2(uResolution.x / uResolution.y, 1.0) * 1.6 + uSeed;
+      float aspect = uResolution.x / uResolution.y;
+      vec2 p = (uv - 0.5) * vec2(aspect, 1.0) * 1.6 + uSeed;
       float t = uTime * 0.025;
 
+      // Gentle warp only — enough that the contours don't read as a regular
+      // pattern, not enough to fold them into knots.
       float warpX = snoise(p * 0.5 + vec2(t * 0.6, -t * 0.4));
       float warpY = snoise(p * 0.5 + vec2(-t * 0.4, t * 0.5) + 8.2);
-      vec2 warped = p + 0.22 * vec2(warpX, warpY);
+      vec2 warped = p + 0.07 * vec2(warpX, warpY);
 
       float n = snoise(warped * 0.75 + vec2(0.0, t * 0.35)) * 0.7
               + snoise(warped * 1.6 - vec2(t * 0.3, 0.0)) * 0.3;
@@ -70,12 +73,15 @@
       float d = min(bands, 1.0 - bands);
       float contour = 1.0 - smoothstep(0.0, 0.018, d);
 
+      // Only the lines fade toward the edges; the card's own darkness stays
+      // flat. The pattern is strongest in the middle and dissolves into the
+      // surface instead of stopping at a visible border.
+      float radial = length((uv - 0.5) * vec2(aspect, 1.0));
+      float falloff = smoothstep(0.95, 0.08, radial);
+
       vec3 base = vec3(0.035, 0.035, 0.035);
       vec3 lineColor = vec3(1.0, 1.0, 1.0);
-      vec3 col = base + contour * lineColor * 0.42;
-
-      float vign = smoothstep(1.15, 0.1, length((uv - 0.5) * vec2(uResolution.x / uResolution.y, 1.0)));
-      col *= mix(0.6, 1.0, vign);
+      vec3 col = base + contour * lineColor * 0.17 * falloff;
 
       gl_FragColor = vec4(col, 1.0);
     }

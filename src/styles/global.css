@@ -141,7 +141,7 @@
   /* Muted text on dark backgrounds. The guide's text/on-dark-muted (#545454)
      fails contrast on --background-dark, so the page uses white at 60%. */
   --text-on-dark-soft: rgba(255, 255, 255, 0.6);
-  --max-w: 1360px;
+  --max-w: 1432px;
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -312,7 +312,13 @@ button {
 .btn-dark { background: var(--button-primary-bg); color: var(--button-primary-text); }
 .btn-dark:hover { background: var(--neutral-700); }
 
-.btn-sm { padding: 9px 16px; font-size: 13px; }
+.btn-sm {
+  padding: 9px 16px;
+  font-size: var(--fs-label);
+  line-height: var(--lh-label);
+  letter-spacing: var(--ls-label);
+  font-weight: var(--weight-medium);
+}
 
 /* ==========================================================================
    Header
@@ -369,7 +375,7 @@ button {
   color: var(--text-secondary);
   transition: color 0.15s var(--ease), background 0.15s var(--ease);
 }
-.main-nav a img { width: 18px; height: 18px; opacity: 0.7; }
+.main-nav a img { width: 20px; height: 20px; opacity: 0.7; }
 .main-nav a:hover { color: var(--text-primary); }
 .main-nav a.is-active {
   background: var(--surface-primary);
@@ -465,7 +471,10 @@ button {
 
 .hero-logos-label {
   position: relative;
-  font-size: 12px;
+  font-size: var(--fs-label);
+  line-height: var(--lh-label);
+  letter-spacing: var(--ls-label);
+  font-weight: var(--weight-medium);
   color: rgba(255, 255, 255, 0.4);
   margin-bottom: 18px;
 }
@@ -476,11 +485,16 @@ button {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 24px 36px;
+  /* At 32px tall the wordmarks need the tighter column gap to hold one row
+     at the 1432px layout width; below that they wrap, which is fine. */
+  gap: var(--space-24);
 }
 .logo-row li {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
   font-weight: 700;
-  font-size: 15px;
+  font-size: 26px;
   letter-spacing: -0.01em;
   color: rgba(255, 255, 255, 0.45);
 }
@@ -494,28 +508,28 @@ button {
 .logo-row .logo-wired { letter-spacing: 0.06em; }
 .logo-row .logo-bbc {
   display: inline-flex;
-  gap: 2px;
+  gap: 3px;
 }
 .logo-row .logo-bbc span {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 18px;
+  width: 32px;
+  height: 30px;
   background: rgba(255, 255, 255, 0.45);
   color: var(--text-primary);
-  font-size: 12px;
+  font-size: 19px;
   font-weight: 800;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 .logo-row .logo-zawya { font-style: italic; letter-spacing: 0.04em; }
 
-.logo-throne { display: inline-flex; align-items: center; gap: 6px; }
+.logo-throne { display: inline-flex; align-items: center; gap: 8px; }
 .logo-throne::before {
   content: "";
   display: inline-block;
-  width: 14px;
-  height: 14px;
+  width: 24px;
+  height: 24px;
   background: currentColor;
   -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect x="1" y="4" width="2" height="8" rx="1"/><rect x="5.5" y="1.5" width="2" height="13" rx="1"/><rect x="10" y="5" width="2" height="6" rx="1"/></svg>') center / contain no-repeat;
   mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect x="1" y="4" width="2" height="8" rx="1"/><rect x="5.5" y="1.5" width="2" height="13" rx="1"/><rect x="10" y="5" width="2" height="6" rx="1"/></svg>') center / contain no-repeat;
@@ -990,7 +1004,7 @@ button {
   transition: background 0.15s var(--ease);
 }
 .accordion-trigger[aria-expanded="true"] .chev-wrap { background: var(--surface-muted); }
-.chev { width: 18px; height: 18px; flex: none; transition: transform 0.2s var(--ease); color: var(--text-secondary); }
+.chev { width: 20px; height: 20px; flex: none; transition: transform 0.2s var(--ease); color: var(--text-secondary); }
 .accordion-trigger[aria-expanded="true"] .chev { transform: rotate(180deg); }
 .accordion-panel { padding: 0 12px 12px; max-width: 620px; }
 .accordion-panel p { font-size: 16px; line-height: 1.5; letter-spacing: -0.019em; color: var(--text-primary); margin-bottom: 10px; }
