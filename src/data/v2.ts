@@ -17,7 +17,11 @@ export const v2: SiteContent = {
     badge: "Accepting projects",
     titleLead: "Product design for",
     titleAccent: "the agentic AI era",
-    sub: "We help startups and B2B SaaS teams design, prototype and ship agentic AI products — from first workshop to a working, coded prototype.",
+    // One line: this copy is a single clause, so it wraps to the column rather
+    // than breaking at a point nobody chose.
+    sub: [
+      "We help startups and B2B SaaS teams design, prototype and ship agentic AI products — from first workshop to a working, coded prototype.",
+    ],
     actions: [
       { label: "Work with us", href: "#contact", variant: "light" },
       { label: "Our services", href: "#services", variant: "outline-light" },

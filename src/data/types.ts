@@ -31,7 +31,12 @@ export interface Hero {
   /** Title is two lines: the second is set in italic serif. */
   titleLead: string;
   titleAccent: string;
-  sub: string;
+  /**
+   * One entry per line. Left to wrap on its own, the copy breaks mid-sentence
+   * and strands the next sentence's first word on the line above, so where the
+   * break falls is a copy decision, not the browser's.
+   */
+  sub: string[];
   actions: Action[];
   logosLabel: string;
   logos: HeroLogo[];

@@ -15,7 +15,16 @@ const { hero } = Astro.props;
       {hero.badge}
     </p>
     <h1 class="hero-title">{hero.titleLead}<br /><em>{hero.titleAccent}</em></h1>
-    <p class="hero-sub">{hero.sub}</p>
+    <p class="hero-sub">
+      {
+        hero.sub.map((line, index) => (
+          <Fragment>
+            {index > 0 && <br />}
+            {line}
+          </Fragment>
+        ))
+      }
+    </p>
     <div class="hero-actions">
       {
         hero.actions.map((action) => (

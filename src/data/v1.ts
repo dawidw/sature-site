@@ -18,7 +18,10 @@ export const v1: SiteContent = {
     badge: "Accepting projects",
     titleLead: "Our design",
     titleAccent: "makes headlines",
-    sub: "We help companies from conception to launch and beyond. We are your trusted design partner.",
+    sub: [
+      "We help companies from conception to launch and beyond.",
+      "We are your trusted design partner.",
+    ],
     actions: [
       { label: "Work with us", href: "#contact", variant: "light" },
       { label: "Our services", href: "#services", variant: "outline-light" },
