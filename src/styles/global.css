@@ -147,6 +147,7 @@
   --text-on-dark-soft: rgba(255, 255, 255, 0.6);
   --max-w: 1432px;
   --header-height: 72px;
+  --header-pad: 16px;
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -335,6 +336,7 @@ button {
   background: rgba(255, 255, 255, 0.82);
   backdrop-filter: saturate(180%) blur(14px);
   -webkit-backdrop-filter: saturate(180%) blur(14px);
+  padding-block: var(--header-pad);
 }
 
 .header-inner {
@@ -419,9 +421,10 @@ button {
    Hero
    ========================================================================== */
 /* The button is centred in the header, so the space above it is
-   (--header-height - button height) / 2. The hero sits exactly that far below
-   the button, and the header's own lower half already provides it — hence no
-   padding here. Change --header-height and both distances follow. */
+   --header-pad + (--header-height - button height) / 2. The hero sits exactly
+   that far below it: the header's lower half plus its lower padding already
+   add up to the same number, so the wrap contributes nothing. The two stay
+   equal because the padding is symmetric. */
 .hero-wrap { padding-top: 0; }
 
 .hero {
@@ -429,7 +432,7 @@ button {
   overflow: hidden;
   background: var(--background-dark);
   border-radius: var(--radius-40);
-  padding: 88px 24px 100px;
+  padding: 100px 24px 64px;
   text-align: center;
   color: var(--text-on-dark);
 }
@@ -477,7 +480,7 @@ button {
   display: flex;
   justify-content: center;
   gap: 15px;
-  margin-bottom: 64px;
+  margin-bottom: 120px;
   flex-wrap: wrap;
 }
 
@@ -488,7 +491,7 @@ button {
   letter-spacing: var(--ls-label);
   font-weight: var(--weight-medium);
   color: rgba(255, 255, 255, 0.4);
-  margin-bottom: 18px;
+  margin-bottom: var(--space-32);
 }
 
 .logo-row {
@@ -550,7 +553,7 @@ button {
 /* ==========================================================================
    Sections
    ========================================================================== */
-.section { padding: 300px 0; }
+.section { padding: 200px 0; }
 #testimonials { padding: 0; }
 #faq { padding-bottom: 0; }
 
@@ -1161,7 +1164,7 @@ button {
 }
 
 @media (max-width: 720px) {
-  .main-nav { position: fixed; top: var(--header-height); left: 0; right: 0; height: calc(100vh - var(--header-height)); height: calc(100dvh - var(--header-height)); overflow-y: auto; background: var(--surface-primary); border-radius: 0; flex-direction: column; align-items: stretch; padding: 12px 24px 24px; gap: 4px; transform: translateY(-8px); opacity: 0; pointer-events: none; transition: opacity 0.2s var(--ease), transform 0.2s var(--ease); border-top: 1px solid var(--border-default); }
+  .main-nav { position: fixed; top: calc(var(--header-height) + 2 * var(--header-pad)); left: 0; right: 0; height: calc(100vh - var(--header-height) - 2 * var(--header-pad)); height: calc(100dvh - var(--header-height) - 2 * var(--header-pad)); overflow-y: auto; background: var(--surface-primary); border-radius: 0; flex-direction: column; align-items: stretch; padding: 12px 24px 24px; gap: 4px; transform: translateY(-8px); opacity: 0; pointer-events: none; transition: opacity 0.2s var(--ease), transform 0.2s var(--ease); border-top: 1px solid var(--border-default); }
   .main-nav.is-open { transform: translateY(0); opacity: 1; pointer-events: auto; }
   .main-nav a { padding: 12px 4px; border-bottom: 1px solid var(--border-default); border-radius: 0; font-size: 16px; }
   .main-nav a.is-active { background: none; box-shadow: none; }

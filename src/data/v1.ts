@@ -34,7 +34,6 @@ export const v1: SiteContent = {
       { label: "Gulf News", className: "logo-gulfnews" },
       { label: "The Washington Post", className: "logo-wapo" },
       { label: "ZAWYA", className: "logo-zawya" },
-      { label: "The Wall Street Journal", className: "logo-wsj" },
     ],
   },
 
