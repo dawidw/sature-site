@@ -11,8 +11,26 @@
 (() => {
   "use strict";
 
-  const host = document.querySelector(".hero");
-  if (!host) return;
+  // Every dark card gets the same field, sampled at a different offset so the
+  // four don't repeat one formation down the page.
+  const TARGETS = [
+    { selector: ".hero", seed: 12.5 },
+    { selector: ".section-dark", seed: 41 },
+    { selector: ".cta-band", seed: 67 },
+    { selector: ".site-footer", seed: 88 },
+  ];
+
+  // One unit of the field spans this many CSS pixels, on every card. Taken from
+  // the authored hero: scale 1.3 across its 725px short side. Without it the
+  // shader divides by whichever side is shorter, so the same parameters would
+  // draw large soft shapes on the hero and a fine stripe pattern on a short
+  // band like the CTA. Each card now derives its own scale from its size.
+  const FEATURE_PX = 558;
+
+  const hosts = TARGETS.flatMap(({ selector, seed }) =>
+    Array.from(document.querySelectorAll(selector), (el) => ({ el, seed }))
+  );
+  if (!hosts.length) return;
 
   const VERT = `attribute vec2 aPos;
 void main(){ gl_Position = vec4(aPos, 0.0, 1.0); }`;
@@ -111,13 +129,13 @@ void main(){
     ],
     scale: 1.3,
     warp: 1.1,
-    speed: 0.18,
+    speed: 0.44,
     contrast: 1.25,
     angle: 118,
-    grain: 0.022,
-    vignette: 0.32,
-    blend: 0.91,
-    seed: 20,
+    grain: 0.068,
+    vignette: 1,
+    blend: 0.82,
+    seed: 12.5,
   };
 
   function createGradientRenderer(canvas, vertSrc, fragSrc, initialParams) {
@@ -207,9 +225,13 @@ void main(){
         poss[j] = s.p;
       }
 
+      // Scale is derived from the card's shorter side rather than taken from
+      // params, so a unit of the field is FEATURE_PX wide everywhere.
+      const shortSide = Math.max(1, Math.min(canvas.clientWidth, canvas.clientHeight));
+
       gl.uniform2f(U["uRes"], canvas.width, canvas.height);
       gl.uniform1f(U["uTime"], time);
-      gl.uniform1f(U["uScale"], params.scale);
+      gl.uniform1f(U["uScale"], shortSide / FEATURE_PX);
       gl.uniform1f(U["uWarp"], params.warp);
       gl.uniform1f(U["uContrast"], params.contrast);
       gl.uniform1f(U["uAngle"], (params.angle * Math.PI) / 180);
@@ -255,29 +277,34 @@ void main(){
     };
   }
 
-  const canvas = document.createElement("canvas");
-  canvas.className = "bg-canvas gradient-canvas";
-  canvas.setAttribute("aria-hidden", "true");
-  // Appended, not prepended: it has to sit over the contour canvas, and both
-  // carry the same z-index, so document order settles it.
-  host.appendChild(canvas);
+  const renderers = [];
 
-  const renderer = createGradientRenderer(canvas, VERT, FRAG, PARAMS);
-  if (!renderer) {
-    canvas.remove();
-    return;
+  for (const { el, seed } of hosts) {
+    const canvas = document.createElement("canvas");
+    canvas.className = "bg-canvas gradient-canvas";
+    canvas.setAttribute("aria-hidden", "true");
+    el.appendChild(canvas);
+
+    const renderer = createGradientRenderer(canvas, VERT, FRAG, { ...PARAMS, seed });
+    if (!renderer) {
+      canvas.remove();
+      continue;
+    }
+
+    renderer.start();
+    renderers.push(renderer);
+
+    // Each card runs its own context, so a card that is off-screen costs
+    // nothing; only what the reader can actually see is drawing.
+    new IntersectionObserver(
+      (entries) => renderer.setVisible(entries[0].isIntersecting),
+      { threshold: 0 }
+    ).observe(el);
+
+    new ResizeObserver(() => renderer.start()).observe(el);
   }
 
-  renderer.start();
-
-  new IntersectionObserver(
-    (entries) => renderer.setVisible(entries[0].isIntersecting),
-    { threshold: 0 }
-  ).observe(host);
-
   document.addEventListener("visibilitychange", () => {
-    if (!document.hidden) renderer.start();
+    if (!document.hidden) for (const renderer of renderers) renderer.start();
   });
-
-  new ResizeObserver(() => renderer.start()).observe(host);
 })();
