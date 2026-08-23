@@ -14,7 +14,7 @@ const { team } = Astro.props;
     <p class="section-title center on-dark"><RichText text={team.title} /></p>
 
     <figure class="founders">
-      <img src={team.photo.src} alt={team.photo.alt} width="1015" height="652" loading="lazy" />
+      <img src={team.photo.src} alt={team.photo.alt} width="1015" height="556" loading="lazy" />
       <figcaption class="founders-names">
         {team.photo.names.map((name) => <span>{name}</span>)}
       </figcaption>
