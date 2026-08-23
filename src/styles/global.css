@@ -132,8 +132,8 @@
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
   /* The shadow scale is black at 10%, which is invisible on a near-black
-     surface. Raising a pill off a dark tray needs a deeper one. */
-  --shadow-on-dark: 0 2px 8px rgba(0, 0, 0, 0.55);
+     surface. This is deep enough to register there and no more. */
+  --shadow-on-dark: 0 1px 4px rgba(0, 0, 0, 0.35);
   /* Long tail, no overshoot: the pill settles rather than snapping or wobbling. */
   --ease-pill: cubic-bezier(0.32, 0.72, 0, 1);
 
@@ -390,6 +390,10 @@ button {
   height: 0;
   border-radius: var(--radius-full);
   background: var(--nav-item-background);
+  /* Sub-pixel on purpose: at 1px this edge reads as a drawn outline rather
+     than a highlight. box-sizing keeps it inside the measured box, so the
+     pill still matches the item it sits on. */
+  border: 0.75px solid rgba(0, 0, 0, 0.06);
   opacity: 0;
   pointer-events: none;
   transition:
@@ -443,7 +447,7 @@ button {
 /* Solid, not frosted: over a moving gradient the blur read as a smear, and the
    translucent fill drifted in brightness with whatever passed beneath it. */
 .site-header.is-on-dark .main-nav {
-  background: var(--neutral-800);
+  background: var(--neutral-700);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
@@ -453,10 +457,11 @@ button {
   color: var(--text-on-dark);
 }
 .site-header.is-on-dark .main-nav a.is-active { color: var(--text-on-dark); }
-/* A step up the ramp from the tray, plus a shadow deep enough to register
-   against it — the pill still has to look raised here. */
+/* Still a step up the ramp from the tray — the tray moved, so this moves with
+   it or the two would be the same colour. */
 .site-header.is-on-dark .nav-pill {
-  background: var(--neutral-700);
+  background: var(--neutral-600);
+  border-color: rgba(255, 255, 255, 0.12);
   box-shadow: var(--shadow-on-dark);
 }
 /* The icons are flat SVG files with #0D0D0D baked in, so they can't inherit a
