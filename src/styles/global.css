@@ -944,12 +944,24 @@ button {
 /* Spec: Figma node 8:10362 — a 264px menu, a 552px column and 120px between
    them, the pair centred as one 936px block rather than stretched to the
    layout width. */
+/* Three columns, not two: the menu sits in the first and holds the section's
+   80px gutter, while the reading column is the middle one and the two flexible
+   columns either side are equal, which puts it on the centre of the window.
+   Centring the pair as one block instead — menu, gap and column together —
+   pushed the reading column half the menu's width off centre. */
 .services-layout {
   display: grid;
-  grid-template-columns: 264px 552px;
-  justify-content: center;
-  gap: 120px;
+  grid-template-columns: 1fr 552px 1fr;
+  align-items: start;
   margin-top: 320px;
+}
+.services-nav {
+  grid-column: 1;
+  justify-self: start;
+  width: 264px;
+}
+.services-content {
+  grid-column: 2;
 }
 
 /* Travels with the page until it is 180px from the top of the window, then
@@ -958,7 +970,6 @@ button {
 .services-nav {
   position: sticky;
   top: 180px;
-  align-self: start;
 }
 /* The menu is a 24px tray with 4px of breathing room; each item is a full
    pill, so the corners inside never echo the corners outside. */
