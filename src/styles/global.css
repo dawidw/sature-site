@@ -696,7 +696,13 @@ button {
 #testimonials { padding: 0; }
 #faq { padding-bottom: 0; }
 
-.team-wrap { padding-block: 32px; }
+/* Full bleed, like the hero: the band escapes the layout width while its
+   contents keep it. */
+.team-wrap {
+  max-width: none;
+  padding-inline: 0;
+  padding-block: 32px;
+}
 
 .section-dark {
   position: relative;
@@ -709,6 +715,8 @@ button {
 .section-dark > :not(.bg-canvas) {
   position: relative;
   z-index: 1;
+  max-width: var(--max-w);
+  margin-inline: auto;
 }
 
 /* About */
@@ -1228,7 +1236,12 @@ button {
 /* ==========================================================================
    Footer
    ========================================================================== */
-.footer-wrap { padding: 32px 0 56px; }
+/* .wrap's max-width was still capping this at 1432px — invisible on a narrower
+   window, a hard edge on anything wider. */
+.footer-wrap {
+  max-width: none;
+  padding: 32px 0 56px;
+}
 .site-footer {
   position: relative;
   background: var(--background-dark);
@@ -1240,6 +1253,8 @@ button {
 .site-footer > :not(.bg-canvas) {
   position: relative;
   z-index: 1;
+  max-width: var(--max-w);
+  margin-inline: auto;
 }
 .footer-top {
   display: grid;
