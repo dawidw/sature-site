@@ -280,28 +280,41 @@ void main(){
   const renderers = [];
 
   for (const { el, seed } of hosts) {
-    const canvas = document.createElement("canvas");
-    canvas.className = "bg-canvas gradient-canvas";
-    canvas.setAttribute("aria-hidden", "true");
-    el.appendChild(canvas);
+    let renderer = null;
 
-    const renderer = createGradientRenderer(canvas, VERT, FRAG, { ...PARAMS, seed });
-    if (!renderer) {
-      canvas.remove();
-      continue;
-    }
+    // Built on first sight rather than at load. Only one of these cards is ever
+    // on screen at a time, but creating all four up front still allocated four
+    // WebGL contexts and their backing stores — on this page 14.2 megapixels of
+    // them at device ratio — before the reader had scrolled anywhere near the
+    // last three.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries[0].isIntersecting;
 
-    renderer.start();
-    renderers.push(renderer);
+        if (visible && !renderer) {
+          const canvas = document.createElement("canvas");
+          canvas.className = "bg-canvas gradient-canvas";
+          canvas.setAttribute("aria-hidden", "true");
+          el.appendChild(canvas);
 
-    // Each card runs its own context, so a card that is off-screen costs
-    // nothing; only what the reader can actually see is drawing.
-    new IntersectionObserver(
-      (entries) => renderer.setVisible(entries[0].isIntersecting),
+          renderer = createGradientRenderer(canvas, VERT, FRAG, { ...PARAMS, seed });
+          if (!renderer) {
+            canvas.remove();
+            observer.disconnect();
+            return;
+          }
+
+          renderers.push(renderer);
+          new ResizeObserver(() => renderer.start()).observe(el);
+        }
+
+        // Off screen it stops drawing; the context stays for the next pass.
+        if (renderer) renderer.setVisible(visible);
+      },
       { threshold: 0 }
-    ).observe(el);
+    );
 
-    new ResizeObserver(() => renderer.start()).observe(el);
+    observer.observe(el);
   }
 
   document.addEventListener("visibilitychange", () => {
