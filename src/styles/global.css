@@ -340,6 +340,7 @@ button {
    change of light rather than a cut. The pill's own travel is timed
    separately, on its transform. */
 .site-header .brand,
+.site-header .brand-glyph,
 .site-header .main-nav,
 .site-header .main-nav a,
 .site-header .main-nav a img,
@@ -381,6 +382,18 @@ button {
   height: 32px;
   width: auto;
   display: block;
+  /* The glyph is cut out of the mark, so it takes the colour of the surface
+     behind the logo rather than a fixed white — otherwise it stays white on a
+     white page once the mark inverts. */
+  --brand-knockout: var(--surface-primary);
+}
+.brand-glyph {
+  fill: var(--brand-knockout);
+  transition: fill 0.35s var(--ease);
+}
+.site-header.is-on-dark .brand-logo,
+.site-footer .brand-logo {
+  --brand-knockout: var(--background-dark);
 }
 
 .main-nav {
