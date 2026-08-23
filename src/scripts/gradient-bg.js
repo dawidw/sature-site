@@ -189,7 +189,10 @@ void main(){
     }
 
     function resize() {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      // A soft gradient carries almost no detail that a second device pixel
+      // would resolve; the only thing that changes is the grain, which gets
+      // marginally coarser. Cuts the pixels drawn and composited by 44%.
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       const w = Math.max(1, Math.round((canvas.clientWidth || 1) * dpr));
       const h = Math.max(1, Math.round((canvas.clientHeight || 1) * dpr));
       if (canvas.width !== w || canvas.height !== h) {
@@ -202,12 +205,26 @@ void main(){
     const reduced =
       window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    // Half the redraws. The field drifts slowly enough that 30 leaves the
+    // motion looking the same; what halves with it is the work Chrome does
+    // recompositing a canvas this size every frame.
+    const MIN_FRAME_MS = 1000 / 30;
+    let lastDraw = 0;
+
     function frame(now) {
       if (dead) return;
       if (!last) last = now;
       const dt = Math.min((now - last) / 1000, 0.05);
       last = now;
+      // The clock still advances on every tick, so skipping draws changes the
+      // frame rate of the animation without slowing the animation itself.
       if (!reduced && !document.hidden) time += dt * params.speed;
+
+      if (now - lastDraw < MIN_FRAME_MS) {
+        raf = requestAnimationFrame(frame);
+        return;
+      }
+      lastDraw = now;
 
       resize();
       gl.useProgram(prog);

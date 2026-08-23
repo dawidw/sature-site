@@ -388,9 +388,12 @@ button {
   display: flex;
   align-items: center;
   gap: 0;
-  background: color-mix(in srgb, var(--nav-background) 82%, transparent);
-  backdrop-filter: saturate(180%) blur(14px);
-  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  /* Solid, not frosted. Blurring a live backdrop costs Chrome a full pass per
+     frame, and since the hero now runs under the bar that backdrop is a canvas
+     repainting continuously — the one place the blur was most expensive was
+     also the one place it was most visible. Safari's backdrop path is far
+     cheaper, which is why the cost only showed up in Chrome. */
+  background: var(--nav-background);
   border-radius: var(--radius-full);
   padding: 4px;
 }
@@ -470,8 +473,6 @@ button {
    translucent fill drifted in brightness with whatever passed beneath it. */
 .site-header.is-on-dark .main-nav {
   background: var(--neutral-700);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
 }
 .site-header.is-on-dark .main-nav a { color: rgba(255, 255, 255, 0.7); }
 .site-header.is-on-dark .main-nav a:hover:not(.is-active) {
@@ -896,6 +897,7 @@ button {
   position: sticky;
   top: 96px;
   align-self: start;
+  padding-top: 180px;
 }
 /* The menu is a 24px tray with 4px of breathing room; each item is a full
    pill, so the corners inside never echo the corners outside. */
