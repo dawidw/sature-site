@@ -151,6 +151,8 @@
      fails contrast on --background-dark, so the page uses white at 60%. */
   --text-on-dark-soft: rgba(255, 255, 255, 0.6);
   --max-w: 1432px;
+  /* Outer width of the sections that run to the 80px gutter, padding included. */
+  --layout-max: 1600px;
   --header-height: 72px;
   --header-pad: 16px;
   --header-total: calc(var(--header-height) + 2 * var(--header-pad));
@@ -392,7 +394,7 @@ button {
   letter-spacing: -0.01em;
 }
 .brand-logo {
-  height: 32px;
+  height: 35.2px;
   width: auto;
   display: block;
   /* The glyph is cut out of the mark, so it takes the colour of the surface
@@ -1461,7 +1463,11 @@ button {
   .header-inner,
   .wrap-gutter-80,
   .contact-grid {
-    max-width: none;
+    /* Grows with the window to 1600 including its gutters, then centres. Past
+       that width the 80px is measured from the layout's edge, not the
+       window's. */
+    max-width: var(--layout-max);
+    margin-inline: auto;
     padding-inline: 80px;
   }
 
@@ -1474,20 +1480,23 @@ button {
 
   /* Level with the heading above it. On the first card rather than the row —
      see the note on .work-carousel. */
+  /* Full bleed, so it tracks the layout edge by hand rather than inheriting it. */
   .work-carousel > .work-card:first-child {
-    margin-left: 80px;
+    margin-left: max(80px, calc((100vw - var(--layout-max)) / 2 + 80px));
   }
   .work-carousel {
-    padding-right: 80px;
+    padding-right: max(80px, calc((100vw - var(--layout-max)) / 2 + 80px));
   }
   .work-carousel-viewport {
-    scroll-padding-left: 80px;
+    scroll-padding-left: max(80px, calc((100vw - var(--layout-max)) / 2 + 80px));
   }
 
+  /* The band itself stays full bleed; only what is inside it caps. */
   .site-footer {
     padding-inline: 80px;
   }
   .site-footer > :not(.bg-canvas) {
-    max-width: none;
+    max-width: calc(var(--layout-max) - 160px);
+    margin-inline: auto;
   }
 }
