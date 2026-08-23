@@ -1215,13 +1215,23 @@ button {
 .cta-wrap {
   max-width: none;
   padding-inline: 0;
-  padding-block: 32px;
+  /* No band of page showing above or below, or the section could never
+     measure a full screen. */
+  padding-block: 0;
 }
 .cta-band {
   position: relative;
   background: var(--background-dark);
   border-radius: 0;
   overflow: hidden;
+  /* One screen, like the hero, with the copy centred in it. Nothing is pinned:
+     the page scrolls past it normally. The 200px stays as the floor for short
+     windows. */
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 200px 24px;
 }
 .cta-inner {
