@@ -779,44 +779,44 @@ button {
 /* One panel holds all three portraits. It carries the same colour as the card
    behind it, so only the shadow separates them — and being opaque, it also
    keeps the animated background from moving underneath the photos. */
-/* Spec: Figma node 1:3844 "team-cards" — 1128 wide, 20px padding, 16px gap,
-   32px radius, 1px #3d3d3d border, Effect/shadow-md. The fill matches the card
-   behind it, so the border does the separating; the shadow is a black at 10%
-   on a near-black surface and is close to invisible by itself. Being opaque
-   also keeps the animated contours from crawling under the photos. */
-/* Selector matches the band's content cap in specificity, or that rule would
-   override the panel's own width — the spec calls for 1128, not the band's. */
-.section-dark > .team-panel {
+/* Spec: Figma node 90:4167 — one 1128x725 frame, no container and no names.
+   The fade is the design's own mask: a radial gradient centred above the
+   middle, wide enough horizontally that it reads as a vertical dissolve into
+   the section. Values taken from the exported mask. */
+.section-dark > .founders {
   max-width: 1128px;
   margin: 0 auto 64px;
-  padding: var(--space-20);
-  background: var(--background-dark);
-  border: 1px solid var(--border-dark-card);
-  border-radius: var(--radius-32);
-  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-40);
+  overflow: hidden;
+  -webkit-mask-image: radial-gradient(
+    ellipse 205% 88% at 50% 29%,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.931) 14.3%,
+    rgba(0, 0, 0, 0.754) 28.6%,
+    rgba(0, 0, 0, 0.511) 42.9%,
+    rgba(0, 0, 0, 0.271) 57.1%,
+    rgba(0, 0, 0, 0.136) 71.4%,
+    rgba(0, 0, 0, 0.038) 85.7%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 205% 88% at 50% 29%,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.931) 14.3%,
+    rgba(0, 0, 0, 0.754) 28.6%,
+    rgba(0, 0, 0, 0.511) 42.9%,
+    rgba(0, 0, 0, 0.271) 57.1%,
+    rgba(0, 0, 0, 0.136) 71.4%,
+    rgba(0, 0, 0, 0.038) 85.7%,
+    rgba(0, 0, 0, 0) 100%
+  );
 }
-
-.team-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-16);
-}
-.team-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0;
-}
-
-.avatar-photo {
+.founders img {
+  display: block;
   width: 100%;
-  /* The img carries height="200" as a presentation hint, which outranks
-     aspect-ratio; without this the frame renders 320x200, not square. */
   height: auto;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1128 / 725;
   object-fit: cover;
-  border-radius: var(--radius-24);
-  margin-bottom: var(--space-16);
 }
 
 .avatar {
@@ -836,62 +836,61 @@ button {
 .avatar-c { background: linear-gradient(135deg, #1c1c1c, #4a4a4a); }
 .avatar-sm { width: 36px; height: 36px; font-size: 12px; }
 
-/* Heading 3 from the style guide — the design applies that exact text style. */
-.team-name {
-  font-size: var(--fs-h3);
-  line-height: calc(var(--lh-h3) / var(--fs-h3));
-  letter-spacing: var(--ls-h3);
-  font-weight: var(--weight-medium);
-  color: var(--text-on-dark);
-  text-align: center;
-}
-
-.story-grid {
+.section-dark > .story-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  max-width: 900px;
+  grid-template-columns: minmax(0, 1fr) 552px;
+  gap: 24px;
+  max-width: 1128px;
   margin: 0 auto;
+  align-items: start;
 }
+/* The stats start above the story heading in the design, not level with it. */
+.story-copy { margin-top: 56px; }
 
 .story-copy h3 {
   font-family: var(--font-sans);
-  font-size: var(--fs-h3);
-  line-height: calc(var(--lh-h3) / var(--fs-h3));
+  font-size: var(--fs-h1);
+  line-height: var(--lh-h1);
   font-weight: var(--weight-medium);
-  letter-spacing: var(--ls-h3);
-  margin-bottom: 12px;
+  letter-spacing: var(--ls-h1);
+  margin-bottom: 10px;
   color: var(--text-on-dark);
 }
 .story-copy p {
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.82);
-  max-width: 380px;
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body-lg);
+  letter-spacing: var(--ls-body-lg);
+  color: var(--text-on-dark);
+  max-width: 550px;
 }
 
 .stats {
   display: grid;
+  gap: var(--space-24);
 }
 .stat {
-  padding: 18px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: grid;
+  gap: 10px;
 }
-.stat:first-child { padding-top: 0; }
-.stat:last-child { border-bottom: none; }
+/* Divider sits in the middle of the 24px rhythm, matching divider/default. */
+.stat + .stat {
+  border-top: 1px solid var(--neutral-600);
+  padding-top: var(--space-24);
+}
 .stat dt {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: var(--fs-h3);
-  line-height: calc(var(--lh-h3) / var(--fs-h3));
-  letter-spacing: var(--ls-h3);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-h1);
+  letter-spacing: var(--ls-h1);
   font-weight: var(--weight-medium);
-  margin-bottom: 4px;
+  color: var(--text-on-dark);
 }
 .stat dd {
   font-size: var(--fs-body-lg);
   line-height: var(--lh-body-lg);
-  color: rgba(255, 255, 255, 0.55);
-  max-width: 340px;
+  letter-spacing: var(--ls-body-lg);
+  color: var(--text-on-dark);
 }
 
 /* Services */
@@ -1350,7 +1349,8 @@ button {
   .services-nav { position: static; }
   .services-nav ul { flex-direction: row; flex-wrap: wrap; }
 
-  .team-grid { grid-template-columns: 1fr; max-width: 320px; }
+  .story-grid { grid-template-columns: 1fr; }
+  .story-copy { margin-top: 0; }
   .testimonial-grid { grid-template-columns: 1fr; }
   .work-card { width: 86vw; }
   .footer-top { grid-template-columns: 1fr; gap: 32px; }

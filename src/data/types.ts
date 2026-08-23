@@ -111,7 +111,11 @@ export interface SiteContent {
   };
   team: {
     title: string;
-    members: TeamMemberId[];
+    /**
+     * The founders arrive as one frame rather than three portraits: the design
+     * supplies a single composite with the panel seams already in it.
+     */
+    photo: { src: string; alt: string };
     story: {
       heading: string;
       body: string;

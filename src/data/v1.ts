@@ -58,7 +58,10 @@ export const v1: SiteContent = {
 
   team: {
     title: "Nice to meet you 👋, we're",
-    members: ["dawid", "maciej", "magdalena"],
+    photo: {
+      src: "/assets/img/team/founders.webp",
+      alt: "Dawid Woźniak, Maciej Kownacki and Magdalena Kercz",
+    },
     story: {
       heading: "Our story",
       body: "Sature is led by Dawid, Maciej & Magdalena, we met years ago and through working together we discovered that our shared passion is solving problems for people and businesses.",

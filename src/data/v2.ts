@@ -66,7 +66,10 @@ export const v2: SiteContent = {
 
   team: {
     title: "Nice to meet you 👋, we're",
-    members: ["dawid", "maciej", "magdalena"],
+    photo: {
+      src: "/assets/img/team/founders.webp",
+      alt: "Dawid Woźniak, Maciej Kownacki and Magdalena Kercz",
+    },
     story: {
       heading: "Our story",
       body: "Sature is led by Dawid, Maciej and Magdalena — we met years ago working in product design across Europe and the US. Over the last two years, as AI moved from a feature checkbox to the backbone of new products, we kept seeing the same gap: teams shipping agentic AI features without the research, interaction patterns, or design process built for a technology that doesn't behave the same way twice. We started Sature to close that gap — pairing classic product design craft with hands-on experience designing agentic AI experiences, so founders don't have to figure out AI UX through trial and error on their own users.",
