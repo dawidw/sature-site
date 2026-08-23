@@ -335,6 +335,24 @@ button {
 /* ==========================================================================
    Header
    ========================================================================== */
+/* Everything in the bar that differs between the two colour modes fades
+   between them, so crossing from a dark section to a light one reads as a
+   change of light rather than a cut. The pill's own travel is timed
+   separately, on its transform. */
+.site-header .brand,
+.site-header .main-nav,
+.site-header .main-nav a,
+.site-header .main-nav a img,
+.site-header .nav-toggle span,
+.site-header .btn {
+  transition:
+    background-color 0.35s var(--ease),
+    color 0.35s var(--ease),
+    border-color 0.35s var(--ease),
+    box-shadow 0.35s var(--ease),
+    filter 0.35s var(--ease);
+}
+
 /* The bar carries no surface of its own — the frost belongs to the menu, which
    is the only part that needs to stay legible over whatever scrolls beneath. */
 .site-header {
@@ -375,7 +393,6 @@ button {
   -webkit-backdrop-filter: saturate(180%) blur(14px);
   border-radius: var(--radius-full);
   padding: 4px;
-  transition: background 0.2s var(--ease);
 }
 
 /* One pill for the whole menu, moved between items instead of a background
@@ -394,16 +411,21 @@ button {
      than a highlight. box-sizing keeps it inside the measured box, so the
      pill still matches the item it sits on. */
   border: 0.75px solid rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-sm);
   opacity: 0;
   pointer-events: none;
+  /* The short delay is what stops it tracking the scroll surgically: the
+     section becomes current, then a beat later the pill sets off. */
   transition:
-    transform 0.48s var(--ease-pill),
-    width 0.48s var(--ease-pill),
-    height 0.48s var(--ease-pill),
-    background 0.2s var(--ease);
+    transform 0.48s var(--ease-pill) 0.12s,
+    width 0.48s var(--ease-pill) 0.12s,
+    height 0.48s var(--ease-pill) 0.12s,
+    background-color 0.35s var(--ease),
+    border-color 0.35s var(--ease),
+    box-shadow 0.35s var(--ease);
 }
 .nav-pill.is-ready { opacity: 1; }
-.main-nav .nav-pill { box-shadow: var(--shadow-sm); }
+
 
 @media (prefers-reduced-motion: reduce) {
   .nav-pill { transition: none; }
@@ -457,10 +479,11 @@ button {
   color: var(--text-on-dark);
 }
 .site-header.is-on-dark .main-nav a.is-active { color: var(--text-on-dark); }
-/* Still a step up the ramp from the tray — the tray moved, so this moves with
-   it or the two would be the same colour. */
+/* Between neutral-600 and neutral-500: the ramp's next step up from the tray
+   was only four levels brighter and read as too dark, and the one after that
+   doubles the brightness. Off the ramp on purpose — see docs/DESIGN-TOKENS. */
 .site-header.is-on-dark .nav-pill {
-  background: var(--neutral-600);
+  background: #383838;
   border-color: rgba(255, 255, 255, 0.12);
   box-shadow: var(--shadow-on-dark);
 }
@@ -905,8 +928,9 @@ button {
 }
 /* The fill lives on the pill so it can travel; the item only carries text. */
 .services-nav a.is-active { background: none; }
-/* Figma gives this menu's active item no shadow, unlike the top bar's. */
-.services-nav .nav-pill { box-shadow: none; }
+/* Same treatment as the top bar's pill — outline and shadow included. This is
+   a step away from the Figma spec for this menu, which draws the active item
+   as flat white. */
 
 .services-content {
   display: flex;

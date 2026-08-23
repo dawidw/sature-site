@@ -62,7 +62,14 @@
             .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
           if (visible) setActive(visible.target.id);
         },
-        { rootMargin: "-40% 0px -50% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
+        {
+          // The band a section has to reach to count as current. Kept high in
+          // the viewport so the highlight waits until the reader is actually
+          // into the section, rather than flipping the moment its top edge
+          // appears past the middle of the screen.
+          rootMargin: "-25% 0px -60% 0px",
+          threshold: [0, 0.25, 0.5, 0.75, 1],
+        }
       );
       sections.forEach((section) => observer.observe(section));
     }

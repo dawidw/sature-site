@@ -70,6 +70,7 @@ Używane na stronie, nieopisane w Figmie. Widoczne też na dole `/styleguide`.
 | --- | --- | --- |
 | `#ff5a2c` (`--accent`) | favicon, focus ring, nazwa firmy w testimonialu | dodać jako `brand/accent` |
 | `rgba(255,255,255,.6)` (`--text-on-dark-soft`) | tekst drugorzędny na ciemnym tle | guide ma `text/on-dark-muted: #545454`, co na `--background-dark` daje kontrast ~1.6:1 (poniżej WCAG AA); albo poprawić token w Figmie, albo udokumentować wariant alpha |
+| `#383838` | tło aktywnego itemu w nawigacji, tryb ciemny | poza rampą: `neutral-600` (#2a2a2a) było za ciemne, a `neutral-500` (#545454) podwaja jasność — brakuje stopnia pośredniego |
 | `#3d3d3d` (`--border-dark-card`) | obramowanie panelu ze zdjęciami zespołu | design nazywa to `gray/700`; w pliku istnieje druga rampa szarości, której style guide nie opisuje — ujednolicić z `neutral/*` albo udokumentować |
 | `#3ecf5e` | zielona kropka „Accepting projects" i jej poświata | dodać `status/positive` |
 | gradienty avatarów | inicjały w testimonialach | udokumentować albo zastąpić zdjęciami |
