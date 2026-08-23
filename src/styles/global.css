@@ -814,7 +814,8 @@ button {
 .section-dark > .founders {
   /* 10% off the 1128 the band gives it. */
   max-width: 1015px;
-  margin: 0 auto 64px;
+  /* 64 plus 15%. */
+  margin: 0 auto 73.6px;
   border-radius: var(--radius-40);
   overflow: hidden;
   position: relative;
@@ -910,7 +911,7 @@ button {
   line-height: var(--lh-body-lg);
   letter-spacing: var(--ls-body-lg);
   color: var(--text-on-dark);
-  max-width: 550px;
+  max-width: 450px;
 }
 
 .stats {
