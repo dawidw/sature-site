@@ -1228,11 +1228,17 @@ button {
 .accordion-panel p:last-child { margin-bottom: 0; }
 
 /* Contact */
+/* Held to the same content width as the row above it, "Sature is a boutique
+   design studio", whose two columns total 1128 — the width the team panel is
+   specced at too. This element carries .wrap, so it was inheriting the full
+   1432 and running 88px wider on each side than the section it sits under.
+   The gutters stay in the padding, so narrow windows still get them. */
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 40px;
   align-items: center;
+  max-width: calc(1128px + 2 * clamp(24px, 4vw, 64px));
 }
 .contact-copy p { font-size: 15px; color: var(--text-secondary); margin-top: 18px; max-width: 420px; }
 .contact-note { font-weight: 500; color: var(--text-primary) !important; }
