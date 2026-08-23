@@ -715,7 +715,10 @@ button {
 .section-dark > :not(.bg-canvas) {
   position: relative;
   z-index: 1;
-  max-width: var(--max-w);
+  /* The width this had before the band went full bleed. Inside .wrap it lost
+     the page gutters as well as the card's own 56px padding, and capping at
+     the bare layout width gave it 240px it never had. */
+  max-width: calc(min(100%, var(--max-w) - 112px) - 2 * clamp(24px, 4vw, 64px));
   margin-inline: auto;
 }
 
@@ -781,7 +784,9 @@ button {
    behind it, so the border does the separating; the shadow is a black at 10%
    on a near-black surface and is close to invisible by itself. Being opaque
    also keeps the animated contours from crawling under the photos. */
-.team-panel {
+/* Selector matches the band's content cap in specificity, or that rule would
+   override the panel's own width — the spec calls for 1128, not the band's. */
+.section-dark > .team-panel {
   max-width: 1128px;
   margin: 0 auto 64px;
   padding: var(--space-20);
