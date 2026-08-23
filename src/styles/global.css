@@ -545,7 +545,7 @@ button {
   display: flex;
   justify-content: center;
   gap: 15px;
-  margin-bottom: 80px;
+  margin-bottom: 120px;
   flex-wrap: wrap;
 }
 
@@ -627,7 +627,7 @@ button {
 .section-dark {
   position: relative;
   background: var(--background-dark);
-  border-radius: var(--radius-40);
+  border-radius: 0;
   overflow: hidden;
   padding: 96px 56px;
   color: var(--text-on-dark);
@@ -944,7 +944,7 @@ button {
 /* Testimonials */
 .testimonials-panel {
   background: var(--background-secondary);
-  border-radius: var(--radius-40);
+  border-radius: 0;
   padding: 45px 46px;
 }
 .testimonial-grid {
@@ -1052,7 +1052,7 @@ button {
 .cta-band {
   position: relative;
   background: var(--background-dark);
-  border-radius: var(--radius-40);
+  border-radius: 0;
   overflow: hidden;
   padding: 120px 24px;
 }
@@ -1152,7 +1152,7 @@ button {
 .site-footer {
   position: relative;
   background: var(--background-dark);
-  border-radius: var(--radius-40);
+  border-radius: 0;
   overflow: hidden;
   color: var(--text-on-dark);
   padding: 80px 56px 40px;
