@@ -131,6 +131,11 @@
   --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  /* The shadow scale is black at 10%, which is invisible on a near-black
+     surface. Raising a pill off a dark tray needs a deeper one. */
+  --shadow-on-dark: 0 2px 8px rgba(0, 0, 0, 0.55);
+  /* Long tail, no overshoot: the pill settles rather than snapping or wobbling. */
+  --ease-pill: cubic-bezier(0.32, 0.72, 0, 1);
 
   /* ---- Not in the style guide -------------------------------------------
      These have no Figma variable yet. Either add them to the guide or replace
@@ -361,9 +366,10 @@ button {
 }
 
 .main-nav {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 0;
   background: color-mix(in srgb, var(--nav-background) 82%, transparent);
   backdrop-filter: saturate(180%) blur(14px);
   -webkit-backdrop-filter: saturate(180%) blur(14px);
@@ -371,7 +377,36 @@ button {
   padding: 4px;
   transition: background 0.2s var(--ease);
 }
+
+/* One pill for the whole menu, moved between items instead of a background
+   switching off one item and on at the next — that is what lets the highlight
+   travel as the page scrolls. Placed by nav-pill.js. */
+.nav-pill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 0;
+  height: 0;
+  border-radius: var(--radius-full);
+  background: var(--nav-item-background);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.48s var(--ease-pill),
+    width 0.48s var(--ease-pill),
+    height 0.48s var(--ease-pill),
+    background 0.2s var(--ease);
+}
+.nav-pill.is-ready { opacity: 1; }
+.main-nav .nav-pill { box-shadow: var(--shadow-sm); }
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-pill { transition: none; }
+}
 .main-nav a {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -385,12 +420,13 @@ button {
   transition: color 0.15s var(--ease), background 0.15s var(--ease);
 }
 .main-nav a img { width: 20px; height: 20px; opacity: 0.7; }
-.main-nav a:hover { color: var(--text-primary); }
-.main-nav a.is-active {
-  background: var(--surface-primary);
+/* The whole item lights up, not just its label. Skipped on the active one,
+   which already has the pill under it. */
+.main-nav a:hover:not(.is-active) {
+  background: rgba(255, 255, 255, 0.55);
   color: var(--text-primary);
-  box-shadow: var(--shadow-sm);
 }
+.main-nav a.is-active { color: var(--text-primary); }
 .main-nav a.is-active img { opacity: 1; }
 
 .header-actions {
@@ -404,15 +440,24 @@ button {
    Set by header-theme.js from whatever surface sits under the bar's midline.
    No Figma reference for this variant yet — values derived from the tokens. */
 .site-header.is-on-dark .brand { color: var(--text-on-dark); }
+/* Solid, not frosted: over a moving gradient the blur read as a smear, and the
+   translucent fill drifted in brightness with whatever passed beneath it. */
 .site-header.is-on-dark .main-nav {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--neutral-800);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 .site-header.is-on-dark .main-nav a { color: rgba(255, 255, 255, 0.7); }
-.site-header.is-on-dark .main-nav a:hover { color: var(--text-on-dark); }
-.site-header.is-on-dark .main-nav a.is-active {
-  background: rgba(255, 255, 255, 0.16);
+.site-header.is-on-dark .main-nav a:hover:not(.is-active) {
+  background: rgba(255, 255, 255, 0.06);
   color: var(--text-on-dark);
-  box-shadow: none;
+}
+.site-header.is-on-dark .main-nav a.is-active { color: var(--text-on-dark); }
+/* A step up the ramp from the tray, plus a shadow deep enough to register
+   against it — the pill still has to look raised here. */
+.site-header.is-on-dark .nav-pill {
+  background: var(--neutral-700);
+  box-shadow: var(--shadow-on-dark);
 }
 /* The icons are flat SVG files with #0D0D0D baked in, so they can't inherit a
    colour — inverting is the only lever short of re-exporting them. */
@@ -827,6 +872,7 @@ button {
 /* The menu is a 24px tray with 4px of breathing room; each item is a full
    pill, so the corners inside never echo the corners outside. */
 .services-nav ul {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
@@ -835,6 +881,8 @@ button {
   padding: var(--space-4);
 }
 .services-nav a {
+  position: relative;
+  z-index: 1;
   display: block;
   padding: var(--space-12) var(--space-16);
   border-radius: var(--radius-full);
@@ -850,9 +898,10 @@ button {
 .services-nav a:hover:not(.is-active) {
   background: rgba(255, 255, 255, 0.55);
 }
-.services-nav a.is-active {
-  background: var(--nav-item-background);
-}
+/* The fill lives on the pill so it can travel; the item only carries text. */
+.services-nav a.is-active { background: none; }
+/* Figma gives this menu's active item no shadow, unlike the top bar's. */
+.services-nav .nav-pill { box-shadow: none; }
 
 .services-content {
   display: flex;
