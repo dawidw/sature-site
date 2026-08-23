@@ -496,10 +496,11 @@ button {
    stretch the full column width. This puts it back to hugging its label. */
 .hero-inner > .badge { align-self: center; }
 
-/* Anchored to the bottom of the screen: on a tall window the slack collects
-   above the strip instead of leaving a gap under it. The 120px below the
-   buttons becomes the minimum rather than the exact distance. */
-.hero-logos { margin-top: auto; }
+/* Deliberately not anchored to the bottom. With the section pinned to one
+   screen height, the distance between the buttons and this strip and the
+   distance from the strip to the bottom edge cannot both be set — one has to
+   absorb whatever the window leaves over. The gap above is the one that was
+   specified, so the slack falls below the strip instead. */
 .hero > :not(.bg-canvas) {
   position: relative;
   z-index: 1;
@@ -544,7 +545,7 @@ button {
   display: flex;
   justify-content: center;
   gap: 15px;
-  margin-bottom: 120px;
+  margin-bottom: 80px;
   flex-wrap: wrap;
 }
 
