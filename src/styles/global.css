@@ -369,6 +369,19 @@ button {
   justify-content: space-between;
   height: var(--header-height);
 }
+/* space-between only centres the middle item when the two outside it are the
+   same width. They are not — the wordmark is narrower than the call button —
+   so the menu was sitting half that difference off the page centre. Equal
+   flexible columns either side put it on the centre regardless of what they
+   hold. */
+.header-inner > .brand,
+.header-inner > .header-actions {
+  flex: 1 1 0;
+  min-width: 0;
+}
+.header-actions {
+  justify-content: flex-end;
+}
 
 .brand {
   display: inline-flex;
