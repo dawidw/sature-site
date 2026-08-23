@@ -148,6 +148,7 @@
   --max-w: 1432px;
   --header-height: 72px;
   --header-pad: 16px;
+  --header-total: calc(var(--header-height) + 2 * var(--header-pad));
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -329,13 +330,12 @@ button {
 /* ==========================================================================
    Header
    ========================================================================== */
+/* The bar carries no surface of its own — the frost belongs to the menu, which
+   is the only part that needs to stay legible over whatever scrolls beneath. */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: saturate(180%) blur(14px);
-  -webkit-backdrop-filter: saturate(180%) blur(14px);
   padding-block: var(--header-pad);
 }
 
@@ -364,9 +364,12 @@ button {
   display: flex;
   align-items: center;
   gap: 4px;
-  background: var(--nav-background);
+  background: color-mix(in srgb, var(--nav-background) 82%, transparent);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
   border-radius: var(--radius-full);
   padding: 4px;
+  transition: background 0.2s var(--ease);
 }
 .main-nav a {
   display: inline-flex;
@@ -396,6 +399,31 @@ button {
   gap: 14px;
 }
 
+/* Over a dark section the whole bar flips: the wordmark and menu go light and
+   the call button inverts, so it stays the brightest thing in the bar.
+   Set by header-theme.js from whatever surface sits under the bar's midline.
+   No Figma reference for this variant yet — values derived from the tokens. */
+.site-header.is-on-dark .brand { color: var(--text-on-dark); }
+.site-header.is-on-dark .main-nav {
+  background: rgba(255, 255, 255, 0.08);
+}
+.site-header.is-on-dark .main-nav a { color: rgba(255, 255, 255, 0.7); }
+.site-header.is-on-dark .main-nav a:hover { color: var(--text-on-dark); }
+.site-header.is-on-dark .main-nav a.is-active {
+  background: rgba(255, 255, 255, 0.16);
+  color: var(--text-on-dark);
+  box-shadow: none;
+}
+/* The icons are flat SVG files with #0D0D0D baked in, so they can't inherit a
+   colour — inverting is the only lever short of re-exporting them. */
+.site-header.is-on-dark .main-nav a img { filter: invert(1); }
+.site-header.is-on-dark .btn-dark {
+  background: var(--surface-primary);
+  color: var(--text-primary);
+}
+.site-header.is-on-dark .btn-dark:hover { background: var(--neutral-200); }
+.site-header.is-on-dark .nav-toggle span { background: var(--text-on-dark); }
+
 .nav-toggle {
   display: none;
   flex-direction: column;
@@ -420,25 +448,35 @@ button {
 /* ==========================================================================
    Hero
    ========================================================================== */
-/* The button is centred in the header, so the space above it is
-   --header-pad + (--header-height - button height) / 2. The hero sits exactly
-   that far below it: the header's lower half plus its lower padding already
-   add up to the same number, so the wrap contributes nothing. The two stay
-   equal because the padding is symmetric. */
-.hero-wrap { padding-top: 0; }
+/* Full bleed: the section escapes the layout width and slides up under the
+   header, so the dark surface runs to the top and both edges of the window
+   with nothing showing around it. The bar floats on top of it — which is why
+   the header carries no background of its own. */
+.hero-wrap {
+  max-width: none;
+  padding-inline: 0;
+  padding-top: 0;
+  margin-top: calc(-1 * var(--header-total));
+}
 
 .hero {
   position: relative;
   overflow: hidden;
   background: var(--background-dark);
-  border-radius: var(--radius-40);
-  padding: 100px 24px 64px;
+  /* Square where it meets the window, rounded where it hands over to the page. */
+  border-radius: 0 0 var(--radius-40) var(--radius-40);
+  /* The header's height is added back so the copy sits where it did before,
+     100px clear of the bar rather than 100px from the top of the window. */
+  padding: calc(var(--header-total) + 100px) 0 64px;
   text-align: center;
   color: var(--text-on-dark);
 }
 .hero > :not(.bg-canvas) {
   position: relative;
   z-index: 1;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: clamp(24px, 4vw, 64px);
 }
 .bg-canvas {
   position: absolute;
