@@ -899,6 +899,7 @@ button {
    them, the pair centred as one 936px block rather than stretched to the
    layout width. */
 .services-layout {
+  position: relative;
   display: grid;
   grid-template-columns: 264px 552px;
   justify-content: center;
@@ -910,7 +911,33 @@ button {
   position: sticky;
   top: 96px;
   align-self: start;
-  padding-top: 180px;
+}
+
+/* Marks where the menu would sit if it never stuck. Once this scrolls above
+   the sticky line the menu is holding position rather than travelling with the
+   page, which is the moment the offset applies. */
+.services-nav-sentinel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+/* Arriving at the section, the menu lines up with the first service heading.
+   Only once it has stuck — once the reader is moving between subsections —
+   does it drop. Moved with a transform rather than padding so the drop costs
+   a composite instead of a layout pass. */
+.services-nav ul {
+  transition: transform 0.45s var(--ease-pill);
+}
+.services-nav.is-stuck ul {
+  transform: translateY(180px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .services-nav ul { transition: none; }
 }
 /* The menu is a 24px tray with 4px of breathing room; each item is a full
    pill, so the corners inside never echo the corners outside. */
@@ -1141,7 +1168,11 @@ button {
 }
 
 /* CTA band */
-.cta-wrap { padding-block: 32px; }
+.cta-wrap {
+  max-width: none;
+  padding-inline: 0;
+  padding-block: 32px;
+}
 .cta-band {
   position: relative;
   background: var(--background-dark);
@@ -1152,21 +1183,30 @@ button {
 .cta-inner {
   position: relative;
   z-index: 1;
+  max-width: calc(min(100%, var(--max-w) - 48px) - 2 * clamp(24px, 4vw, 64px));
+  margin-inline: auto;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 28px;
 }
+/* Set like the hero title: the sentence in white Geist, the accent in Lora
+   italic — where it previously ran grey Geist with a bold white phrase. */
 .cta-inner h2 {
   font-family: var(--font-sans);
   font-size: clamp(30px, 4.2vw, var(--fs-display));
   font-weight: var(--weight-medium);
   letter-spacing: var(--ls-display);
   line-height: var(--lh-display);
-  color: var(--text-muted);
+  color: var(--text-on-dark);
 }
-.cta-inner h2 strong { color: var(--text-on-dark); font-weight: 700; }
+.cta-inner h2 strong {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--weight-medium);
+  color: var(--text-on-dark);
+}
 
 /* FAQ */
 .accordion {
@@ -1245,7 +1285,9 @@ button {
    window, a hard edge on anything wider. */
 .footer-wrap {
   max-width: none;
-  padding: 32px 0 56px;
+  /* No bottom padding: the band is the last thing on the page and should meet
+     its edge, not float above a strip of page background. */
+  padding: 32px 0 0;
 }
 .site-footer {
   position: relative;
