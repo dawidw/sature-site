@@ -736,7 +736,8 @@ button {
   margin-bottom: 4px;
 }
 .stat dd {
-  font-size: 14px;
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body-lg);
   color: rgba(255, 255, 255, 0.55);
   max-width: 340px;
 }
@@ -805,7 +806,8 @@ button {
   scroll-margin-top: 100px;
 }
 .service-block > p {
-  font-size: 16px;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-secondary);
   max-width: 560px;
   margin-bottom: 20px;
@@ -813,7 +815,8 @@ button {
 
 .check-group { margin-bottom: 20px; }
 .check-group-label {
-  font-size: 13px;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   font-weight: 600;
   color: var(--text-secondary);
   margin-bottom: 10px;
@@ -827,7 +830,8 @@ button {
 .check-list li {
   position: relative;
   padding-left: 22px;
-  font-size: 14px;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-primary);
 }
 .check-list li::before {
@@ -853,7 +857,8 @@ button {
   margin-top: 12px;
 }
 .mini-quote p {
-  font-size: 14px;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-primary);
 }
 .mini-avatars {
