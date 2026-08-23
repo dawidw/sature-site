@@ -899,7 +899,6 @@ button {
    them, the pair centred as one 936px block rather than stretched to the
    layout width. */
 .services-layout {
-  position: relative;
   display: grid;
   grid-template-columns: 264px 552px;
   justify-content: center;
@@ -907,37 +906,13 @@ button {
   margin-top: 320px;
 }
 
+/* Travels with the page until it is 180px from the top of the window, then
+   holds there. Nothing switches and nothing moves on its own — the earlier
+   version applied the offset after sticking, which is what made it jump. */
 .services-nav {
   position: sticky;
-  top: 96px;
+  top: 180px;
   align-self: start;
-}
-
-/* Marks where the menu would sit if it never stuck. Once this scrolls above
-   the sticky line the menu is holding position rather than travelling with the
-   page, which is the moment the offset applies. */
-.services-nav-sentinel {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 1px;
-  height: 1px;
-  pointer-events: none;
-}
-
-/* Arriving at the section, the menu lines up with the first service heading.
-   Only once it has stuck — once the reader is moving between subsections —
-   does it drop. Moved with a transform rather than padding so the drop costs
-   a composite instead of a layout pass. */
-.services-nav ul {
-  transition: transform 0.45s var(--ease-pill);
-}
-.services-nav.is-stuck ul {
-  transform: translateY(180px);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .services-nav ul { transition: none; }
 }
 /* The menu is a 24px tray with 4px of breathing room; each item is a full
    pill, so the corners inside never echo the corners outside. */
