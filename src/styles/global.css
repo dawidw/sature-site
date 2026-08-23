@@ -784,10 +784,17 @@ button {
    middle, wide enough horizontally that it reads as a vertical dissolve into
    the section. Values taken from the exported mask. */
 .section-dark > .founders {
-  max-width: 1128px;
+  /* 10% off the 1128 the band gives it. */
+  max-width: 1015px;
   margin: 0 auto 64px;
   border-radius: var(--radius-40);
   overflow: hidden;
+  position: relative;
+}
+
+/* The fade belongs to the picture alone — on the figure it would take the
+   names down with it, and they sit exactly where it is weakest. */
+.founders img {
   -webkit-mask-image: radial-gradient(
     ellipse 205% 88% at 50% 29%,
     rgba(0, 0, 0, 1) 0%,
@@ -810,13 +817,27 @@ button {
     rgba(0, 0, 0, 0.038) 85.7%,
     rgba(0, 0, 0, 0) 100%
   );
-}
-.founders img {
   display: block;
   width: 100%;
   height: auto;
   aspect-ratio: 1128 / 725;
   object-fit: cover;
+}
+
+/* One name per panel, centred on its third of the picture. */
+.founders-names {
+  position: absolute;
+  inset: auto 0 10% 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--weight-medium);
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: var(--ls-h3);
+  color: var(--text-on-dark);
+  text-align: center;
 }
 
 .avatar {

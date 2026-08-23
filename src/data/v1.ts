@@ -60,7 +60,8 @@ export const v1: SiteContent = {
     title: "Nice to meet you 👋, we're",
     photo: {
       src: "/assets/img/team/founders.webp",
-      alt: "Dawid Woźniak, Maciej Kownacki and Magdalena Kercz",
+      alt: "Dawid Woźniak, Maciej Kownacki and Magda Kerczyńska",
+      names: ["Dawid Woźniak", "Maciej Kownacki", "Magda Kerczyńska"],
     },
     story: {
       heading: "Our story",
