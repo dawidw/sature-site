@@ -1,0 +1,425 @@
+---
+/**
+ * Living style guide.
+ *
+ * Every value shown is read from the CSS custom properties at runtime, so this
+ * page cannot drift from global.css — if a swatch looks wrong, the token is
+ * wrong. Mirrors the Figma documentation (file SDAlLcbZJQNTwPG4In2AxB,
+ * node 68-4033).
+ */
+import "../styles/global.css";
+import {
+  PRIMITIVES,
+  SEMANTIC_COLORS,
+  TYPE_SCALE,
+  TYPE_ACCENT,
+  SPACING,
+  RADIUS,
+  SHADOWS,
+  UNDOCUMENTED,
+} from "../data/tokens";
+
+const FIGMA_URL =
+  "https://www.figma.com/design/SDAlLcbZJQNTwPG4In2AxB/landing?node-id=68-4033";
+---
+
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sature — Style guide</title>
+    <meta name="robots" content="noindex" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="sg">
+    <header class="sg-head">
+      <div class="sg-wrap">
+        <p class="sg-kicker">Design system · sierpień 2026</p>
+        <h1>Style guide</h1>
+        <p class="sg-lead">
+          Wszystkie wartości czytane są z CSS w momencie renderowania — ta strona nie może
+          rozjechać się z <code>global.css</code>. Źródłem prawdy jest
+          <a href={FIGMA_URL} rel="noreferrer">dokumentacja w Figmie</a>; zmiany zaczynamy tam.
+        </p>
+      </div>
+    </header>
+
+    <main class="sg-wrap">
+      <section class="sg-section">
+        <h2>Neutral ramp</h2>
+        <p class="sg-desc">
+          Pełna skala szarości. Jasne wartości (50–200) na tła i powierzchnie, średnie (300–500)
+          na obramowania i tekst muted, ciemne (700–950) na tekst i ciemne tła.
+        </p>
+        <div class="sg-ramp">
+          {
+            PRIMITIVES.map((token) => (
+              <div class="sg-ramp-item">
+                <div class="sg-ramp-chip" style={`background: var(--${token.name})`} />
+                <span class="sg-mono">{token.name}</span>
+                <span class="sg-mono sg-value" data-token={token.name} />
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      {
+        SEMANTIC_COLORS.map((group) => (
+          <section class="sg-section">
+            <h2>{group.title}</h2>
+            <p class="sg-desc">{group.description}</p>
+            <ul class="sg-tokens">
+              {group.rows.map((token) => (
+                <li>
+                  <span class="sg-chip" style={`background: var(--${token.name})`} />
+                  <span class="sg-mono">--{token.name}</span>
+                  <span class="sg-source">{token.source}</span>
+                  <span class="sg-mono sg-value" data-token={token.name} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+
+      <section class="sg-section">
+        <h2>Typografia — Geist</h2>
+        <p class="sg-desc">
+          Główna rodzina. Tracking podany w procentach: dokumentacja Figmy drukuje te liczby z
+          jednostką „px", ale to wartości procentowe — patrz notatka w <code>global.css</code>.
+        </p>
+        {
+          TYPE_SCALE.map((type) => (
+            <div class="sg-type">
+              <p
+                class="sg-type-sample"
+                style={`font-family: var(--font-sans); font-size: var(--fs-${type.key}); line-height: var(--lh-${type.key}); letter-spacing: var(--ls-${type.key}); font-weight: var(--weight-${type.weight})`}
+              >
+                {type.sample}
+              </p>
+              <p class="sg-type-spec">
+                <strong>{type.name}</strong> · {type.spec}
+              </p>
+            </div>
+          ))
+        }
+      </section>
+
+      <section class="sg-section">
+        <h2>Typografia — Lora (akcent)</h2>
+        <p class="sg-desc">
+          Rodzina akcentowa, zawsze Medium Italic. Nagłówki wyróżnione i elementy dekoracyjne.
+        </p>
+        {
+          TYPE_ACCENT.map((type) => (
+            <div class="sg-type">
+              <p
+                class="sg-type-sample"
+                style={`font-family: var(--font-serif); font-style: italic; font-size: var(--fs-${type.key}); line-height: var(--lh-${type.key}); letter-spacing: var(--ls-${type.key}); font-weight: var(--weight-${type.weight})`}
+              >
+                {type.sample}
+              </p>
+              <p class="sg-type-spec">
+                <strong>{type.name}</strong> · {type.spec}
+              </p>
+            </div>
+          ))
+        }
+      </section>
+
+      <section class="sg-section">
+        <h2>Spacing</h2>
+        <p class="sg-desc">
+          Małe wartości (4–12) na wewnętrzne paddingi, średnie (16–32) na sekcje, duże (48–120)
+          na separację głównych bloków.
+        </p>
+        <ul class="sg-spacing">
+          {
+            SPACING.map((step) => (
+              <li>
+                <span class="sg-mono">--space-{step}</span>
+                <span class="sg-bar" style={`width: var(--space-${step})`} />
+                <span class="sg-mono sg-value">{step}px</span>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="sg-section">
+        <h2>Radius</h2>
+        <p class="sg-desc">
+          Mniejsze wartości na pola i karty, większe na tagi i sekcje, full na okrągłe elementy.
+        </p>
+        <div class="sg-radius">
+          {
+            RADIUS.map((step) => (
+              <div class="sg-radius-item">
+                <div class="sg-radius-box" style={`border-radius: var(--radius-${step})`} />
+                <span class="sg-mono">--radius-{step}</span>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="sg-section">
+        <h2>Elevation</h2>
+        <p class="sg-desc">Cztery poziomy cienia. Poza tą czwórką nie dodajemy własnych.</p>
+        <ul class="sg-shadows">
+          {
+            SHADOWS.map((shadow) => (
+              <li>
+                <span class="sg-shadow-box" style={`box-shadow: var(--${shadow.name})`} />
+                <span>
+                  <span class="sg-mono">--{shadow.name}</span>
+                  <span class="sg-source">{shadow.use}</span>
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="sg-section sg-gaps">
+        <h2>Poza style guidem</h2>
+        <p class="sg-desc">
+          Wartości używane na stronie, których Figma nie definiuje. Każda z nich to decyzja do
+          podjęcia: dodać token do guide'u albo zastąpić istniejącym.
+        </p>
+        <ul class="sg-tokens">
+          {
+            UNDOCUMENTED.map((item) => (
+              <li>
+                <span class="sg-mono">{item.name}</span>
+                <span class="sg-mono sg-value">{item.value}</span>
+                <span class="sg-source sg-source-wide">{item.where}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </main>
+
+    <script>
+      // Resolve each swatch's real value from the cascade, so the printed hex
+      // is whatever the browser actually computed — not a number typed twice.
+      const probe = document.createElement("span");
+      probe.style.display = "none";
+      document.body.appendChild(probe);
+
+      for (const el of document.querySelectorAll<HTMLElement>(".sg-value[data-token]")) {
+        const token = el.dataset.token;
+        if (!token) continue;
+        probe.style.color = `var(--${token})`;
+        el.textContent = getComputedStyle(probe).color;
+      }
+
+      probe.remove();
+    </script>
+
+    <style>
+      .sg {
+        background: var(--background-secondary);
+        color: var(--text-primary);
+        font-family: var(--font-sans);
+        padding-bottom: var(--space-120);
+      }
+
+      .sg-wrap {
+        max-width: 1080px;
+        margin-inline: auto;
+        padding-inline: var(--space-32);
+      }
+
+      .sg-head {
+        background: var(--background-dark);
+        color: var(--text-on-dark);
+        padding-block: var(--space-80) var(--space-64);
+        margin-bottom: var(--space-64);
+      }
+
+      .sg-kicker {
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-on-dark-soft);
+        margin-bottom: var(--space-16);
+      }
+
+      .sg-head h1 {
+        font-size: var(--fs-h1);
+        line-height: var(--lh-h1);
+        letter-spacing: var(--ls-h1);
+        font-weight: var(--weight-medium);
+        margin-bottom: var(--space-16);
+      }
+
+      .sg-lead {
+        max-width: 640px;
+        font-size: var(--fs-body);
+        line-height: var(--lh-body);
+        letter-spacing: var(--ls-body);
+        color: var(--text-on-dark-soft);
+      }
+
+      .sg-lead a { color: var(--text-on-dark); text-decoration: underline; }
+      .sg-lead code { font-size: 14px; }
+
+      .sg-section {
+        background: var(--surface-primary);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-24);
+        padding: var(--space-32);
+        margin-bottom: var(--space-24);
+      }
+
+      .sg-section h2 {
+        font-size: var(--fs-h3);
+        line-height: calc(var(--lh-h3) / var(--fs-h3));
+        letter-spacing: var(--ls-h3);
+        font-weight: var(--weight-medium);
+        margin-bottom: var(--space-8);
+      }
+
+      .sg-desc {
+        max-width: 640px;
+        font-size: var(--fs-body);
+        line-height: var(--lh-body);
+        letter-spacing: var(--ls-body);
+        color: var(--text-secondary);
+        margin-bottom: var(--space-24);
+      }
+
+      .sg-mono {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 13px;
+      }
+
+      .sg-value { color: var(--text-muted); }
+
+      .sg-source { color: var(--text-muted); font-size: 13px; }
+
+      /* Ramp */
+      .sg-ramp {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+        gap: var(--space-12);
+      }
+
+      .sg-ramp-item { display: flex; flex-direction: column; gap: var(--space-4); }
+
+      .sg-ramp-chip {
+        height: 88px;
+        border-radius: var(--radius-12);
+        border: 1px solid var(--border-subtle);
+      }
+
+      /* Token lists */
+      .sg-tokens { list-style: none; margin: 0; padding: 0; }
+
+      .sg-tokens li {
+        display: grid;
+        grid-template-columns: 32px minmax(180px, 1fr) minmax(120px, auto) minmax(110px, auto);
+        align-items: center;
+        gap: var(--space-16);
+        padding-block: var(--space-12);
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      .sg-tokens li:last-child { border-bottom: 0; }
+
+      .sg-chip {
+        width: 32px;
+        height: 32px;
+        border-radius: var(--radius-8);
+        border: 1px solid var(--border-subtle);
+      }
+
+      .sg-source-wide { grid-column: span 2; }
+
+      /* Type */
+      .sg-type {
+        padding: var(--space-20);
+        background: var(--surface-muted);
+        border-radius: var(--radius-12);
+        margin-bottom: var(--space-12);
+      }
+
+      .sg-type-sample { margin-bottom: var(--space-4); overflow-wrap: anywhere; }
+
+      .sg-type-spec { font-size: 12px; color: var(--text-muted); }
+      .sg-type-spec strong { color: var(--text-secondary); font-weight: var(--weight-medium); }
+
+      /* Spacing */
+      .sg-spacing { list-style: none; margin: 0; padding: 0; }
+
+      .sg-spacing li {
+        display: grid;
+        grid-template-columns: 120px 1fr 60px;
+        align-items: center;
+        gap: var(--space-16);
+        padding-block: var(--space-8);
+      }
+
+      .sg-bar {
+        display: block;
+        height: 16px;
+        border-radius: var(--radius-8);
+        background: var(--text-primary);
+      }
+
+      /* Radius */
+      .sg-radius { display: flex; flex-wrap: wrap; gap: var(--space-24); }
+
+      .sg-radius-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-8);
+      }
+
+      .sg-radius-box {
+        width: 88px;
+        height: 88px;
+        background: var(--surface-secondary);
+        border: 1px solid var(--border-default);
+      }
+
+      /* Shadows */
+      .sg-shadows { list-style: none; margin: 0; padding: 0; }
+
+      .sg-shadows li {
+        display: flex;
+        align-items: center;
+        gap: var(--space-24);
+        padding-block: var(--space-16);
+      }
+
+      .sg-shadows span span { display: block; }
+
+      .sg-shadow-box {
+        width: 96px;
+        height: 64px;
+        flex: none;
+        background: var(--surface-primary);
+        border-radius: var(--radius-12);
+      }
+
+      .sg-gaps { border-color: var(--border-default); }
+
+      @media (max-width: 720px) {
+        .sg-tokens li { grid-template-columns: 32px 1fr; }
+        .sg-source, .sg-value { grid-column: 2; }
+        .sg-spacing li { grid-template-columns: 100px 1fr; }
+      }
+    </style>
+  </body>
+</html>

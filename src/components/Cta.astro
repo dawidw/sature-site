@@ -1,0 +1,18 @@
+---
+import type { SiteContent } from "../data/types";
+
+interface Props {
+  cta: SiteContent["cta"];
+}
+
+const { cta } = Astro.props;
+---
+
+<section class="cta-wrap wrap">
+  <div class="cta-band">
+    <div class="cta-inner">
+      <h2>{cta.titleLead}<br />{cta.titleRest}<strong>{cta.titleStrong}</strong></h2>
+      <a class={`btn btn-${cta.action.variant}`} href={cta.action.href}>{cta.action.label}</a>
+    </div>
+  </div>
+</section>

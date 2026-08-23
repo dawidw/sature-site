@@ -1,0 +1,1513 @@
+/* ==========================================================================
+   Sature — design tokens
+
+   Mirrors the Figma style guide (file SDAlLcbZJQNTwPG4In2AxB, node 68-4033,
+   "DESIGN SYSTEM · AUGUST 2026"). Token names match the Figma variable names
+   one-for-one, so a value can be traced back to its source without guessing.
+
+   Read the guide with get_variable_defs on that node before changing anything
+   here — and change the guide first, not this file.
+   ========================================================================== */
+:root {
+  /* ---- Primitives: neutral ramp ---------------------------------------- */
+  --white: #ffffff;
+  --neutral-50: #fafafa;
+  --neutral-100: #f5f5f5;
+  --neutral-200: #f2f2f2;
+  --neutral-300: #d1d1d1;
+  --neutral-400: #8f8f8f;
+  --neutral-500: #545454;
+  --neutral-600: #2a2a2a;
+  --neutral-700: #262626;
+  --neutral-800: #1a1a1a;
+  --neutral-900: #121212;
+  --neutral-950: #0d0d0d;
+  --black: #000000;
+
+  /* ---- Semantic: background -------------------------------------------- */
+  --background-primary: var(--white);
+  --background-secondary: var(--neutral-50);
+  --background-tertiary: var(--neutral-100);
+  --background-dark: var(--neutral-950);
+  --background-dark-card: var(--neutral-900);
+
+  /* ---- Semantic: surface ----------------------------------------------- */
+  --surface-primary: var(--white);
+  --surface-secondary: var(--neutral-200);
+  --surface-muted: var(--neutral-100);
+
+  /* ---- Semantic: text --------------------------------------------------- */
+  --text-primary: var(--neutral-800);
+  --text-secondary: var(--neutral-500);
+  --text-muted: var(--neutral-400);
+  --text-on-dark: var(--white);
+  --text-on-dark-muted: var(--neutral-500);
+
+  /* ---- Semantic: border ------------------------------------------------- */
+  --border-default: var(--neutral-300);
+  --border-subtle: var(--neutral-200);
+  --border-dark: var(--neutral-600);
+
+  /* ---- Semantic: button ------------------------------------------------- */
+  --button-primary-bg: var(--neutral-950);
+  --button-primary-text: var(--white);
+  --button-secondary-bg: var(--white);
+  --button-secondary-text: var(--neutral-800);
+
+  /* ---- Semantic: nav & divider ------------------------------------------ */
+  --nav-background: var(--neutral-200);
+  --nav-item-background: var(--white);
+  --nav-text: var(--neutral-800);
+  --divider-default: var(--neutral-600);
+
+  /* ---- Typography: families --------------------------------------------- */
+  --font-sans: "Geist", system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Lora", "Iowan Old Style", "Georgia", serif;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  /* ---- Typography: scale -------------------------------------------------
+     Tracking is expressed in em. The guide prints these as "-2.2px", but the
+     numbers are percentages: -2.2px at every size (24px through 56px) would
+     be a different optical tightness each time, and the values match the
+     -0.022em / -0.019em / -0.015em already used across the page. See the note
+     in docs/DESIGN-TOKENS.md before changing the unit.
+     ---------------------------------------------------------------------- */
+  --fs-display: 56px;
+  --lh-display: 1.2;
+  --ls-display: -0.022em;
+
+  --fs-h1: 40px;
+  --lh-h1: 1.2;
+  --ls-h1: -0.022em;
+
+  --fs-h2: 32px;
+  --lh-h2: 1.2;
+  --ls-h2: -0.022em;
+
+  --fs-h3: 24px;
+  --lh-h3: 32px;
+  --ls-h3: -0.022em;
+
+  --fs-body-lg: 20px;
+  --lh-body-lg: 1.5;
+  --ls-body-lg: -0.015em;
+
+  --fs-body: 16px;
+  --lh-body: 1.5;
+  --ls-body: -0.019em;
+
+  --fs-label: 16px;
+  --lh-label: 20px;
+  --ls-label: -0.022em;
+
+  /* ---- Spacing ----------------------------------------------------------- */
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-80: 80px;
+  --space-120: 120px;
+
+  /* ---- Radius ------------------------------------------------------------ */
+  --radius-8: 8px;
+  --radius-12: 12px;
+  --radius-16: 16px;
+  --radius-24: 24px;
+  --radius-32: 32px;
+  --radius-40: 40px;
+  --radius-full: 999px;
+
+  /* ---- Elevation --------------------------------------------------------- */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  /* The shadow scale is black at 10%, which is invisible on a near-black
+     surface. This is deep enough to register there and no more. */
+  --shadow-on-dark: 0 1px 4px rgba(0, 0, 0, 0.35);
+  /* Long tail, no overshoot: the pill settles rather than snapping or wobbling. */
+  --ease-pill: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* ---- Not in the style guide -------------------------------------------
+     These have no Figma variable yet. Either add them to the guide or replace
+     the usages; don't add more values here without documenting them there.
+     ---------------------------------------------------------------------- */
+  /* Brand orange: favicon dot, focus ring, testimonial company name. */
+  --accent: #ff5a2c;
+  /* Border on dark panels. The design calls this gray/700 (#3d3d3d), which is
+     not the documented neutral/700 (#262626) — a second grey ramp exists in
+     the file that the style guide doesn't cover. */
+  --border-dark-card: #3d3d3d;
+  /* Muted text on dark backgrounds. The guide's text/on-dark-muted (#545454)
+     fails contrast on --background-dark, so the page uses white at 60%. */
+  --text-on-dark-soft: rgba(255, 255, 255, 0.6);
+  --max-w: 1432px;
+  /* Outer width of the sections that run to the 80px gutter, padding included. */
+  --layout-max: 1600px;
+  --header-height: 72px;
+  --header-pad: 16px;
+  --header-total: calc(var(--header-height) + 2 * var(--header-pad));
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   Reset
+   ========================================================================== */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background: var(--surface-primary);
+  line-height: 1.5;
+  letter-spacing: -0.019em;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, svg { display: block; max-width: 100%; }
+
+a { color: inherit; text-decoration: none; }
+
+ul { list-style: none; margin: 0; padding: 0; }
+
+h1, h2, h3, h4, p, dl, dd, figure, blockquote { margin: 0; }
+
+h1, h2, h3, h4 { font-weight: 500; }
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+.wrap {
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: clamp(24px, 4vw, 64px);
+}
+
+.wrap-narrow { max-width: 760px; }
+
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  background: var(--background-dark);
+  color: var(--text-on-dark);
+  padding: 10px 16px;
+  border-radius: var(--radius-12);
+  z-index: 200;
+  transition: top 0.2s var(--ease);
+}
+.skip-link:focus { top: 12px; }
+
+.accent { color: var(--accent); }
+.muted-text { color: var(--text-muted); }
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: 500;
+  letter-spacing: -0.022em;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+.eyebrow.center { display: flex; justify-content: center; width: 100%; }
+.eyebrow-light { color: var(--text-on-dark-soft); }
+.badge {
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  background: var(--text-primary);
+  border: 1px solid var(--text-secondary);
+  box-shadow: var(--shadow-sm);
+  color: var(--text-on-dark);
+}
+.eyebrow-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 20px;
+  letter-spacing: -0.019em;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+.eyebrow-serif.center { text-align: center; }
+.eyebrow .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #3ecf5e;
+  box-shadow: 0 0 0 3px rgba(62, 207, 94, 0.18);
+  animation: dot-pulse 2s ease-in-out infinite;
+}
+@keyframes dot-pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(62, 207, 94, 0.18); }
+  50% { box-shadow: 0 0 0 6px rgba(62, 207, 94, 0.06); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .eyebrow .dot { animation: none; }
+}
+
+.section-title {
+  font-family: var(--font-sans);
+  font-size: clamp(26px, 3vw, var(--fs-h1));
+  line-height: var(--lh-h1);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--ls-h1);
+}
+.section-title.display {
+  font-size: clamp(30px, 4.2vw, var(--fs-display));
+}
+.section-title.center { text-align: center; margin-inline: auto; max-width: 780px; }
+.section-title.on-dark { color: var(--text-on-dark); margin-bottom: 44px; }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 52px;
+  padding: 0 24px;
+  border-radius: var(--radius-full);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.022em;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s var(--ease), background 0.15s var(--ease), color 0.15s var(--ease), border-color 0.15s var(--ease);
+  white-space: nowrap;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.btn-light { background: var(--button-secondary-bg); color: var(--button-secondary-text); border: 1px solid var(--border-default); }
+.btn-light:hover { background: var(--surface-secondary); }
+
+.btn-outline-light {
+  background: transparent;
+  color: var(--text-on-dark);
+  border: 1px solid var(--border-default);
+}
+.btn-outline-light:hover { border-color: rgba(255, 255, 255, 0.55); }
+
+.btn-dark { background: var(--button-primary-bg); color: var(--button-primary-text); }
+.btn-dark:hover { background: var(--neutral-700); }
+
+.btn-sm {
+  padding: 9px 16px;
+  font-size: var(--fs-label);
+  line-height: var(--lh-label);
+  letter-spacing: var(--ls-label);
+  font-weight: var(--weight-medium);
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+/* Everything in the bar that differs between the two colour modes fades
+   between them, so crossing from a dark section to a light one reads as a
+   change of light rather than a cut. The pill's own travel is timed
+   separately, on its transform. */
+.site-header .brand,
+.site-header .brand-glyph,
+.site-header .main-nav,
+.site-header .main-nav a,
+.site-header .main-nav a img,
+.site-header .nav-toggle span,
+.site-header .btn {
+  transition:
+    background-color 0.35s var(--ease),
+    color 0.35s var(--ease),
+    border-color 0.35s var(--ease),
+    box-shadow 0.35s var(--ease),
+    filter 0.35s var(--ease);
+}
+
+/* The bar carries no surface of its own — the frost belongs to the menu, which
+   is the only part that needs to stay legible over whatever scrolls beneath. */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding-block: var(--header-pad);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-height);
+}
+/* space-between only centres the middle item when the two outside it are the
+   same width. They are not — the wordmark is narrower than the call button —
+   so the menu was sitting half that difference off the page centre. Equal
+   flexible columns either side put it on the centre regardless of what they
+   hold. */
+.header-inner > .brand,
+.header-inner > .header-actions {
+  flex: 1 1 0;
+  min-width: 0;
+}
+.header-actions {
+  justify-content: flex-end;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+}
+.brand-logo {
+  height: 35.2px;
+  width: auto;
+  display: block;
+  /* The glyph is cut out of the mark, so it takes the colour of the surface
+     behind the logo rather than a fixed white — otherwise it stays white on a
+     white page once the mark inverts. */
+  --brand-knockout: var(--surface-primary);
+}
+.brand-glyph {
+  fill: var(--brand-knockout);
+  transition: fill 0.35s var(--ease);
+}
+.site-header.is-on-dark .brand-logo,
+.site-footer .brand-logo {
+  --brand-knockout: var(--background-dark);
+}
+
+.main-nav {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  /* Solid, not frosted. Blurring a live backdrop costs Chrome a full pass per
+     frame, and since the hero now runs under the bar that backdrop is a canvas
+     repainting continuously — the one place the blur was most expensive was
+     also the one place it was most visible. Safari's backdrop path is far
+     cheaper, which is why the cost only showed up in Chrome. */
+  background: var(--nav-background);
+  border-radius: var(--radius-full);
+  padding: 4px;
+}
+
+/* One pill for the whole menu, moved between items instead of a background
+   switching off one item and on at the next — that is what lets the highlight
+   travel as the page scrolls. Placed by nav-pill.js. */
+.nav-pill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 0;
+  height: 0;
+  border-radius: var(--radius-full);
+  background: var(--nav-item-background);
+  /* Sub-pixel on purpose: at 1px this edge reads as a drawn outline rather
+     than a highlight. box-sizing keeps it inside the measured box, so the
+     pill still matches the item it sits on. */
+  border: 0.75px solid rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-sm);
+  opacity: 0;
+  pointer-events: none;
+  /* The short delay is what stops it tracking the scroll surgically: the
+     section becomes current, then a beat later the pill sets off. */
+  transition:
+    transform 0.48s var(--ease-pill) 0.12s,
+    width 0.48s var(--ease-pill) 0.12s,
+    height 0.48s var(--ease-pill) 0.12s,
+    background-color 0.35s var(--ease),
+    border-color 0.35s var(--ease),
+    box-shadow 0.35s var(--ease);
+}
+.nav-pill.is-ready { opacity: 1; }
+
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-pill { transition: none; }
+}
+.main-nav a {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: var(--radius-full);
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.022em;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: color 0.15s var(--ease), background 0.15s var(--ease);
+}
+.main-nav a img { width: 20px; height: 20px; opacity: 0.7; }
+/* The whole item lights up, not just its label. Skipped on the active one,
+   which already has the pill under it. */
+.main-nav a:hover:not(.is-active) {
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--text-primary);
+}
+.main-nav a.is-active { color: var(--text-primary); }
+.main-nav a.is-active img { opacity: 1; }
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Over a dark section the whole bar flips: the wordmark and menu go light and
+   the call button inverts, so it stays the brightest thing in the bar.
+   Set by header-theme.js from whatever surface sits under the bar's midline.
+   No Figma reference for this variant yet — values derived from the tokens. */
+.site-header.is-on-dark .brand { color: var(--text-on-dark); }
+/* Solid, not frosted: over a moving gradient the blur read as a smear, and the
+   translucent fill drifted in brightness with whatever passed beneath it. */
+.site-header.is-on-dark .main-nav {
+  background: var(--neutral-700);
+}
+.site-header.is-on-dark .main-nav a { color: rgba(255, 255, 255, 0.7); }
+.site-header.is-on-dark .main-nav a:hover:not(.is-active) {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-on-dark);
+}
+.site-header.is-on-dark .main-nav a.is-active { color: var(--text-on-dark); }
+/* Between neutral-600 and neutral-500: the ramp's next step up from the tray
+   was only four levels brighter and read as too dark, and the one after that
+   doubles the brightness. Off the ramp on purpose — see docs/DESIGN-TOKENS. */
+.site-header.is-on-dark .nav-pill {
+  background: #383838;
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: var(--shadow-on-dark);
+}
+/* The icons are flat SVG files with #0D0D0D baked in, so they can't inherit a
+   colour — inverting is the only lever short of re-exporting them. */
+.site-header.is-on-dark .main-nav a img { filter: invert(1); }
+.site-header.is-on-dark .btn-dark {
+  background: var(--surface-primary);
+  color: var(--text-primary);
+}
+.site-header.is-on-dark .btn-dark:hover { background: var(--neutral-200); }
+.site-header.is-on-dark .nav-toggle span { background: var(--text-on-dark); }
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-12);
+}
+.nav-toggle span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--text-primary);
+  margin-inline: auto;
+  transition: transform 0.2s var(--ease), opacity 0.2s var(--ease);
+}
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+/* Full bleed: the section escapes the layout width and slides up under the
+   header, so the dark surface runs to the top and both edges of the window
+   with nothing showing around it. The bar floats on top of it — which is why
+   the header carries no background of its own. */
+.hero-wrap {
+  max-width: none;
+  padding-inline: 0;
+  padding-top: 0;
+  margin-top: calc(-1 * var(--header-total));
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--background-dark);
+  border-radius: 0;
+  /* One full screen, then the page scrolls on normally. dvh so mobile browser
+     chrome collapsing doesn't leave a strip of the next section showing. */
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  /* The header's height is added back so the copy sits where it did before,
+     100px clear of the bar rather than 100px from the top of the window. */
+  padding: calc(var(--header-total) + 100px) 0 64px;
+  text-align: center;
+  color: var(--text-on-dark);
+}
+
+/* The layout's width and gutters live here rather than on each child — put on
+   the children they also reached the badge, whose pill then stretched to the
+   full gutter instead of hugging its label. */
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: clamp(24px, 4vw, 64px);
+}
+
+/* A flex parent blockifies its children, so the pill — an inline-flex — would
+   stretch the full column width. This puts it back to hugging its label. */
+.hero-inner > .badge { align-self: center; }
+
+/* Deliberately not anchored to the bottom. With the section pinned to one
+   screen height, the distance between the buttons and this strip and the
+   distance from the strip to the bottom edge cannot both be set — one has to
+   absorb whatever the window leaves over. The gap above is the one that was
+   specified, so the slack falls below the strip instead. */
+.hero > :not(.bg-canvas) {
+  position: relative;
+  z-index: 1;
+}
+.bg-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Sits under the hero's content, which the rule above lifts to z-index 1. */
+.gradient-canvas { opacity: 0.5; }
+
+.hero-title {
+  position: relative;
+  font-family: var(--font-sans);
+  font-size: clamp(34px, 5vw, var(--fs-display));
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
+  font-weight: var(--weight-medium);
+  margin-bottom: 20px;
+}
+.hero-title em { font-family: var(--font-serif); font-style: italic; font-weight: 500; }
+
+.hero-sub {
+  position: relative;
+  max-width: 560px;
+  margin: 0 auto 32px;
+  color: var(--text-on-dark);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body-lg);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+.hero-actions {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 120px;
+  flex-wrap: wrap;
+}
+
+.hero-logos-label {
+  position: relative;
+  font-size: var(--fs-label);
+  line-height: var(--lh-label);
+  letter-spacing: var(--ls-label);
+  font-weight: var(--weight-medium);
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: var(--space-32);
+}
+
+.logo-row {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  /* At 32px tall the wordmarks need the tighter column gap to hold one row
+     at the 1432px layout width; below that they wrap, which is fine. */
+  gap: var(--space-24);
+}
+.logo-row li {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.45);
+}
+.logo-row .logo-wired,
+.logo-row .logo-gulfnews,
+.logo-row .logo-wapo,
+.logo-row .logo-wsj {
+  font-family: var(--font-serif);
+  font-weight: 600;
+}
+.logo-row .logo-wired { letter-spacing: 0.06em; }
+.logo-row .logo-bbc {
+  display: inline-flex;
+  gap: 3px;
+}
+.logo-row .logo-bbc span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.45);
+  color: var(--text-primary);
+  font-size: 19px;
+  font-weight: 800;
+  border-radius: 3px;
+}
+.logo-row .logo-zawya { font-style: italic; letter-spacing: 0.04em; }
+
+.logo-throne { display: inline-flex; align-items: center; gap: 8px; }
+.logo-throne::before {
+  content: "";
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: currentColor;
+  -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect x="1" y="4" width="2" height="8" rx="1"/><rect x="5.5" y="1.5" width="2" height="13" rx="1"/><rect x="10" y="5" width="2" height="6" rx="1"/></svg>') center / contain no-repeat;
+  mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect x="1" y="4" width="2" height="8" rx="1"/><rect x="5.5" y="1.5" width="2" height="13" rx="1"/><rect x="10" y="5" width="2" height="6" rx="1"/></svg>') center / contain no-repeat;
+}
+
+/* ==========================================================================
+   Sections
+   ========================================================================== */
+.section { padding: 200px 0; }
+#testimonials { padding: 0; }
+#faq { padding-bottom: 0; }
+
+/* Full bleed, like the hero: the band escapes the layout width while its
+   contents keep it. */
+.team-wrap {
+  max-width: none;
+  padding-inline: 0;
+  padding-block: 32px;
+}
+
+.section-dark {
+  position: relative;
+  background: var(--background-dark);
+  border-radius: 0;
+  overflow: hidden;
+  padding: 96px 56px;
+  color: var(--text-on-dark);
+}
+.section-dark > :not(.bg-canvas) {
+  position: relative;
+  z-index: 1;
+  /* The width this had before the band went full bleed. Inside .wrap it lost
+     the page gutters as well as the card's own 56px padding, and capping at
+     the bare layout width gave it 240px it never had. */
+  max-width: calc(min(100%, var(--max-w) - 112px) - 2 * clamp(24px, 4vw, 64px));
+  margin-inline: auto;
+}
+
+/* About */
+.about-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+}
+
+.about-copy p {
+  font-family: var(--font-sans);
+  font-size: 40px;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: -0.022em;
+  color: var(--text-primary);
+  max-width: 460px;
+  margin-bottom: 24px;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 460px;
+}
+.tag-list li {
+  padding: 12px 16px;
+  border-radius: var(--radius-full);
+  background: var(--nav-background);
+  font-family: var(--font-sans);
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 500;
+  letter-spacing: -0.022em;
+  color: var(--text-primary);
+}
+
+.about-copy {
+  width: 100%;
+  max-width: 642px;
+}
+
+.about-visual {
+  width: 100%;
+  max-width: 454px;
+  aspect-ratio: 454 / 377;
+  background: var(--nav-background);
+  border-radius: var(--radius-40);
+  overflow: hidden;
+  flex: 1 1 320px;
+}
+
+/* Team */
+/* One panel holds all three portraits. It carries the same colour as the card
+   behind it, so only the shadow separates them — and being opaque, it also
+   keeps the animated background from moving underneath the photos. */
+/* Spec: Figma node 90:4167 — one 1128x725 frame, no container and no names.
+   The fade is the design's own mask: a radial gradient centred above the
+   middle, wide enough horizontally that it reads as a vertical dissolve into
+   the section. Values taken from the exported mask. */
+.section-dark > .founders {
+  /* 10% off the 1128 the band gives it. */
+  max-width: 1015px;
+  /* 64, then 15%, then another 25% on top of that. */
+  margin: 0 auto 92px;
+  border-radius: var(--radius-40);
+  overflow: hidden;
+  position: relative;
+}
+
+/* The fade belongs to the picture alone — on the figure it would take the
+   names down with it, and they sit exactly where it is weakest. */
+.founders img {
+  -webkit-mask-image: radial-gradient(
+    ellipse 205% 88% at 50% 29%,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.931) 14.3%,
+    rgba(0, 0, 0, 0.754) 28.6%,
+    rgba(0, 0, 0, 0.511) 42.9%,
+    rgba(0, 0, 0, 0.271) 57.1%,
+    rgba(0, 0, 0, 0.136) 71.4%,
+    rgba(0, 0, 0, 0.038) 85.7%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 205% 88% at 50% 29%,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.931) 14.3%,
+    rgba(0, 0, 0, 0.754) 28.6%,
+    rgba(0, 0, 0, 0.511) 42.9%,
+    rgba(0, 0, 0, 0.271) 57.1%,
+    rgba(0, 0, 0, 0.136) 71.4%,
+    rgba(0, 0, 0, 0.038) 85.7%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2242 / 1228;
+  object-fit: cover;
+}
+
+/* One name per panel, centred on its third of the picture. */
+.founders-names {
+  position: absolute;
+  inset: auto 0 10% 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--weight-medium);
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: var(--ls-h3);
+  color: var(--text-on-dark);
+  text-align: center;
+}
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text-on-dark);
+  flex: none;
+}
+.avatar-a { background: linear-gradient(135deg, #f2542d, #ff8a5c); }
+.avatar-b { background: linear-gradient(135deg, #2d3ef2, #6b7bff); }
+.avatar-c { background: linear-gradient(135deg, #1c1c1c, #4a4a4a); }
+.avatar-sm { width: 36px; height: 36px; font-size: 12px; }
+
+.section-dark > .story-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 552px;
+  gap: 24px;
+  max-width: 1128px;
+  margin: 0 auto;
+  align-items: start;
+}
+/* The stats start above the story heading in the design, not level with it. */
+.story-copy { margin-top: 56px; }
+
+.story-copy h3 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-h1);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--ls-h1);
+  margin-bottom: 10px;
+  color: var(--text-on-dark);
+}
+.story-copy p {
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body-lg);
+  letter-spacing: var(--ls-body-lg);
+  color: var(--text-on-dark);
+  max-width: 450px;
+}
+
+.stats {
+  display: grid;
+  gap: var(--space-24);
+}
+.stat {
+  display: grid;
+  gap: 10px;
+}
+/* Divider sits in the middle of the 24px rhythm, matching divider/default. */
+.stat + .stat {
+  border-top: 1px solid var(--neutral-600);
+  padding-top: var(--space-24);
+}
+.stat dt {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fs-h1);
+  line-height: var(--lh-h1);
+  letter-spacing: var(--ls-h1);
+  font-weight: var(--weight-medium);
+  color: var(--text-on-dark);
+}
+.stat dd {
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body-lg);
+  letter-spacing: var(--ls-body-lg);
+  color: var(--text-on-dark);
+}
+
+/* Services */
+/* Spec: Figma node 8:10362 — a 264px menu, a 552px column and 120px between
+   them, the pair centred as one 936px block rather than stretched to the
+   layout width. */
+/* Three columns, not two: the menu sits in the first and holds the section's
+   80px gutter, while the reading column is the middle one and the two flexible
+   columns either side are equal, which puts it on the centre of the window.
+   Centring the pair as one block instead — menu, gap and column together —
+   pushed the reading column half the menu's width off centre. */
+.services-layout {
+  display: grid;
+  grid-template-columns: 1fr 552px 1fr;
+  align-items: start;
+  margin-top: 320px;
+}
+.services-nav {
+  grid-column: 1;
+  justify-self: start;
+  width: 264px;
+}
+.services-content {
+  grid-column: 2;
+}
+
+/* Travels with the page until it is 180px from the top of the window, then
+   holds there. Nothing switches and nothing moves on its own — the earlier
+   version applied the offset after sticking, which is what made it jump. */
+.services-nav {
+  position: sticky;
+  top: 180px;
+}
+/* The menu is a 24px tray with 4px of breathing room; each item is a full
+   pill, so the corners inside never echo the corners outside. */
+.services-nav ul {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  background: var(--nav-background);
+  border-radius: var(--radius-24);
+  padding: var(--space-4);
+}
+.services-nav a {
+  position: relative;
+  z-index: 1;
+  display: block;
+  padding: var(--space-12) var(--space-16);
+  border-radius: var(--radius-full);
+  font-size: var(--fs-label);
+  line-height: var(--lh-label);
+  letter-spacing: var(--ls-label);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+  transition: background 0.15s var(--ease);
+}
+/* Not in the design, which defines no hover state — without it the menu gives
+   no feedback at all before the click lands. */
+.services-nav a:hover:not(.is-active) {
+  background: rgba(255, 255, 255, 0.55);
+}
+/* The fill lives on the pill so it can travel; the item only carries text. */
+.services-nav a.is-active { background: none; }
+/* Same treatment as the top bar's pill — outline and shadow included. This is
+   a step away from the Figma spec for this menu, which draws the active item
+   as flat white. */
+
+.services-content {
+  display: flex;
+  flex-direction: column;
+  gap: 88px;
+}
+
+.service-block h3 {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fs-h3);
+  line-height: calc(var(--lh-h3) / var(--fs-h3));
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--ls-h3);
+  margin-bottom: 12px;
+  scroll-margin-top: 100px;
+}
+.service-block > p {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--text-secondary);
+  max-width: 560px;
+  margin-bottom: 20px;
+}
+
+.check-group { margin-bottom: 20px; }
+.check-group-label {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+.check-list {
+  display: grid;
+  gap: 10px;
+  max-width: 460px;
+}
+.check-list li {
+  position: relative;
+  padding-left: 22px;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--text-primary);
+}
+.check-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 15px;
+  height: 15px;
+  background: var(--text-primary);
+  -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" d="M20 6L9 17l-5-5"/></svg>') center / 70% no-repeat;
+  mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" d="M20 6L9 17l-5-5"/></svg>') center / 70% no-repeat;
+}
+
+.mini-quote {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: var(--surface-muted);
+  border-radius: var(--radius-16);
+  padding: 18px 20px;
+  max-width: 560px;
+  margin-top: 12px;
+}
+.mini-quote p {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--text-primary);
+}
+.mini-avatars {
+  display: flex;
+  flex: none;
+  margin-top: 2px;
+}
+.mini-avatars img {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--surface-muted);
+  margin-left: -8px;
+}
+.mini-avatars img:first-child { margin-left: 0; }
+
+/* Testimonials */
+.testimonials-panel {
+  background: var(--background-secondary);
+  border-radius: 0;
+  padding: 45px 46px;
+}
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 44px;
+}
+.testimonial-grid-single {
+  grid-template-columns: minmax(280px, 480px);
+  justify-content: center;
+}
+.testimonial-card {
+  background: var(--surface-primary);
+  border-radius: var(--radius-16);
+  padding: 16px;
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-xs);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.testimonial-card p { font-size: 16px; line-height: 1.5; letter-spacing: -0.019em; color: var(--text-secondary); }
+.testimonial-attr {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+}
+.attr-name { font-size: 13px; font-weight: 600; }
+.attr-company {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-left: auto;
+}
+
+/* Work */
+.work-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+.work-caption { margin-bottom: 40px; }
+.work-caption-title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.022em;
+  margin-bottom: 8px;
+}
+.work-caption-body {
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -0.019em;
+  color: var(--text-secondary);
+  max-width: 640px;
+}
+.carousel-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  transition: color 0.15s var(--ease);
+}
+.carousel-hint:hover { color: var(--text-primary); }
+
+.work-carousel-viewport {
+  scroll-padding-left: max(24px, calc((100vw - 1160px) / 2 + 24px));
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.work-carousel-viewport::-webkit-scrollbar { display: none; }
+
+.work-carousel {
+  display: flex;
+  gap: 20px;
+  /* The leading offset is a margin on the first card, not padding on the row:
+     this container clamps scrollLeft to its own start padding, so a padded row
+     still shows the first card flush against the edge. The snap port has to be
+     inset to match — snapping is mandatory here, and with the cards snapping to
+     their own start edge, an un-inset port has no snap position that leaves the
+     offset visible. */
+  padding-right: 24px;
+}
+.work-carousel > .work-card:first-child {
+  margin-left: max(24px, calc((100vw - 1160px) / 2 + 24px));
+}
+.work-card {
+  flex: 0 0 auto;
+  width: min(680px, 74vw);
+  aspect-ratio: 16 / 11;
+  background: var(--background-dark);
+  border-radius: var(--radius-40);
+  overflow: hidden;
+  scroll-snap-align: start;
+}
+.work-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* CTA band */
+.cta-wrap {
+  max-width: none;
+  padding-inline: 0;
+  /* No band of page showing above or below, or the section could never
+     measure a full screen. */
+  padding-block: 0;
+}
+.cta-band {
+  position: relative;
+  background: var(--background-dark);
+  border-radius: 0;
+  overflow: hidden;
+  /* One screen, like the hero, with the copy centred in it. Nothing is pinned:
+     the page scrolls past it normally. The 200px stays as the floor for short
+     windows. */
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 200px 24px;
+}
+.cta-inner {
+  position: relative;
+  z-index: 1;
+  max-width: calc(min(100%, var(--max-w) - 48px) - 2 * clamp(24px, 4vw, 64px));
+  margin-inline: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+/* Split like the hero title, but keeping this band's own contrast: the
+   sentence in grey Geist, the accent in white Lora italic. */
+.cta-inner h2 {
+  font-family: var(--font-sans);
+  font-size: clamp(30px, 4.2vw, var(--fs-display));
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--ls-display);
+  line-height: var(--lh-display);
+  color: var(--text-muted);
+}
+.cta-inner h2 strong {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--weight-medium);
+  color: var(--text-on-dark);
+}
+
+/* FAQ */
+.accordion {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.accordion-item {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-12);
+  overflow: hidden;
+  transition: border-color 0.15s var(--ease);
+}
+.accordion-item:has(.accordion-trigger[aria-expanded="true"]) { border-color: var(--border-default); }
+.accordion-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px;
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.022em;
+  font-weight: 500;
+  text-align: left;
+}
+.chev-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex: none;
+  transition: background 0.15s var(--ease);
+}
+.accordion-trigger[aria-expanded="true"] .chev-wrap { background: var(--surface-muted); }
+.chev { width: 20px; height: 20px; flex: none; transition: transform 0.2s var(--ease); color: var(--text-secondary); }
+.accordion-trigger[aria-expanded="true"] .chev { transform: rotate(180deg); }
+.accordion-panel { padding: 0 12px 12px; max-width: 620px; }
+.accordion-panel p { font-size: 16px; line-height: 1.5; letter-spacing: -0.019em; color: var(--text-primary); margin-bottom: 10px; }
+.accordion-panel p:last-child { margin-bottom: 0; }
+
+/* Contact */
+/* Held to the same content width as the row above it, "Sature is a boutique
+   design studio", whose two columns total 1128 — the width the team panel is
+   specced at too. This element carries .wrap, so it was inheriting the full
+   1432 and running 88px wider on each side than the section it sits under.
+   The gutters stay in the padding, so narrow windows still get them. */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+  max-width: calc(1128px + 2 * clamp(24px, 4vw, 64px));
+}
+.contact-copy p { font-size: 15px; color: var(--text-secondary); margin-top: 18px; max-width: 420px; }
+.contact-note { font-weight: 500; color: var(--text-primary) !important; }
+.contact-copy .btn { margin-top: 26px; }
+
+.contact-placeholder {
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-40);
+  border: 1px dashed var(--border-default);
+  background: var(--surface-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+  padding: 24px;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+/* .wrap's max-width was still capping this at 1432px — invisible on a narrower
+   window, a hard edge on anything wider. */
+.footer-wrap {
+  max-width: none;
+  /* No bottom padding: the band is the last thing on the page and should meet
+     its edge, not float above a strip of page background. */
+  padding: 32px 0 0;
+}
+.site-footer {
+  position: relative;
+  background: var(--background-dark);
+  border-radius: 0;
+  overflow: hidden;
+  color: var(--text-on-dark);
+  padding: 80px 56px 40px;
+}
+.site-footer > :not(.bg-canvas) {
+  position: relative;
+  z-index: 1;
+  max-width: var(--max-w);
+  margin-inline: auto;
+}
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.footer-brand p {
+  margin-top: 16px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.55);
+  max-width: 340px;
+}
+.social-links {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+.social-links a {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s var(--ease);
+}
+.social-links a:hover { background: rgba(255, 255, 255, 0.16); }
+
+.footer-nav {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.footer-nav-compact { grid-template-columns: repeat(2, minmax(120px, 160px)); }
+.footer-col { display: flex; flex-direction: column; gap: 12px; }
+.footer-col a {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.75);
+  transition: color 0.15s var(--ease);
+}
+.footer-col a:hover { color: var(--text-on-dark); }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 24px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+}
+.footer-bottom a:hover { color: rgba(255, 255, 255, 0.7); }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 900px) {
+  .about-grid,
+  .story-grid,
+  .contact-grid { grid-template-columns: 1fr; }
+  .about-visual { order: -1; aspect-ratio: 16/9; }
+
+  .services-layout { grid-template-columns: 1fr; }
+  .services-nav { position: static; }
+  .services-nav ul { flex-direction: row; flex-wrap: wrap; }
+
+  .story-grid { grid-template-columns: 1fr; }
+  .story-copy { margin-top: 0; }
+  .testimonial-grid { grid-template-columns: 1fr; }
+  .work-card { width: 86vw; }
+  .footer-top { grid-template-columns: 1fr; gap: 32px; }
+}
+
+@media (max-width: 720px) {
+  .main-nav { position: fixed; top: calc(var(--header-height) + 2 * var(--header-pad)); left: 0; right: 0; height: calc(100vh - var(--header-height) - 2 * var(--header-pad)); height: calc(100dvh - var(--header-height) - 2 * var(--header-pad)); overflow-y: auto; background: var(--surface-primary); border-radius: 0; flex-direction: column; align-items: stretch; padding: 12px 24px 24px; gap: 4px; transform: translateY(-8px); opacity: 0; pointer-events: none; transition: opacity 0.2s var(--ease), transform 0.2s var(--ease); border-top: 1px solid var(--border-default); }
+  .main-nav.is-open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+  .main-nav a { padding: 12px 4px; border-bottom: 1px solid var(--border-default); border-radius: 0; font-size: 16px; }
+  .main-nav a.is-active { background: none; box-shadow: none; }
+  .nav-toggle { display: flex; }
+  .header-actions .btn-sm span { display: none; }
+
+  .hero { padding: 64px 20px 32px; }
+  .hero-actions { flex-direction: column; align-items: stretch; }
+  .hero-actions .btn { justify-content: center; }
+
+  .section { padding: 96px 0; }
+  #testimonials { padding: 0; }
+  #faq { padding-bottom: 0; }
+  .section-dark { padding: 40px 24px; }
+  .cta-band { padding: 56px 24px; }
+  .site-footer { padding: 48px 24px 24px; }
+  .footer-nav { grid-template-columns: repeat(2, 1fr); }
+  .footer-bottom { flex-direction: column; gap: 6px; }
+}
+
+/* ==========================================================================
+   Fixed 80px gutter
+   ==========================================================================
+   These sections line their content up on a fixed 80px margin rather than the
+   centred layout width, so the header, the industries row, the contact block,
+   the work gallery and the footer all start on the same vertical. The
+   max-width has to go with it: a centred 1432 box puts its edge wherever the
+   window leaves it, which is what had these five landing at 148, 236, 236,
+   0 and 84 respectively.
+
+   Sections not listed here — services, testimonials, FAQ — keep the centred
+   layout width and so still start further in. */
+@media (min-width: 1024px) {
+  .header-inner,
+  .wrap-gutter-80,
+  .contact-grid {
+    /* Grows with the window to 1600 including its gutters, then centres. Past
+       that width the 80px is measured from the layout's edge, not the
+       window's. */
+    max-width: var(--layout-max);
+    margin-inline: auto;
+    padding-inline: 80px;
+  }
+
+  /* The row centres its two columns, so widening the wrap alone would leave
+     them where they were. */
+  .about-grid {
+    justify-content: space-between;
+    flex-wrap: nowrap;
+  }
+
+  /* Level with the heading above it. On the first card rather than the row —
+     see the note on .work-carousel. */
+  /* Full bleed, so it tracks the layout edge by hand rather than inheriting it. */
+  .work-carousel > .work-card:first-child {
+    margin-left: max(80px, calc((100vw - var(--layout-max)) / 2 + 80px));
+  }
+  .work-carousel {
+    padding-right: max(80px, calc((100vw - var(--layout-max)) / 2 + 80px));
+  }
+  .work-carousel-viewport {
+    scroll-padding-left: max(80px, calc((100vw - var(--layout-max)) / 2 + 80px));
+  }
+
+  /* The band itself stays full bleed; only what is inside it caps. */
+  .site-footer {
+    padding-inline: 80px;
+  }
+  .site-footer > :not(.bg-canvas) {
+    max-width: calc(var(--layout-max) - 160px);
+    margin-inline: auto;
+  }
+}

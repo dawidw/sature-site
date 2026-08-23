@@ -1,0 +1,40 @@
+---
+import type { SiteContent } from "../data/types";
+
+interface Props {
+  testimonials: SiteContent["testimonials"];
+}
+
+const { testimonials } = Astro.props;
+
+// A lone quote gets centred in a single narrow column instead of stretching
+// across the three-up grid.
+const gridClass =
+  testimonials.items.length === 1
+    ? "testimonial-grid testimonial-grid-single"
+    : "testimonial-grid";
+---
+
+<section class="section" id="testimonials">
+  <div class="wrap">
+    <div class="testimonials-panel">
+      <h2 class="section-title center">{testimonials.title}</h2>
+      <ul class={gridClass}>
+        {
+          testimonials.items.map((item) => (
+            <li class="testimonial-card">
+              <p>{item.quote}</p>
+              <div class="testimonial-attr">
+                <span class="avatar avatar-sm avatar-a" aria-hidden="true">
+                  {item.initials}
+                </span>
+                <span class="attr-name">{item.name}</span>
+                <span class={`attr-company ${item.companyClassName}`}>{item.company}</span>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

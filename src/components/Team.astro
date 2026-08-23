@@ -1,0 +1,40 @@
+---
+import type { SiteContent } from "../data/types";
+import RichText from "./RichText.astro";
+
+interface Props {
+  team: SiteContent["team"];
+}
+
+const { team } = Astro.props;
+---
+
+<section class="team-wrap wrap">
+  <div class="section-dark">
+    <p class="section-title center on-dark"><RichText text={team.title} /></p>
+
+    <figure class="founders">
+      <img src={team.photo.src} alt={team.photo.alt} width="1015" height="556" loading="lazy" />
+      <figcaption class="founders-names">
+        {team.photo.names.map((name) => <span>{name}</span>)}
+      </figcaption>
+    </figure>
+
+    <div class="story-grid">
+      <div class="story-copy">
+        <h3>{team.story.heading}</h3>
+        <p>{team.story.body}</p>
+      </div>
+      <dl class="stats">
+        {
+          team.stats.map((stat) => (
+            <div class="stat">
+              <dt>{stat.value}</dt>
+              <dd>{stat.label}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </div>
+</section>

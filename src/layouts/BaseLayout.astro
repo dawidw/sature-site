@@ -1,0 +1,60 @@
+---
+import "../styles/global.css";
+import type { SiteContent } from "../data/types";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+
+interface Props {
+  meta: SiteContent["meta"];
+  footer: SiteContent["footer"];
+}
+
+const { meta, footer } = Astro.props;
+
+// Quotes stay percent-encoded (%22): written literally they come out as
+// &quot; in the attribute, which is a data URI the spec doesn't guarantee.
+const favicon =
+  "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%230a0a0a%22/><circle cx=%2216%22 cy=%2216%22 r=%227%22 fill=%22%23ff5a2c%22/></svg>";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{meta.title}</title>
+    <meta name="description" content={meta.description} />
+    <meta name="theme-color" content="#0a0a0a" />
+    <link rel="icon" href={favicon} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <SiteHeader />
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <SiteFooter footer={footer} />
+
+    <script>
+      import "../scripts/main.js";
+    </script>
+    <script>
+      import "../scripts/gradient-bg.js";
+    </script>
+    <script>
+      import "../scripts/header-theme.js";
+    </script>
+    <script>
+      import "../scripts/nav-pill.js";
+    </script>
+  </body>
+</html>

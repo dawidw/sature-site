@@ -1,0 +1,29 @@
+---
+import type { SiteContent } from "../data/types";
+import RichText from "./RichText.astro";
+
+interface Props {
+  contact: SiteContent["contact"];
+}
+
+const { contact } = Astro.props;
+---
+
+<section class="section" id="contact">
+  <div class="wrap contact-grid">
+    <div class="contact-copy">
+      <h2 class="section-title">{contact.titleLead}<br />{contact.titleRest}</h2>
+      <p>{contact.body}</p>
+      <p class="contact-note"><RichText text={contact.note} /></p>
+      <a class={`btn btn-${contact.action.variant}`} href={contact.action.href}>
+        {contact.action.label}
+      </a>
+    </div>
+    <div class="contact-visual" aria-hidden="true">
+      <div class="contact-placeholder">
+        {/* Placeholder: scheduling widget goes here (e.g. embedded Cal.com / Calendly) */}
+        <span>{contact.placeholderLabel}</span>
+      </div>
+    </div>
+  </div>
+</section>
