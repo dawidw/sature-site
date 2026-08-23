@@ -463,20 +463,46 @@ button {
   position: relative;
   overflow: hidden;
   background: var(--background-dark);
-  /* Square where it meets the window, rounded where it hands over to the page. */
-  border-radius: 0 0 var(--radius-40) var(--radius-40);
+  border-radius: 0;
+  /* One full screen, then the page scrolls on normally. dvh so mobile browser
+     chrome collapsing doesn't leave a strip of the next section showing. */
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
   /* The header's height is added back so the copy sits where it did before,
      100px clear of the bar rather than 100px from the top of the window. */
   padding: calc(var(--header-total) + 100px) 0 64px;
   text-align: center;
   color: var(--text-on-dark);
 }
-.hero > :not(.bg-canvas) {
+
+/* The layout's width and gutters live here rather than on each child — put on
+   the children they also reached the badge, whose pill then stretched to the
+   full gutter instead of hugging its label. */
+.hero-inner {
   position: relative;
   z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   max-width: var(--max-w);
   margin-inline: auto;
   padding-inline: clamp(24px, 4vw, 64px);
+}
+
+/* A flex parent blockifies its children, so the pill — an inline-flex — would
+   stretch the full column width. This puts it back to hugging its label. */
+.hero-inner > .badge { align-self: center; }
+
+/* Anchored to the bottom of the screen: on a tall window the slack collects
+   above the strip instead of leaving a gap under it. The 120px below the
+   buttons becomes the minimum rather than the exact distance. */
+.hero-logos { margin-top: auto; }
+.hero > :not(.bg-canvas) {
+  position: relative;
+  z-index: 1;
 }
 .bg-canvas {
   position: absolute;
