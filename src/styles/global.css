@@ -1147,6 +1147,7 @@ button {
 .carousel-hint:hover { color: var(--text-primary); }
 
 .work-carousel-viewport {
+  scroll-padding-left: max(24px, calc((100vw - 1160px) / 2 + 24px));
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
@@ -1157,8 +1158,16 @@ button {
 .work-carousel {
   display: flex;
   gap: 20px;
-  padding-left: max(24px, calc((100vw - 1160px) / 2 + 24px));
+  /* The leading offset is a margin on the first card, not padding on the row:
+     this container clamps scrollLeft to its own start padding, so a padded row
+     still shows the first card flush against the edge. The snap port has to be
+     inset to match — snapping is mandatory here, and with the cards snapping to
+     their own start edge, an un-inset port has no snap position that leaves the
+     offset visible. */
   padding-right: 24px;
+}
+.work-carousel > .work-card:first-child {
+  margin-left: max(24px, calc((100vw - 1160px) / 2 + 24px));
 }
 .work-card {
   flex: 0 0 auto;
@@ -1410,4 +1419,51 @@ button {
   .site-footer { padding: 48px 24px 24px; }
   .footer-nav { grid-template-columns: repeat(2, 1fr); }
   .footer-bottom { flex-direction: column; gap: 6px; }
+}
+
+/* ==========================================================================
+   Fixed 80px gutter
+   ==========================================================================
+   These sections line their content up on a fixed 80px margin rather than the
+   centred layout width, so the header, the industries row, the contact block,
+   the work gallery and the footer all start on the same vertical. The
+   max-width has to go with it: a centred 1432 box puts its edge wherever the
+   window leaves it, which is what had these five landing at 148, 236, 236,
+   0 and 84 respectively.
+
+   Sections not listed here — services, testimonials, FAQ — keep the centred
+   layout width and so still start further in. */
+@media (min-width: 1024px) {
+  .header-inner,
+  .wrap-gutter-80,
+  .contact-grid {
+    max-width: none;
+    padding-inline: 80px;
+  }
+
+  /* The row centres its two columns, so widening the wrap alone would leave
+     them where they were. */
+  .about-grid {
+    justify-content: space-between;
+    flex-wrap: nowrap;
+  }
+
+  /* Level with the heading above it. On the first card rather than the row —
+     see the note on .work-carousel. */
+  .work-carousel > .work-card:first-child {
+    margin-left: 80px;
+  }
+  .work-carousel {
+    padding-right: 80px;
+  }
+  .work-carousel-viewport {
+    scroll-padding-left: 80px;
+  }
+
+  .site-footer {
+    padding-inline: 80px;
+  }
+  .site-footer > :not(.bg-canvas) {
+    max-width: none;
+  }
 }
