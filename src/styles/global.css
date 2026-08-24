@@ -1336,7 +1336,14 @@ button {
   align-items: center;
   max-width: calc(1128px + 2 * clamp(24px, 4vw, 64px));
 }
-.contact-copy p { font-size: 15px; color: var(--text-secondary); margin-top: 18px; max-width: 420px; }
+.contact-copy p {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
+  color: var(--text-secondary);
+  margin-top: 18px;
+  max-width: 420px;
+}
 .contact-note { font-weight: 500; color: var(--text-primary) !important; }
 .contact-copy .btn { margin-top: 26px; }
 
@@ -1389,7 +1396,9 @@ button {
 }
 .footer-brand p {
   margin-top: 16px;
-  font-size: 14px;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
   color: rgba(255, 255, 255, 0.55);
   max-width: 340px;
 }
@@ -1418,7 +1427,9 @@ button {
 .footer-nav-compact { grid-template-columns: repeat(2, minmax(120px, 160px)); }
 .footer-col { display: flex; flex-direction: column; gap: 12px; }
 .footer-col a {
-  font-size: 14px;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
   color: rgba(255, 255, 255, 0.75);
   transition: color 0.15s var(--ease);
 }

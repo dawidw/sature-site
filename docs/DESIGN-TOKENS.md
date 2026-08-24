@@ -76,9 +76,15 @@ Używane na stronie, nieopisane w Figmie. Widoczne też na dole `/styleguide`.
 | `#3ecf5e` | zielona kropka „Accepting projects" i jej poświata | dodać `status/positive` |
 | gradienty avatarów | inicjały w testimonialach | udokumentować albo zastąpić zdjęciami |
 
-Rozmiary tekstu spoza skali (13px, 14px, 15px, 17px) zostały w kodzie bez
-zmian — snapowanie ich do siedmiostopniowej skali przeprojektowałoby nawigację,
-stopkę i drobne etykiety. To osobna decyzja projektowa.
+Rozmiary tekstu spoza skali (13px, 14px, 15px, 17px) w większości zostały —
+snapowanie wszystkiego do siedmiostopniowej skali przeprojektowałoby nawigację
+i drobne etykiety.
+
+Wyjątek: tekst ciągły w stopce i w sekcji kontaktu został zsnapowany do
+`--fs-body` (16px) razem z `--lh-body` i `--ls-body` — akapit stopki i akapit
+kontaktu szły odpowiednio na 14 i 15px, a linki w kolumnach stopki na 14px.
+Drobny druk na dole stopki (copyright, Privacy Policy) świadomie zostaje na
+14px, żeby utrzymać hierarchię względem tekstu ciągłego nad nim.
 
 ## Co zostało zsnapowane do skali
 
