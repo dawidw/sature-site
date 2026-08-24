@@ -1,5 +1,6 @@
 ---
 import BrandLogo from "./BrandLogo.astro";
+import { asset } from "../lib/asset";
 
 // Section links are fixed across versions — they mirror the page's own
 // anchors, so they live here rather than in the content files.
@@ -20,7 +21,7 @@ const links = [
       {
         links.map((link) => (
           <a href={link.href} class={link.active ? "is-active" : undefined}>
-            <img src={`/assets/img/icons/${link.icon}.svg`} alt="" width="20" height="20" />
+            <img src={asset(`/assets/img/icons/${link.icon}.svg`)} alt="" width="20" height="20" />
             {link.label}
           </a>
         ))

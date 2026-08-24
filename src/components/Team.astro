@@ -1,6 +1,7 @@
 ---
 import type { SiteContent } from "../data/types";
 import RichText from "./RichText.astro";
+import { asset } from "../lib/asset";
 
 interface Props {
   team: SiteContent["team"];
@@ -14,7 +15,7 @@ const { team } = Astro.props;
     <p class="section-title center on-dark"><RichText text={team.title} /></p>
 
     <figure class="founders">
-      <img src={team.photo.src} alt={team.photo.alt} width="1015" height="556" loading="lazy" />
+      <img src={asset(team.photo.src)} alt={team.photo.alt} width="1015" height="556" loading="lazy" />
       <figcaption class="founders-names">
         {team.photo.names.map((name) => <span>{name}</span>)}
       </figcaption>
@@ -28,7 +29,7 @@ const { team } = Astro.props;
         team.photo.portraits.map((portrait) => (
           <li>
             <figure>
-              <img src={portrait.src} alt={portrait.alt} width="732" height="908" loading="lazy" />
+              <img src={asset(portrait.src)} alt={portrait.alt} width="732" height="908" loading="lazy" />
               <figcaption>{portrait.name}</figcaption>
             </figure>
           </li>
