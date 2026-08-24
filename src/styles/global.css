@@ -267,7 +267,10 @@ button {
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 500;
-  font-size: 20px;
+  /* Was 20px, which sat too far under the display line it introduces. 24 is
+     the scale's own h3 step. */
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
   letter-spacing: -0.019em;
   color: var(--text-secondary);
   margin-bottom: 10px;
@@ -1569,7 +1572,12 @@ button {
      While it lost, the stats kept their fixed 552px column on a 375px screen:
      the copy beside them was computing to 0px wide and breaking one word per
      line, and the stats themselves ran off under .section-dark's overflow. */
-  .section-dark > .story-grid { grid-template-columns: minmax(0, 1fr); }
+  .section-dark > .story-grid {
+    grid-template-columns: minmax(0, 1fr);
+    /* Stacked, this is the gap between the story and the figures below it, not
+       a column gutter — 24 read as one block, 80 separates them. */
+    gap: 80px;
+  }
   .story-copy { margin-top: 0; }
   .story-copy p { max-width: none; }
 
@@ -1580,10 +1588,11 @@ button {
 
 /* --- <= 720: phone -------------------------------------------------------- */
 @media (max-width: 720px) {
-  /* Clear of the bar, which is sticky and now opaque — at 64px the "Accepting
-     projects" badge was sitting behind the call button. 24px matches the
-     gutter the rest of the page uses; this was the one section on 20px. */
-  .hero { padding: calc(var(--header-total) + 24px) 24px 32px; }
+  /* 160px to the first thing in the hero, counted once. It lives on .hero and
+     not on .hero-inner so there is a single number to read: the two stack, and
+     splitting the distance across both is what put the copy 48px in the last
+     time. Well clear of the 104px bar either way. */
+  .hero { padding: 160px 24px 32px; }
   /* The gutter comes from .hero above. .hero-inner's clamp bottoms out at
      another 24 on top of it, which set the hero copy 48px in while every
      other section on the page starts at 24 — the sub-heading was wrapping to
@@ -1595,8 +1604,10 @@ button {
   .section { padding: 72px 0; }
   /* The two halves of About are one statement read in sequence, so they get
      the same air above and below rather than the page's default rhythm. */
-  #about,
-  .section-industries { padding-block: 150px; }
+  #about { padding-block: 150px; }
+  /* #about already closes on 150px, so matching it here put 300px between the
+     two halves. The top comes off and that one gap does the work. */
+  .section-industries { padding-block: 0 150px; }
   /* Same voice as the heading in the half above — on a phone the two sit one
      after the other with nothing between them, and two different display
      sizes read as two unrelated sections. */
@@ -1616,6 +1627,10 @@ button {
   #testimonials { padding: 0; }
   #faq { padding-bottom: 0; }
   .section-dark { padding: 80px 24px; }
+  /* Both headings in the band on one size: the greeting was clamping to 26 and
+     "Our story" was still holding the 40px h1. */
+  .section-title.on-dark,
+  .story-copy h3 { font-size: 30px; }
 
   /* Three panels side by side need a width a phone does not have — the
      composite becomes three portraits, each running the full screen. */
