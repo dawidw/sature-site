@@ -299,7 +299,14 @@ button {
 .section-title.display {
   font-size: clamp(30px, 4.2vw, var(--fs-display));
 }
-.section-title.center { text-align: center; margin-inline: auto; max-width: 780px; }
+.section-title.center {
+  text-align: center;
+  margin-inline: auto;
+  max-width: 780px;
+  /* Centred display text left to itself strands a short last line; balance
+     evens the rag out across the block. Ignored where unsupported. */
+  text-wrap: balance;
+}
 .section-title.on-dark { color: var(--text-on-dark); margin-bottom: 44px; }
 
 /* Buttons */
@@ -1245,7 +1252,9 @@ button {
 }
 .work-card {
   flex: 0 0 auto;
-  width: min(680px, 74vw);
+  /* 680 + 20%. The vw term still governs anything narrow, so this is a
+     desktop-only change. */
+  width: min(816px, 74vw);
   /* The card in the design is 925x600, and the screens are exported at that
      proportion, so cover has nothing left to crop. */
   aspect-ratio: 925 / 600;
@@ -1510,6 +1519,20 @@ button {
    --------------------------------------------------------------------------- */
 @media (max-width: 1023.98px) {
   .main-nav { display: none; }
+}
+
+/* --- 721..1023: the tablet middle ----------------------------------------
+   The services menu is gone below 900 and the layout is a plain block, which
+   left the reading column against the left gutter with the rest of the width
+   empty beside it. On a phone that column is the whole screen so it does not
+   arise; here it needs centring. 552px is the width the desktop layout gives
+   the same column.
+   --------------------------------------------------------------------------- */
+@media (min-width: 721px) and (max-width: 1023.98px) {
+  .services-content {
+    max-width: 552px;
+    margin-inline: auto;
+  }
 }
 
 /* --- <= 900: two columns become one -------------------------------------- */
