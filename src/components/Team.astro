@@ -20,6 +20,22 @@ const { team } = Astro.props;
       </figcaption>
     </figure>
 
+    {/* The narrow-screen counterpart to the composite above; CSS shows one or
+        the other. Both are lazy, and the hidden one is never in the viewport,
+        so only the set actually on screen is fetched. */}
+    <ul class="founders-stack">
+      {
+        team.photo.portraits.map((portrait) => (
+          <li>
+            <figure>
+              <img src={portrait.src} alt={portrait.alt} width="732" height="908" loading="lazy" />
+              <figcaption>{portrait.name}</figcaption>
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
+
     <div class="story-grid">
       <div class="story-copy">
         <h3>{team.story.heading}</h3>

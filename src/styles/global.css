@@ -46,6 +46,11 @@
   /* ---- Semantic: border ------------------------------------------------- */
   --border-default: var(--neutral-300);
   --border-subtle: var(--neutral-200);
+  /* Off the ramp on purpose: the open FAQ card needs an edge that reads as
+     open without reading as selected, and the ramp jumps straight from
+     neutral-200 (#f2f2f2, the resting border) to neutral-300 (#d1d1d1),
+     which was too hard a line. Halfway between the two. */
+  --border-active: #e2e2e2;
   --border-dark: var(--neutral-600);
 
   /* ---- Semantic: button ------------------------------------------------- */
@@ -216,6 +221,11 @@ button {
 
 .wrap-narrow { max-width: 760px; }
 
+/* Cancels the wrap so a band inside it can run edge to edge. Whatever the band
+   holds takes over the capping — the same division of labour .team-wrap has
+   with .section-dark. */
+.wrap-bleed { max-width: none; padding-inline: 0; }
+
 .skip-link {
   position: absolute;
   left: 12px;
@@ -346,7 +356,6 @@ button {
 .site-header .main-nav,
 .site-header .main-nav a,
 .site-header .main-nav a img,
-.site-header .nav-toggle span,
 .site-header .btn {
   transition:
     background-color 0.35s var(--ease),
@@ -524,29 +533,6 @@ button {
   color: var(--text-primary);
 }
 .site-header.is-on-dark .btn-dark:hover { background: var(--neutral-200); }
-.site-header.is-on-dark .nav-toggle span { background: var(--text-on-dark); }
-
-.nav-toggle {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-12);
-}
-.nav-toggle span {
-  display: block;
-  width: 18px;
-  height: 2px;
-  background: var(--text-primary);
-  margin-inline: auto;
-  transition: transform 0.2s var(--ease), opacity 0.2s var(--ease);
-}
-.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
-.nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
 /* ==========================================================================
    Hero
    ========================================================================== */
@@ -657,7 +643,9 @@ button {
   line-height: var(--lh-label);
   letter-spacing: var(--ls-label);
   font-weight: var(--weight-medium);
-  color: rgba(255, 255, 255, 0.4);
+  /* 0.4 measured 3.80:1 on the hero — under AA for 16px. 0.72 clears it at
+     9.1:1 and still reads as the quiet label above the logos. */
+  color: rgba(255, 255, 255, 0.72);
   margin-bottom: var(--space-32);
 }
 
@@ -737,7 +725,7 @@ button {
   background: var(--background-dark);
   border-radius: 0;
   overflow: hidden;
-  padding: 96px 56px;
+  padding: 150px 56px;
   color: var(--text-on-dark);
 }
 .section-dark > :not(.bg-canvas) {
@@ -853,6 +841,10 @@ button {
   object-fit: cover;
 }
 
+/* The narrow-screen alternative to the composite. Off by default; the
+   Responsive section turns it on and takes the composite away. */
+.founders-stack { display: none; }
+
 /* One name per panel, centred on its third of the picture. */
 .founders-names {
   position: absolute;
@@ -867,6 +859,13 @@ button {
   letter-spacing: var(--ls-h3);
   color: var(--text-on-dark);
   text-align: center;
+}
+/* Three columns of a 24px serif need 110px each to set "Kownacki" on one
+   line; a 375px screen gives them 109. They were running into each other and
+   the third was hanging off the picture. Scaled to the panel it sits on, with
+   24px as the ceiling it already had. */
+@media (max-width: 900px) {
+  .founders-names { font-size: clamp(12px, 5.2vw, 24px); }
 }
 
 .avatar {
@@ -1102,6 +1101,14 @@ button {
   border-radius: 0;
   padding: 45px 46px;
 }
+/* The band is full bleed (see .wrap-bleed on its parent) but the quotes are
+   not: this is the width they had while the band still sat inside the wrap —
+   the layout width, less the page gutters and the band's own 46px each side.
+   Built like .section-dark's cap, so the two bands reason the same way. */
+.testimonials-panel > * {
+  max-width: calc(min(100%, var(--max-w) - 92px) - 2 * clamp(24px, 4vw, 64px));
+  margin-inline: auto;
+}
 .testimonial-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1199,9 +1206,11 @@ button {
 .work-card {
   flex: 0 0 auto;
   width: min(680px, 74vw);
-  aspect-ratio: 16 / 11;
+  /* The card in the design is 925x600, and the screens are exported at that
+     proportion, so cover has nothing left to crop. */
+  aspect-ratio: 925 / 600;
   background: var(--background-dark);
-  border-radius: var(--radius-40);
+  border-radius: var(--radius-24);
   overflow: hidden;
   scroll-snap-align: start;
 }
@@ -1273,9 +1282,17 @@ button {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-12);
   overflow: hidden;
-  transition: border-color 0.15s var(--ease);
+  transition: border-color 0.15s var(--ease), background 0.15s var(--ease);
 }
-.accordion-item:has(.accordion-trigger[aria-expanded="true"]) { border-color: var(--border-default); }
+/* The card is the target, not the button inside it: the trigger stops at the
+   question, so on an open card the answer was dead area under the cursor. */
+.accordion-item:hover { background: var(--surface-muted); }
+/* The chevron tray sits on --surface-muted once open, which is what a hovered
+   card is now painted with. One step along so the tray keeps its edge. */
+.accordion-item:hover .accordion-trigger[aria-expanded="true"] .chev-wrap {
+  background: var(--surface-secondary);
+}
+.accordion-item:has(.accordion-trigger[aria-expanded="true"]) { border-color: var(--border-active); }
 .accordion-trigger {
   width: 100%;
   display: flex;
@@ -1411,51 +1428,201 @@ button {
   display: flex;
   justify-content: space-between;
   padding-top: 24px;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.4);
+  /* 13px at 0.4 measured 3.80:1 — under AA, and the Privacy Policy link is a
+     real target, not decoration. 14px at 0.62 lands on 6.6:1. */
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.62);
 }
-.footer-bottom a:hover { color: rgba(255, 255, 255, 0.7); }
+.footer-bottom a:hover { color: rgba(255, 255, 255, 0.85); }
 
 /* ==========================================================================
    Responsive
-   ========================================================================== */
+   ==========================================================================
+   Four bands, narrowest last so the later ones win:
+
+     <= 1023  the bar gives up the desktop menu and takes a surface
+     <=  900  two-column rows fold to one
+     <=  720  phone: gutters, stacked actions, tightened vertical rhythm
+     <=  380  the call button drops its label
+
+   The 80px-gutter block below this one is min-width: 1024px, so nothing here
+   reaches the desktop layout. */
+
+/* --- <= 1023: the bar ----------------------------------------------------
+   The menu row needs a desktop's worth of width to sit between a wordmark and
+   a call button; at 768 "About us" was wrapping inside its own pill. The old
+   breakpoint was 720, which left every tablet in portrait on the desktop bar.
+   Rather than fold it into a sheet behind a hamburger, the bar simply drops
+   it: five anchors to sections the reader is already scrolling past earned
+   neither the button nor the full-screen panel it opened. What is left is the
+   wordmark and the one thing the bar is for.
+   --------------------------------------------------------------------------- */
+@media (max-width: 1023.98px) {
+  .main-nav { display: none; }
+}
+
+/* --- <= 900: two columns become one -------------------------------------- */
 @media (max-width: 900px) {
   .about-grid,
   .story-grid,
   .contact-grid { grid-template-columns: 1fr; }
   .about-visual { order: -1; aspect-ratio: 16/9; }
 
-  .services-layout { grid-template-columns: 1fr; }
-  .services-nav { position: static; }
-  .services-nav ul { flex-direction: row; flex-wrap: wrap; }
+  /* Block rather than grid. The desktop layout is three columns — menu,
+     reading column, spacer — with each child placed by hand, and collapsing it
+     to one column is not enough: a sticky item in a grid is held inside its
+     own row, and that row is exactly as tall as the menu, so it would have
+     nowhere to travel. In normal flow the menu can hold against the whole of
+     the content beneath it.
+     320px, meanwhile, is the air the design leaves under the section title on
+     a desktop; held literally it was most of a phone screen of nothing. */
+  .services-layout {
+    display: block;
+    margin-top: clamp(48px, 12vw, 120px);
+  }
+  /* Gone below this width. Wrapped, it took three rows off the top of the
+     section; as a sticky track it held a bar over the reading column for the
+     length of four service blocks. Neither earned the space — what is under
+     it is one continuous read, not something to jump around in. */
+  .services-nav { display: none; }
 
-  .story-grid { grid-template-columns: 1fr; }
+  /* This has to out-specify .section-dark > .story-grid (0,2,0), which the
+     plain .story-grid rule above loses to — media queries add no specificity.
+     While it lost, the stats kept their fixed 552px column on a 375px screen:
+     the copy beside them was computing to 0px wide and breaking one word per
+     line, and the stats themselves ran off under .section-dark's overflow. */
+  .section-dark > .story-grid { grid-template-columns: minmax(0, 1fr); }
   .story-copy { margin-top: 0; }
+  .story-copy p { max-width: none; }
+
   .testimonial-grid { grid-template-columns: 1fr; }
   .work-card { width: 86vw; }
   .footer-top { grid-template-columns: 1fr; gap: 32px; }
 }
 
+/* --- <= 720: phone -------------------------------------------------------- */
 @media (max-width: 720px) {
-  .main-nav { position: fixed; top: calc(var(--header-height) + 2 * var(--header-pad)); left: 0; right: 0; height: calc(100vh - var(--header-height) - 2 * var(--header-pad)); height: calc(100dvh - var(--header-height) - 2 * var(--header-pad)); overflow-y: auto; background: var(--surface-primary); border-radius: 0; flex-direction: column; align-items: stretch; padding: 12px 24px 24px; gap: 4px; transform: translateY(-8px); opacity: 0; pointer-events: none; transition: opacity 0.2s var(--ease), transform 0.2s var(--ease); border-top: 1px solid var(--border-default); }
-  .main-nav.is-open { transform: translateY(0); opacity: 1; pointer-events: auto; }
-  .main-nav a { padding: 12px 4px; border-bottom: 1px solid var(--border-default); border-radius: 0; font-size: 16px; }
-  .main-nav a.is-active { background: none; box-shadow: none; }
-  .nav-toggle { display: flex; }
-  .header-actions .btn-sm span { display: none; }
-
-  .hero { padding: 64px 20px 32px; }
+  /* Clear of the bar, which is sticky and now opaque — at 64px the "Accepting
+     projects" badge was sitting behind the call button. 24px matches the
+     gutter the rest of the page uses; this was the one section on 20px. */
+  .hero { padding: calc(var(--header-total) + 24px) 24px 32px; }
+  /* The gutter comes from .hero above. .hero-inner's clamp bottoms out at
+     another 24 on top of it, which set the hero copy 48px in while every
+     other section on the page starts at 24 — the sub-heading was wrapping to
+     three lines inside 279px where it had 327 to work with. */
+  .hero-inner { padding-inline: 0; }
   .hero-actions { flex-direction: column; align-items: stretch; }
   .hero-actions .btn { justify-content: center; }
 
-  .section { padding: 96px 0; }
+  .section { padding: 72px 0; }
+  /* The two halves of About are one statement read in sequence, so they get
+     the same air above and below rather than the page's default rhythm. */
+  #about,
+  .section-industries { padding-block: 150px; }
+  /* Same voice as the heading in the half above — on a phone the two sit one
+     after the other with nothing between them, and two different display
+     sizes read as two unrelated sections. */
+  .about-copy p {
+    font-size: clamp(30px, 4.2vw, var(--fs-display));
+    line-height: var(--lh-h1);
+    letter-spacing: var(--ls-h1);
+    font-weight: var(--weight-medium);
+  }
+  /* Scaled with the copy they sit under: the heading came down by a quarter,
+     so the pills do too, padding included. */
+  .tag-list li {
+    font-size: 18px;
+    line-height: 24px;
+    padding: 9px 14px;
+  }
   #testimonials { padding: 0; }
   #faq { padding-bottom: 0; }
-  .section-dark { padding: 40px 24px; }
+  .section-dark { padding: 80px 24px; }
+
+  /* Three panels side by side need a width a phone does not have — the
+     composite becomes three portraits, each running the full screen. */
+  .founders { display: none; }
+  .section-dark > .founders-stack {
+    display: grid;
+    gap: 16px;
+    justify-items: center;
+    /* Out past the band's own padding: the portraits run to the edge of the
+       screen, not to the text column. */
+    max-width: none;
+    margin-inline: -24px;
+    margin-bottom: 56px;
+  }
+  .founders-stack li { width: 100%; max-width: 450px; }
+  .founders-stack figure { position: relative; margin: 0; }
+  /* At their own 0.81 the portraits stood 465px tall on a 375 screen — three
+     of them made the band a scroll of its own. Cropped to 4/3 and held high in
+     the frame, which is where the faces are. */
+  .founders-stack img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: center 32%;
+  }
+  /* Laid over the portrait where the composite puts them, and smaller: at 24px
+     a name was most of the width of the picture it belongs to. The corners and
+     the vignette are baked into the file, so nothing is needed behind it. */
+  .founders-stack figcaption {
+    position: absolute;
+    inset: auto 16px 24px 16px;
+    text-align: center;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: var(--weight-medium);
+    font-size: 20px;
+    line-height: 1.2;
+    letter-spacing: var(--ls-h3);
+    color: var(--text-on-dark);
+  }
   .cta-band { padding: 56px 24px; }
   .site-footer { padding: 48px 24px 24px; }
-  .footer-nav { grid-template-columns: repeat(2, 1fr); }
+
+  /* An empty aria-hidden box: with order: -1 it opened the section with a
+     blank grey rectangle two thirds of a screen tall. Drop this rule once
+     there is something inside it. */
+  .about-visual { display: none; }
+
+  /* 46px of panel inset on top of the wrap's 24px left the cards 235px wide
+     on a 375px screen — a 28-character measure, with "Scott Hickle" wrapping.
+     The wrap already supplies the gutter. */
+  /* The band's own padding is the gutter here — .wrap-bleed took the wrap's
+     away. The desktop cap would then subtract a gutter that is not there, so
+     it comes off. */
+  .testimonials-panel { padding: 32px 24px; }
+  .testimonials-panel > * { max-width: none; }
+  .testimonial-card { padding: 20px; }
+
+  /* The cards keep the 16/11 they have everywhere else. Cropping them to a
+     phone-shaped 4/5 did make the interface inside legible, but at the cost of
+     reframing the work itself — the proportions are part of what is being
+     shown. Legibility belongs to an art-directed source, not to a crop. */
+  .carousel-hint { min-height: 44px; }
+
+  .footer-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* 21px tall as inline text. Blocked out, they clear the touch minimum and
+     the column reads as a list. */
+  .footer-col a { display: block; padding-block: 11px; }
   .footer-bottom { flex-direction: column; gap: 6px; }
+}
+
+/* --- <= 359: the last of the width ---------------------------------------
+   At 320 the bar measures 309 of its 320: wordmark 96, button 129, toggle 44,
+   gutters 48 — it fits, on eleven pixels of slack, which reads as the button
+   crowding the wordmark. Dropping the label buys back about 90 of them. The
+   link keeps its name through aria-label on the anchor.
+
+   Held below 360 rather than at 375: a 375 screen has room for the label, and
+   a call button that says what it is beats a bare glyph wherever it fits.
+   --------------------------------------------------------------------------- */
+@media (max-width: 359.98px) {
+  .header-actions .btn-sm span { display: none; }
+  .header-actions .btn-sm { padding-inline: 14px; }
 }
 
 /* ==========================================================================

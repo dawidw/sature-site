@@ -11,6 +11,8 @@
 (() => {
   "use strict";
 
+  const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)");
+
   const menus = document.querySelectorAll("#main-nav, #services-nav-list");
 
   menus.forEach((list) => {
@@ -41,6 +43,20 @@
       pill.style.height = `${h}px`;
       pill.style.transform = `translate(${x}px, ${y}px)`;
       pill.classList.add("is-ready");
+
+      // On a narrow screen the services menu is a track wider than the window,
+      // so the item the pill just moved to can be off the side of it. Bringing
+      // it to the middle is what makes the highlight readable as movement
+      // rather than as something that vanished.
+      if (list.scrollWidth > list.clientWidth) {
+        const max = list.scrollWidth - list.clientWidth;
+        const centred = x + w / 2 - list.clientWidth / 2;
+        list.scrollTo({
+          left: Math.max(0, Math.min(centred, max)),
+          // Silent on first placement, for the same reason the pill is.
+          behavior: placed && !REDUCED_MOTION.matches ? "smooth" : "auto",
+        });
+      }
 
       if (!placed) {
         void pill.offsetWidth; // flush, so the next change animates
