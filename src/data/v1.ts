@@ -80,9 +80,8 @@ export const v1: SiteContent = {
   },
 
   services: {
-    title:
-      "Discovery, product design, design systems, AI experience design and no-code development for",
-    titleMuted: "startups, scaleups and b2b saas",
+    title: "We take products from discovery to launch for",
+    titleMuted: "startups, scaleups and B2B SaaS",
     items: [
       {
         id: "svc-discovery",
