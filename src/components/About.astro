@@ -1,5 +1,6 @@
 ---
 import type { SiteContent } from "../data/types";
+import { asset } from "../lib/asset";
 
 interface Props {
   about: SiteContent["about"];
@@ -25,7 +26,22 @@ const { about, industries } = Astro.props;
           {industries.tags.map((tag) => <li>{tag}</li>)}
         </ul>
       </div>
-      <div class="about-visual" aria-hidden="true"></div>
+      {/* Decorative, and silent — the file carries no audio track. Nothing is
+          autoplayed from the markup: about-video.js starts it only once the
+          slot is near the viewport and only when motion is welcome, so the
+          2.3MB never loads for a reader who does not get this far. */}
+      <div class="about-visual" aria-hidden="true">
+        <video
+          class="about-video"
+          poster={asset("/assets/video/office-portrait-poster.webp")}
+          preload="none"
+          muted
+          loop
+          playsinline
+        >
+          <source src={asset("/assets/video/office-portrait.mp4")} type="video/mp4" />
+        </video>
+      </div>
     </div>
   </div>
 </section>

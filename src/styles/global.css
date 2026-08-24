@@ -742,7 +742,10 @@ button {
 .about-grid {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  /* The visual runs the height of the copy beside it rather than floating
+     centred against it — its top and bottom line up with the heading block and
+     the last row of pills. */
+  align-items: stretch;
   justify-content: center;
   gap: 32px;
 }
@@ -785,12 +788,47 @@ button {
 
 .about-visual {
   width: 100%;
-  max-width: 454px;
-  aspect-ratio: 454 / 377;
   background: var(--nav-background);
   border-radius: var(--radius-40);
   overflow: hidden;
-  flex: 1 1 320px;
+  /* Takes whatever width the copy leaves and gets its height from the row; the
+     stacked layout puts both back — see Responsive.
+   *
+   * 640 is not a taste call. The video box is 1.2x the slot's height (it hangs
+   * over the top to bury the watermark), so the box is 4:3 — the source's own
+   * ratio — exactly when the slot is 1.6. At or below that, cover crops
+   * sideways and the only thing lost off the top is the 120px band. Let the
+   * slot go wider and cover starts taking the difference out of the vertical
+   * instead: at 1920 unclamped the slot reached 1.915 and the crop ate 159px,
+   * which is into the foreheads. */
+  flex: 1 1 380px;
+  max-width: 640px;
+}
+/* The slot keeps the proportion the design gave it and the film fills it; the
+   row is not rebuilt around the footage.
+ *
+ * The source carries a "Luma AI" watermark across its top 120 of 720 pixels.
+ * Rather than re-encode, the video box is made taller than the slot and pinned
+ * to its bottom, so that band falls outside the slot's overflow: hidden. The
+ * arithmetic only holds while the box stays narrower in ratio than the 4:3
+ * source — true at both the desktop slot (1.00) and the stacked one (1.11) —
+ * because that is what makes cover crop sideways and fill the height exactly.
+ *
+ * Replace the file with a clean export and this becomes one line:
+ * height: 100% and no positioning. */
+.about-visual { position: relative; }
+.about-video {
+  /* 120 of the source's 720. Unitless on purpose: calc() cannot take a
+     percentage away from a bare number, and an invalid height here silently
+     falls back to auto, which drops the box below the slot instead of over
+     it — the watermark comes straight back and nothing errors. */
+  --hidden-top: 0.16667;
+  position: absolute;
+  inset: auto 0 0 0;
+  display: block;
+  width: 100%;
+  height: calc(100% / (1 - var(--hidden-top)));
+  object-fit: cover;
 }
 
 /* Team */
@@ -1479,7 +1517,11 @@ button {
   .about-grid,
   .story-grid,
   .contact-grid { grid-template-columns: 1fr; }
-  .about-visual { order: -1; aspect-ratio: 16/9; }
+  /* Stacked, there is no copy beside it to take a height from, so the box is
+     stated outright. 4/3 is the source's own proportion — the 16/9 that was
+     here framed an empty placeholder and would have cut the heads off. */
+  .about-grid { align-items: center; }
+  .about-visual { order: -1; aspect-ratio: 4 / 3; }
 
   /* Block rather than grid. The desktop layout is three columns — menu,
      reading column, spacer — with each child placed by hand, and collapsing it
@@ -1596,10 +1638,6 @@ button {
   .cta-band { padding: 56px 24px; }
   .site-footer { padding: 48px 24px 24px; }
 
-  /* An empty aria-hidden box: with order: -1 it opened the section with a
-     blank grey rectangle two thirds of a screen tall. Drop this rule once
-     there is something inside it. */
-  .about-visual { display: none; }
 
   /* 46px of panel inset on top of the wrap's 24px left the cards 235px wide
      on a 375px screen — a 28-character measure, with "Scott Hickle" wrapping.
