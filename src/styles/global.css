@@ -162,6 +162,10 @@
   --header-pad: 16px;
   --header-total: calc(var(--header-height) + 2 * var(--header-pad));
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Entrances only. Pure ease-out on purpose: the element is notionally
+     already moving when it appears, so easing into the start would read as a
+     stall. The long tail is what makes it settle rather than stop. */
+  --ease-reveal: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* ==========================================================================
@@ -1497,6 +1501,42 @@ button {
   color: rgba(255, 255, 255, 0.62);
 }
 .footer-bottom a:hover { color: rgba(255, 255, 255, 0.85); }
+
+/* ==========================================================================
+   Reveal on scroll
+   ==========================================================================
+   The hidden half of this is applied by reveal.js, never from here: if the
+   script does not run, .reveal is never added and every element below stays
+   exactly as it would have been. Nothing in this file can hide content on its
+   own.
+
+   Opacity finishes well before the transform so the element is readable while
+   it is still settling, rather than sitting half-there for the whole move.
+   The transform is only ever opacity and transform — both composited, neither
+   touching layout, so a page full of these costs nothing to scroll past. */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px) scale(0.985);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+.reveal {
+  transition:
+    opacity 0.42s var(--ease-reveal) var(--reveal-delay, 0ms),
+    transform 0.64s var(--ease-reveal) var(--reveal-delay, 0ms);
+}
+
+/* The media query above already flattens every duration on the page, but this
+   pair would still leave the element starting from an offset and snapping. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
 
 /* ==========================================================================
    Responsive
