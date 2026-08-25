@@ -1840,3 +1840,36 @@ button {
     margin-inline: auto;
   }
 }
+/* ==========================================================================
+   Hero, on a tall window
+   ==========================================================================
+   Keyed to height, not width: whether there is room to centre depends on the
+   window's height, and the copy is the same height on a phone as on a laptop.
+
+   The region being centred in is what is left under the bar — hence the top
+   padding coming down to exactly the header and the bottom to nothing. The
+   section's own 100px offset and 64px tail were what put the copy above centre
+   with the slack collecting beneath it; with the box symmetrical, centring is
+   the whole rule.
+
+   Below 800px the fixed offset stays, so a short window never pulls the copy
+   up against the bar. .hero keeps min-height rather than height, so when the
+   copy is taller than the window the section grows and nothing is clipped —
+   which is what happens on a phone, where centring is a no-op.
+
+   Last in the file on purpose: it has to out-order the phone block's padding
+   shorthand, and padding-block leaves that rule's inline gutter alone. */
+@media (min-height: 800px) {
+  .hero-inner { justify-content: center; }
+}
+
+/* Collapsing the offset only makes sense where centring has something to
+   centre. On a phone the copy is already taller than the window — the section
+   grows past 100dvh and there is no slack — so dropping the top padding to the
+   header would not centre anything, it would just pull the badge flush under
+   the bar and undo the 160px the phone layout asks for. Above that width the
+   region genuinely has room, and the box has to be symmetrical for centring to
+   land on the middle of what is under the bar. */
+@media (min-height: 800px) and (min-width: 721px) {
+  .hero { padding-block: var(--header-total) 0; }
+}
