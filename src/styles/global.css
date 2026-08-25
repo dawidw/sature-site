@@ -730,6 +730,9 @@ button {
 .section { padding: 200px 0; }
 #testimonials { padding: 0; }
 #faq { padding-bottom: 0; }
+/* The heading is one left-aligned line now, not a display block that needed
+   the section's full 200 above it. */
+#services { padding-top: 40px; }
 
 /* Full bleed, like the hero: the band escapes the layout width while its
    contents keep it. */
@@ -1014,7 +1017,9 @@ button {
   display: grid;
   grid-template-columns: 1fr 552px 1fr;
   align-items: start;
-  margin-top: 320px;
+  /* 320 was the air under a five-line display heading. "Our services" is one
+     48px line, and holding the old figure left a void under it. */
+  margin-top: 80px;
 }
 .services-nav {
   grid-column: 1;
@@ -1626,7 +1631,9 @@ button {
      a desktop; held literally it was most of a phone screen of nothing. */
   .services-layout {
     display: block;
-    margin-top: clamp(48px, 12vw, 120px);
+    /* The clamp existed only to escape the desktop 320. At 80 the base figure
+       suits the phone as well, and the clamp's own ceiling would have run
+       higher than the desktop it was scaling down from. */
   }
   /* Gone below this width. Wrapped, it took three rows off the top of the
      section; as a sticky track it held a bar over the reading column for the
