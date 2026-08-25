@@ -225,6 +225,11 @@ button {
 
 .wrap-narrow { max-width: 760px; }
 
+/* The plate inside carries its own 120px top and bottom, so the section adds
+   80px above it and nothing below — the section's default 200/200 stacked on
+   top of the plate's own air twice over. */
+#about { padding-block: 80px 0; }
+
 /* Cancels the wrap so a band inside it can run edge to edge. Whatever the band
    holds takes over the capping — the same division of labour .team-wrap has
    with .section-dark. */
@@ -1503,6 +1508,28 @@ button {
 .footer-bottom a:hover { color: rgba(255, 255, 255, 0.85); }
 
 /* ==========================================================================
+   Framed headline
+   ==========================================================================
+   A claim held on its own plate. It is a direct child of .wrap, so its width
+   is the wrap's content box — the layout width less its gutters — and its
+   edges land on the same vertical as the header, the contact block and the
+   footer. No max-width of its own: the heading inside keeps the 780px it
+   already had and stays centred.
+
+   A fill rather than an outline. A hairline around a box this long reads as a
+   rule drawn across the page; a plate at one step off white reads as the
+   section having its own ground, which is what the claim wants.
+
+   The inline padding is deliberately lighter than the page gutter on a phone.
+   It is subtracted from an already narrow measure, and 20px is enough to keep
+   the words off the corner radius. */
+.headline-frame {
+  background: var(--background-secondary);
+  border-radius: var(--radius-24);
+  padding: 120px clamp(20px, 4vw, 64px);
+}
+
+/* ==========================================================================
    Reveal on scroll
    ==========================================================================
    The hidden half of this is applied by reveal.js, never from here: if the
@@ -1642,9 +1669,8 @@ button {
   .hero-actions .btn { justify-content: center; }
 
   .section { padding: 72px 0; }
-  /* The two halves of About are one statement read in sequence, so they get
-     the same air above and below rather than the page's default rhythm. */
-  #about { padding-block: 150px; }
+  /* Nothing to override any more: the base rule's 80px 0 is what the phone
+     wants too. */
   /* #about already closes on 150px, so matching it here put 300px between the
      two halves. The top comes off and that one gap does the work. */
   .section-industries { padding-block: 0 150px; }
