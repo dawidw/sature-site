@@ -167,7 +167,6 @@ export interface SiteContent {
     titleRest: string;
     body: string;
     note: string;
-    placeholderLabel: string;
   };
   footer: {
     paragraphs: string[];
