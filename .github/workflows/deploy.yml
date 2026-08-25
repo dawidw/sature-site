@@ -28,11 +28,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build
-        # No custom domain hooked up yet, so GitHub serves this under
-        # /<repo>/ rather than at the root — asset links need that prefix
-        # baked in or every CSS/JS/image request 404s. Drop this once
-        # sature.studio is pointed at Pages and served from the root.
-        run: SITE_BASE=/${{ github.event.repository.name }}/ npm run build
+        run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
