@@ -1,6 +1,7 @@
 ---
 import type { SiteContent } from "../data/types";
 import { TEAM } from "../data/types";
+import { asset } from "../lib/asset";
 
 interface Props {
   services: SiteContent["services"];
@@ -50,7 +51,7 @@ const { services } = Astro.props;
                 <blockquote class="mini-quote">
                   <span class="mini-avatars" aria-hidden="true">
                     {quote.people.map((id) => (
-                      <img src={TEAM[id].photo} alt="" />
+                      <img src={asset(TEAM[id].photo)} alt="" />
                     ))}
                   </span>
                   <p>{quote.text}</p>

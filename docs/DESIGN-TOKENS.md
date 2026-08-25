@@ -72,12 +72,19 @@ Używane na stronie, nieopisane w Figmie. Widoczne też na dole `/styleguide`.
 | `rgba(255,255,255,.6)` (`--text-on-dark-soft`) | tekst drugorzędny na ciemnym tle | guide ma `text/on-dark-muted: #545454`, co na `--background-dark` daje kontrast ~1.6:1 (poniżej WCAG AA); albo poprawić token w Figmie, albo udokumentować wariant alpha |
 | `#383838` | tło aktywnego itemu w nawigacji, tryb ciemny | poza rampą: `neutral-600` (#2a2a2a) było za ciemne, a `neutral-500` (#545454) podwaja jasność — brakuje stopnia pośredniego |
 | `#3d3d3d` (`--border-dark-card`) | obramowanie panelu ze zdjęciami zespołu | design nazywa to `gray/700`; w pliku istnieje druga rampa szarości, której style guide nie opisuje — ujednolicić z `neutral/*` albo udokumentować |
+| `#e2e2e2` (`--border-active`) | obramowanie rozwiniętej karty w FAQ | poza rampą: `neutral-200` (#f2f2f2) to zwykłe obramowanie, a `neutral-300` (#d1d1d1) czytało się jak zaznaczenie — brakuje stopnia pośredniego, dokładnie w połowie |
 | `#3ecf5e` | zielona kropka „Accepting projects" i jej poświata | dodać `status/positive` |
 | gradienty avatarów | inicjały w testimonialach | udokumentować albo zastąpić zdjęciami |
 
-Rozmiary tekstu spoza skali (13px, 14px, 15px, 17px) zostały w kodzie bez
-zmian — snapowanie ich do siedmiostopniowej skali przeprojektowałoby nawigację,
-stopkę i drobne etykiety. To osobna decyzja projektowa.
+Rozmiary tekstu spoza skali (13px, 14px, 15px, 17px) w większości zostały —
+snapowanie wszystkiego do siedmiostopniowej skali przeprojektowałoby nawigację
+i drobne etykiety.
+
+Wyjątek: tekst ciągły w stopce i w sekcji kontaktu został zsnapowany do
+`--fs-body` (16px) razem z `--lh-body` i `--ls-body` — akapit stopki i akapit
+kontaktu szły odpowiednio na 14 i 15px, a linki w kolumnach stopki na 14px.
+Drobny druk na dole stopki (copyright, Privacy Policy) świadomie zostaje na
+14px, żeby utrzymać hierarchię względem tekstu ciągłego nad nim.
 
 ## Co zostało zsnapowane do skali
 

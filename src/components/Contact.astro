@@ -15,9 +15,6 @@ const { contact } = Astro.props;
       <h2 class="section-title">{contact.titleLead}<br />{contact.titleRest}</h2>
       <p>{contact.body}</p>
       <p class="contact-note"><RichText text={contact.note} /></p>
-      <a class={`btn btn-${contact.action.variant}`} href={contact.action.href}>
-        {contact.action.label}
-      </a>
     </div>
     <div class="contact-visual" aria-hidden="true">
       <div class="contact-placeholder">

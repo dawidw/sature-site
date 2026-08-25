@@ -70,6 +70,11 @@ export const v2: SiteContent = {
       src: "/assets/img/team/founders.webp",
       alt: "Dawid Woźniak, Maciej Kownacki and Magda Kerczyńska",
       names: ["Dawid Woźniak", "Maciej Kownacki", "Magda Kerczyńska"],
+      portraits: [
+        { src: "/assets/img/team/founder-dawid.webp", alt: "Dawid Woźniak", name: "Dawid Woźniak" },
+        { src: "/assets/img/team/founder-maciej.webp", alt: "Maciej Kownacki", name: "Maciej Kownacki" },
+        { src: "/assets/img/team/founder-magda.webp", alt: "Magda Kerczyńska", name: "Magda Kerczyńska" },
+      ],
     },
     story: {
       heading: "Our story",
@@ -85,9 +90,8 @@ export const v2: SiteContent = {
   },
 
   services: {
-    title:
-      "Discovery, product design, design systems, AI experience design and no-code development for",
-    titleMuted: "startups, scaleups and b2b saas",
+    title: "We take products from discovery to launch for",
+    titleMuted: "startups, scaleups and B2B SaaS",
     items: [
       {
         id: "svc-discovery",
@@ -320,7 +324,6 @@ export const v2: SiteContent = {
     titleRest: "Let's talk",
     body: "30-minute call. No strings attached. Refreshing your product? Creating new product? Need help with DS or ongoing work?",
     note: "We can help with these, and many more 🙌",
-    action: { label: "Book a call", href: "mailto:hello@sature.studio", variant: "dark" },
     placeholderLabel: "Scheduling widget placeholder",
   },
 

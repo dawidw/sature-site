@@ -1,5 +1,6 @@
 ---
 import BrandLogo from "./BrandLogo.astro";
+import { asset } from "../lib/asset";
 
 // Section links are fixed across versions — they mirror the page's own
 // anchors, so they live here rather than in the content files.
@@ -20,7 +21,7 @@ const links = [
       {
         links.map((link) => (
           <a href={link.href} class={link.active ? "is-active" : undefined}>
-            <img src={`/assets/img/icons/${link.icon}.svg`} alt="" width="20" height="20" />
+            <img src={asset(`/assets/img/icons/${link.icon}.svg`)} alt="" width="20" height="20" />
             {link.label}
           </a>
         ))
@@ -28,7 +29,7 @@ const links = [
     </nav>
 
     <div class="header-actions">
-      <a class="btn btn-dark btn-sm" href="#contact">
+      <a class="btn btn-dark btn-sm" href="#contact" aria-label="Book a call">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
           <path
             fill-rule="evenodd"
@@ -36,17 +37,8 @@ const links = [
             d="M3.96641 2H6.78337C7.01797 2 7.22799 2.14642 7.31057 2.36754L8.40362 5.29419C8.43983 5.39107 8.449 5.49606 8.43015 5.59781L7.88244 8.55628C8.55564 10.1505 9.66758 11.2218 11.5118 12.1828L14.4144 11.6164C14.5174 11.5963 14.624 11.6056 14.7221 11.6433L17.6373 12.7619C17.8557 12.8457 18 13.0566 18 13.2919V16.0026C18 17.2319 16.9244 18.2295 15.6663 17.9538C13.373 17.4513 9.12438 16.1741 6.14889 13.1778C3.29871 10.3077 2.34378 6.34286 2.02231 4.19973C1.8389 2.97688 2.8128 2 3.96641 2Z"
             fill="currentColor"></path>
         </svg>
-        Book a call
+        <span>Book a call</span>
       </a>
-      <button
-        class="nav-toggle"
-        id="nav-toggle"
-        aria-expanded="false"
-        aria-controls="main-nav"
-        aria-label="Toggle menu"
-      >
-        <span></span><span></span><span></span>
-      </button>
     </div>
   </div>
 </header>

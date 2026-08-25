@@ -120,6 +120,12 @@ export interface SiteContent {
       alt: string;
       /** One per panel, left to right, laid over the picture. */
       names: string[];
+      /**
+       * The same three people as single portraits, in the same order. The
+       * composite is one wide frame; below 720px there is no width to seat
+       * three panels side by side, so the stack is used instead.
+       */
+      portraits: { src: string; alt: string; name: string }[];
     };
     story: {
       heading: string;
@@ -161,7 +167,6 @@ export interface SiteContent {
     titleRest: string;
     body: string;
     note: string;
-    action: Action;
     placeholderLabel: string;
   };
   footer: {
