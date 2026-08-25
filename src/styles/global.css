@@ -1676,10 +1676,8 @@ button {
   .hero-actions .btn { justify-content: center; }
 
   .section { padding: 72px 0; }
-  /* Nothing to override any more: the base rule's 80px 0 is what the phone
-     wants too. */
-  /* #about already closes on 150px, so matching it here put 300px between the
-     two halves. The top comes off and that one gap does the work. */
+  /* #about is the plate now, and it closes on the plate's own 120px, so this
+     half opens straight underneath and carries only its own tail. */
   .section-industries { padding-block: 0 150px; }
   /* Same voice as the heading in the half above — on a phone the two sit one
      after the other with nothing between them, and two different display
