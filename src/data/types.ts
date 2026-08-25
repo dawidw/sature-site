@@ -135,8 +135,6 @@ export interface SiteContent {
   };
   services: {
     title: string;
-    /** Tail of the heading, set in muted grey. */
-    titleMuted: string;
     items: Service[];
   };
   testimonials: {

@@ -11,9 +11,15 @@ const { about, industries } = Astro.props;
 ---
 
 <section class="section" id="about">
-  <div class="wrap">
-    <p class="eyebrow-serif center">{about.eyebrow}</p>
-    <h2 class="section-title display center">{about.title}</h2>
+  {/* wrap-gutter-80 so the framed claim lands on the same vertical as the
+      header, the industries row, the contact block and the footer. On the
+      plain wrap it sat on the centred layout width instead, 18px further out
+      at 1440 — invisible on its own, obvious once the frame drew the edge. */}
+  <div class="wrap wrap-gutter-80">
+    <div class="headline-frame">
+      <p class="eyebrow-serif center">{about.eyebrow}</p>
+      <h2 class="section-title display center">{about.title}</h2>
+    </div>
   </div>
 </section>
 

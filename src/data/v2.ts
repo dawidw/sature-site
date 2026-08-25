@@ -90,8 +90,7 @@ export const v2: SiteContent = {
   },
 
   services: {
-    title: "We take products from discovery to launch for",
-    titleMuted: "startups, scaleups and B2B SaaS",
+    title: "Our services",
     items: [
       {
         id: "svc-discovery",

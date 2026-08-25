@@ -162,6 +162,10 @@
   --header-pad: 16px;
   --header-total: calc(var(--header-height) + 2 * var(--header-pad));
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Entrances only. Pure ease-out on purpose: the element is notionally
+     already moving when it appears, so easing into the start would read as a
+     stall. The long tail is what makes it settle rather than stop. */
+  --ease-reveal: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* ==========================================================================
@@ -220,6 +224,11 @@ button {
 }
 
 .wrap-narrow { max-width: 760px; }
+
+/* The plate inside carries its own 120px top and bottom, so the section adds
+   80px above it and nothing below — the section's default 200/200 stacked on
+   top of the plate's own air twice over. */
+#about { padding-block: 80px 0; }
 
 /* Cancels the wrap so a band inside it can run edge to edge. Whatever the band
    holds takes over the capping — the same division of labour .team-wrap has
@@ -721,6 +730,9 @@ button {
 .section { padding: 200px 0; }
 #testimonials { padding: 0; }
 #faq { padding-bottom: 0; }
+/* The heading is one left-aligned line now, not a display block that needed
+   the section's full 200 above it. */
+#services { padding-top: 40px; }
 
 /* Full bleed, like the hero: the band escapes the layout width while its
    contents keep it. */
@@ -1005,7 +1017,9 @@ button {
   display: grid;
   grid-template-columns: 1fr 552px 1fr;
   align-items: start;
-  margin-top: 320px;
+  /* 320 was the air under a five-line display heading. "Our services" is one
+     48px line, and holding the old figure left a void under it. */
+  margin-top: 80px;
 }
 .services-nav {
   grid-column: 1;
@@ -1492,6 +1506,64 @@ button {
 .footer-bottom a:hover { color: rgba(255, 255, 255, 0.85); }
 
 /* ==========================================================================
+   Framed headline
+   ==========================================================================
+   A claim held on its own plate. It is a direct child of .wrap, so its width
+   is the wrap's content box — the layout width less its gutters — and its
+   edges land on the same vertical as the header, the contact block and the
+   footer. No max-width of its own: the heading inside keeps the 780px it
+   already had and stays centred.
+
+   A fill rather than an outline. A hairline around a box this long reads as a
+   rule drawn across the page; a plate at one step off white reads as the
+   section having its own ground, which is what the claim wants.
+
+   The inline padding is deliberately lighter than the page gutter on a phone.
+   It is subtracted from an already narrow measure, and 20px is enough to keep
+   the words off the corner radius. */
+.headline-frame {
+  background: var(--background-secondary);
+  border-radius: var(--radius-24);
+  padding: 120px clamp(20px, 4vw, 64px);
+}
+
+/* ==========================================================================
+   Reveal on scroll
+   ==========================================================================
+   The hidden half of this is applied by reveal.js, never from here: if the
+   script does not run, .reveal is never added and every element below stays
+   exactly as it would have been. Nothing in this file can hide content on its
+   own.
+
+   Opacity finishes well before the transform so the element is readable while
+   it is still settling, rather than sitting half-there for the whole move.
+   The transform is only ever opacity and transform — both composited, neither
+   touching layout, so a page full of these costs nothing to scroll past. */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px) scale(0.985);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+.reveal {
+  transition:
+    opacity 0.42s var(--ease-reveal) var(--reveal-delay, 0ms),
+    transform 0.64s var(--ease-reveal) var(--reveal-delay, 0ms);
+}
+
+/* The media query above already flattens every duration on the page, but this
+   pair would still leave the element starting from an offset and snapping. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ==========================================================================
    Responsive
    ==========================================================================
    Four bands, narrowest last so the later ones win:
@@ -1552,7 +1624,9 @@ button {
      a desktop; held literally it was most of a phone screen of nothing. */
   .services-layout {
     display: block;
-    margin-top: clamp(48px, 12vw, 120px);
+    /* The clamp existed only to escape the desktop 320. At 80 the base figure
+       suits the phone as well, and the clamp's own ceiling would have run
+       higher than the desktop it was scaling down from. */
   }
   /* Gone below this width. Wrapped, it took three rows off the top of the
      section; as a sticky track it held a bar over the reading column for the
@@ -1595,11 +1669,8 @@ button {
   .hero-actions .btn { justify-content: center; }
 
   .section { padding: 72px 0; }
-  /* The two halves of About are one statement read in sequence, so they get
-     the same air above and below rather than the page's default rhythm. */
-  #about { padding-block: 150px; }
-  /* #about already closes on 150px, so matching it here put 300px between the
-     two halves. The top comes off and that one gap does the work. */
+  /* #about is the plate now, and it closes on the plate's own 120px, so this
+     half opens straight underneath and carries only its own tail. */
   .section-industries { padding-block: 0 150px; }
   /* Same voice as the heading in the half above — on a phone the two sit one
      after the other with nothing between them, and two different display
@@ -1759,4 +1830,37 @@ button {
     max-width: calc(var(--layout-max) - 160px);
     margin-inline: auto;
   }
+}
+/* ==========================================================================
+   Hero, on a tall window
+   ==========================================================================
+   Keyed to height, not width: whether there is room to centre depends on the
+   window's height, and the copy is the same height on a phone as on a laptop.
+
+   The region being centred in is what is left under the bar — hence the top
+   padding coming down to exactly the header and the bottom to nothing. The
+   section's own 100px offset and 64px tail were what put the copy above centre
+   with the slack collecting beneath it; with the box symmetrical, centring is
+   the whole rule.
+
+   Below 800px the fixed offset stays, so a short window never pulls the copy
+   up against the bar. .hero keeps min-height rather than height, so when the
+   copy is taller than the window the section grows and nothing is clipped —
+   which is what happens on a phone, where centring is a no-op.
+
+   Last in the file on purpose: it has to out-order the phone block's padding
+   shorthand, and padding-block leaves that rule's inline gutter alone. */
+@media (min-height: 800px) {
+  .hero-inner { justify-content: center; }
+}
+
+/* Collapsing the offset only makes sense where centring has something to
+   centre. On a phone the copy is already taller than the window — the section
+   grows past 100dvh and there is no slack — so dropping the top padding to the
+   header would not centre anything, it would just pull the badge flush under
+   the bar and undo the 160px the phone layout asks for. Above that width the
+   region genuinely has room, and the box has to be symmetrical for centring to
+   land on the middle of what is under the bar. */
+@media (min-height: 800px) and (min-width: 721px) {
+  .hero { padding-block: var(--header-total) 0; }
 }
