@@ -315,7 +315,6 @@ export const v1: SiteContent = {
     titleRest: "Let's talk",
     body: "30-minute call. No strings attached. Refreshing your product? Creating new product? Need help with DS or ongoing work?",
     note: "We can help with these, and many more 🙌",
-    placeholderLabel: "Scheduling widget placeholder",
   },
 
   footer: {
