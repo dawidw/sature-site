@@ -370,6 +370,11 @@ button {
    between them, so crossing from a dark section to a light one reads as a
    change of light rather than a cut. The pill's own travel is timed
    separately, on its transform. */
+/* .site-header itself is in the list for the frosted plate below 1024: without
+   it the background snaps in at the first scrolled pixel while the wordmark and
+   the call button ease across. Above that width the bar has no background, so
+   this transitions nothing. */
+.site-header,
 .site-header .brand,
 .site-header .brand-glyph,
 .site-header .main-nav,
@@ -1587,6 +1592,23 @@ button {
    --------------------------------------------------------------------------- */
 @media (max-width: 1023.98px) {
   .main-nav { display: none; }
+
+  /* Nothing at rest, a frosted plate once the page moves under it. The bar has
+     no surface of its own, so the wordmark was landing straight on whatever
+     was travelling past — legible in isolation, a mess in motion.
+     .site-header carries no background above this width, so none of this
+     reaches the desktop bar. The blur is the reason it is scoped here at all:
+     .main-nav notes what a live backdrop costs Chrome per frame, and the hero
+     canvas is exactly that backdrop for the first screen of scrolling. Held to
+     the narrow layout, where the bar is two elements rather than a menu. */
+  .site-header.is-scrolled {
+    background: color-mix(in oklab, var(--surface-primary) 72%, transparent);
+    -webkit-backdrop-filter: saturate(1.6) blur(12px);
+    backdrop-filter: saturate(1.6) blur(12px);
+  }
+  .site-header.is-scrolled.is-on-dark {
+    background: color-mix(in oklab, var(--background-dark) 62%, transparent);
+  }
 }
 
 /* --- 721..1023: the tablet middle ----------------------------------------
