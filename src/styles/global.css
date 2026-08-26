@@ -744,7 +744,8 @@ button {
 .team-wrap {
   max-width: none;
   padding-inline: 0;
-  padding-block: 32px;
+  /* Opens flush against the section above it; only the tail is kept. */
+  padding-block: 0 32px;
 }
 
 .section-dark {
