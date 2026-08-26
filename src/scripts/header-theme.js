@@ -24,6 +24,12 @@
       return rect.top <= line && rect.bottom >= line;
     });
     header.classList.toggle("is-on-dark", onDark);
+
+    // The bar carries no surface, which is fine while the page is at rest but
+    // leaves the wordmark sitting on whatever is travelling underneath it. The
+    // flag drives the frosted plate below 1024 — see the media query. Eight
+    // pixels rather than zero so a rubber-band overscroll does not flicker it.
+    header.classList.toggle("is-scrolled", window.scrollY > 8);
   }
 
   function schedule() {

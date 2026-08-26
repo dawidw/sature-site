@@ -5,6 +5,7 @@ import Hero from "../components/Hero.astro";
 import About from "../components/About.astro";
 import Team from "../components/Team.astro";
 import Services from "../components/Services.astro";
+import Stages from "../components/Stages.astro";
 import Testimonials from "../components/Testimonials.astro";
 import Work from "../components/Work.astro";
 import Cta from "../components/Cta.astro";
@@ -15,7 +16,8 @@ import { v2 as content } from "../data/v2";
 
 <BaseLayout meta={content.meta} footer={content.footer}>
   <Hero hero={content.hero} />
-  <About about={content.about} industries={content.industries} />
+  <About industries={content.industries} />
+  <Stages stages={content.stages} />
   <Team team={content.team} />
   <Services services={content.services} />
   <Testimonials testimonials={content.testimonials} />

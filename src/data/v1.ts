@@ -37,10 +37,6 @@ export const v1: SiteContent = {
     ],
   },
 
-  about: {
-    eyebrow: "We're a design partner you can trust",
-    title: "Sature helps companies deliver great experiences driving business outcomes.",
-  },
 
   industries: {
     lead: "Sature is a boutique design studio with combined 30 years of experience designing for:",
@@ -258,6 +254,35 @@ export const v1: SiteContent = {
     titleRest: "matters for ",
     titleStrong: "your business",
     action: { label: "Book a call", href: "#contact", variant: "light" },
+  },
+
+  stages: {
+    items: [
+      {
+        eyebrow: "0 → 1 & Product discovery",
+        title: "Early stage",
+        body:
+          "We collaborate with founders and stakeholders to create innovative solution at the forefront of design and technology. We iterate relentlessly with speed and wit to meet high standards of our clients. All that with care needed to retain happy customers.",
+        points: [
+          "Visualize your ideas and test with your users",
+          "Rapid prototyping and design iterations",
+          "Design leadership for your team",
+          "Support with finding traction and product-market fit",
+        ],
+      },
+      {
+        eyebrow: "Scaleups | B2B SaaS | Enterprise",
+        title: "Growing businesses",
+        body:
+          "We step inside businesses and move fast where it matters. We move without disturbing existing businesses to help them on their growth trajectory by optimizing their core flows, building scalable design systems and improving existing design processes.",
+        points: [
+          "Revamp product experience to help with growth",
+          "Streamline design system solutions",
+          "Increase customer satisfaction by addressing pain points",
+          "Support with finding traction and product-market fit",
+        ],
+      },
+    ],
   },
 
   faq: {

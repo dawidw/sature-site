@@ -34,12 +34,13 @@
   // where the items are siblings a reader takes in as a set; everything else
   // arrives on its own and needs no offset.
   const GROUPS = [
-    // The framed headlines animate as one object. Revealing their contents
-    // separately would land the border first and the words after it.
-    { sel: ".headline-frame" },
     { sel: "#services > .wrap > .section-title" },
     { sel: ".about-copy p, .about-visual", stagger: true },
     { sel: ".tag-list li", stagger: true },
+    // Both halves of a stage row, offset against each other. They share a
+    // parent, so the stagger is per row rather than running on down the
+    // section — each row arrives on its own as it is reached.
+    { sel: ".stage-copy, .stage-points", stagger: true },
     { sel: ".section-dark > .section-title, .founders, .founders-stack" },
     { sel: ".story-copy, .stats", stagger: true },
     { sel: ".service-block" },

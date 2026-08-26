@@ -101,10 +101,6 @@ export interface SiteContent {
     description: string;
   };
   hero: Hero;
-  about: {
-    eyebrow: string;
-    title: string;
-  };
   industries: {
     lead: string;
     tags: string[];
@@ -155,6 +151,15 @@ export interface SiteContent {
     titleRest: string;
     titleStrong: string;
     action: Action;
+  };
+  /** Engagement stages, each a copy column beside its own checklist. */
+  stages: {
+    items: {
+      eyebrow: string;
+      title: string;
+      body: string;
+      points: string[];
+    }[];
   };
   faq: {
     title: string;

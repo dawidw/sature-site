@@ -225,10 +225,7 @@ button {
 
 .wrap-narrow { max-width: 760px; }
 
-/* The plate inside carries its own 120px top and bottom, so the section adds
-   80px above it and nothing below — the section's default 200/200 stacked on
-   top of the plate's own air twice over. */
-#about { padding-block: 80px 0; }
+
 
 /* Cancels the wrap so a band inside it can run edge to edge. Whatever the band
    holds takes over the capping — the same division of labour .team-wrap has
@@ -370,6 +367,11 @@ button {
    between them, so crossing from a dark section to a light one reads as a
    change of light rather than a cut. The pill's own travel is timed
    separately, on its transform. */
+/* .site-header itself is in the list for the frosted plate below 1024: without
+   it the background snaps in at the first scrolled pixel while the wordmark and
+   the call button ease across. Above that width the bar has no background, so
+   this transitions nothing. */
+.site-header,
 .site-header .brand,
 .site-header .brand-glyph,
 .site-header .main-nav,
@@ -739,7 +741,8 @@ button {
 .team-wrap {
   max-width: none;
   padding-inline: 0;
-  padding-block: 32px;
+  /* Opens flush against the section above it; only the tail is kept. */
+  padding-block: 0 32px;
 }
 
 .section-dark {
@@ -1506,26 +1509,89 @@ button {
 .footer-bottom a:hover { color: rgba(255, 255, 255, 0.85); }
 
 /* ==========================================================================
-   Framed headline
+   Stages
    ==========================================================================
-   A claim held on its own plate. It is a direct child of .wrap, so its width
-   is the wrap's content box — the layout width less its gutters — and its
-   edges land on the same vertical as the header, the contact block and the
-   footer. No max-width of its own: the heading inside keeps the 780px it
-   already had and stays centred.
+   Two rows, each a copy column beside its own checklist, split by a hairline.
 
-   A fill rather than an outline. A hairline around a box this long reads as a
-   rule drawn across the page; a plate at one step off white reads as the
-   section having its own ground, which is what the claim wants.
+   The columns are fluid rather than the design's fixed 552 + 24 + 552. Held
+   literally that would centre an 1128px island inside the 1280 the gutter
+   gives us, leaving the band's edges out of line with every other section;
+   equal fractions keep them on the page's own vertical. The 24px between them
+   is the design's.
 
-   The inline padding is deliberately lighter than the page gutter on a phone.
-   It is subtracted from an already narrow measure, and 20px is enough to keep
-   the words off the corner radius. */
-.headline-frame {
-  background: var(--background-secondary);
-  border-radius: var(--radius-24);
-  padding: 120px clamp(20px, 4vw, 64px);
+   80px sits above and below the rule, which is what the design leaves either
+   side of it once the checklist's own height is taken into account.
+
+   This band is the one gradient-bg.js paints light — see the LIGHT params
+   there. Everything that is not the canvas is lifted over it. */
+.stages {
+  position: relative;
+  overflow: hidden;
 }
+.stages > :not(.bg-canvas) {
+  position: relative;
+  z-index: 1;
+}
+/* A suggestion of the field rather than the field itself: at this strength it
+   reads as a tint on the page instead of a surface of its own, and the copy
+   sitting straight on it keeps a near-white ground. */
+.stages > .bg-canvas { opacity: 0.15; }
+
+.stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: center;
+}
+.stage + .stage {
+  margin-top: 80px;
+  padding-top: 80px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* 40px between the heading group and the paragraph, 8px inside the group —
+   nested, so the two distances stay independent. */
+.stage-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.stage-head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.stage-eyebrow {
+  font-size: var(--fs-label);
+  line-height: var(--lh-label);
+  letter-spacing: var(--ls-label);
+  font-weight: var(--weight-medium);
+  color: var(--text-muted);
+}
+.stage-title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fs-h1);
+  line-height: var(--lh-h1);
+  letter-spacing: var(--ls-h1);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+.stage-body {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
+  color: var(--text-primary);
+}
+
+.stage-points {
+  background: var(--background-secondary);
+  border-radius: var(--radius-16);
+  padding: 24px;
+}
+/* The list is the one the service blocks use; only its reading-width cap has
+   to go, since here it is already inside a column. */
+.stage-points .check-list { max-width: none; }
 
 /* ==========================================================================
    Reveal on scroll
@@ -1587,6 +1653,23 @@ button {
    --------------------------------------------------------------------------- */
 @media (max-width: 1023.98px) {
   .main-nav { display: none; }
+
+  /* Nothing at rest, a frosted plate once the page moves under it. The bar has
+     no surface of its own, so the wordmark was landing straight on whatever
+     was travelling past — legible in isolation, a mess in motion.
+     .site-header carries no background above this width, so none of this
+     reaches the desktop bar. The blur is the reason it is scoped here at all:
+     .main-nav notes what a live backdrop costs Chrome per frame, and the hero
+     canvas is exactly that backdrop for the first screen of scrolling. Held to
+     the narrow layout, where the bar is two elements rather than a menu. */
+  .site-header.is-scrolled {
+    background: color-mix(in oklab, var(--surface-primary) 72%, transparent);
+    -webkit-backdrop-filter: saturate(1.6) blur(12px);
+    backdrop-filter: saturate(1.6) blur(12px);
+  }
+  .site-header.is-scrolled.is-on-dark {
+    background: color-mix(in oklab, var(--background-dark) 62%, transparent);
+  }
 }
 
 /* --- 721..1023: the tablet middle ----------------------------------------
@@ -1669,9 +1752,22 @@ button {
   .hero-actions .btn { justify-content: center; }
 
   .section { padding: 72px 0; }
-  /* #about is the plate now, and it closes on the plate's own 120px, so this
-     half opens straight underneath and carries only its own tail. */
-  .section-industries { padding-block: 0 150px; }
+  /* One column, the checklist under the copy it belongs to. The 80px either
+     side of the rule comes in with it — at this width that is most of a screen
+     between two rows. */
+  .stage {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+  .stage + .stage {
+    margin-top: 48px;
+    padding-top: 48px;
+  }
+  .stage-copy { gap: 24px; }
+  /* 150px both ways. The top used to be zero because the claim above closed
+     on 150 and the two stacked; with that section gone this is the first thing
+     under the hero and has to open on its own air. */
+  .section-industries { padding-block: 150px; }
   /* Same voice as the heading in the half above — on a phone the two sit one
      after the other with nothing between them, and two different display
      sizes read as two unrelated sections. */
@@ -1711,16 +1807,16 @@ button {
   }
   .founders-stack li { width: 100%; max-width: 450px; }
   .founders-stack figure { position: relative; margin: 0; }
-  /* At their own 0.81 the portraits stood 465px tall on a 375 screen — three
-     of them made the band a scroll of its own. Cropped to 4/3 and held high in
-     the frame, which is where the faces are. */
+  /* Shown square, which is what the files are. The 4/3 crop that used to be
+     here existed to push a watermark band off the top of a taller source; the
+     portraits it applied to are gone, and holding it now would only cut the
+     tops of heads off. The rounded corners are baked into the files, so the
+     box must not crop them either. */
   .founders-stack img {
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    object-position: center 32%;
+    aspect-ratio: 1 / 1;
   }
   /* Laid over the portrait where the composite puts them, and smaller: at 24px
      a name was most of the width of the picture it belongs to. The corners and
