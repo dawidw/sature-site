@@ -1711,16 +1711,16 @@ button {
   }
   .founders-stack li { width: 100%; max-width: 450px; }
   .founders-stack figure { position: relative; margin: 0; }
-  /* At their own 0.81 the portraits stood 465px tall on a 375 screen — three
-     of them made the band a scroll of its own. Cropped to 4/3 and held high in
-     the frame, which is where the faces are. */
+  /* Shown square, which is what the files are. The 4/3 crop that used to be
+     here existed to push a watermark band off the top of a taller source; the
+     portraits it applied to are gone, and holding it now would only cut the
+     tops of heads off. The rounded corners are baked into the files, so the
+     box must not crop them either. */
   .founders-stack img {
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    object-position: center 32%;
+    aspect-ratio: 1 / 1;
   }
   /* Laid over the portrait where the composite puts them, and smaller: at 24px
      a name was most of the width of the picture it belongs to. The corners and
