@@ -1,0 +1,42 @@
+---
+import type { SiteContent } from "../data/types";
+
+interface Props {
+  stages: SiteContent["stages"];
+}
+
+const { stages } = Astro.props;
+---
+
+{/*
+  The band the gradient canvas is painted into — gradient-bg.js targets .stages
+  and appends a .bg-canvas, which is why the section is a positioned, clipped
+  box and everything that is not that canvas is lifted above it. Same
+  arrangement the hero and the CTA band use.
+*/}
+<section class="section stages" id="stages">
+  <div class="wrap wrap-gutter-80">
+    <ul class="stage-list">
+      {
+        stages.items.map((stage) => (
+          <li class="stage">
+            <div class="stage-copy">
+              <div class="stage-head">
+                <p class="stage-eyebrow">{stage.eyebrow}</p>
+                <h3 class="stage-title">{stage.title}</h3>
+              </div>
+              <p class="stage-body">{stage.body}</p>
+            </div>
+            <div class="stage-points">
+              <ul class="check-list">
+                {stage.points.map((point) => (
+                  <li>{point}</li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
