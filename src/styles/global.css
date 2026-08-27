@@ -1423,7 +1423,7 @@ button {
      would do nothing. overflow-y rather than hidden, or the booking UI below
      the fold becomes unreachable. */
   min-height: 600px;
-  max-height: 700px;
+  max-height: 750px;
   /* 75px narrower than its column. Anchored right, so the far edge stays on
      the section's gutter and the space opens between the copy and the
      calendar rather than pulling it off that line. */
