@@ -1422,8 +1422,13 @@ button {
      maximum so the two can't fight — a min taller than a max wins, and the cap
      would do nothing. overflow-y rather than hidden, or the booking UI below
      the fold becomes unreachable. */
-  min-height: 500px;
-  max-height: 600px;
+  min-height: 600px;
+  max-height: 700px;
+  /* 75px narrower than its column. Anchored right, so the far edge stays on
+     the section's gutter and the space opens between the copy and the
+     calendar rather than pulling it off that line. */
+  width: calc(100% - 75px);
+  margin-left: auto;
   overflow-y: auto;
   border-radius: var(--radius-40);
   border: 1px solid var(--border-default);
