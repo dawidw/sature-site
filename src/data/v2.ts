@@ -64,12 +64,12 @@ export const v2: SiteContent = {
     title: "Nice to meet you 👋, we're",
     photo: {
       src: "/assets/img/team/founders.webp",
-      alt: "Dawid Woźniak, Maciej Kownacki and Magda Kerczyńska",
-      names: ["Dawid Woźniak", "Maciej Kownacki", "Magda Kerczyńska"],
+      alt: "Dawid Woźniak, Maciej Kownacki and Magda Kercz",
+      names: ["Dawid Woźniak", "Maciej Kownacki", "Magda Kercz"],
       portraits: [
         { src: "/assets/img/team/founder-dawid.webp", alt: "Dawid Woźniak", name: "Dawid Woźniak" },
         { src: "/assets/img/team/founder-maciej.webp", alt: "Maciej Kownacki", name: "Maciej Kownacki" },
-        { src: "/assets/img/team/founder-magda.webp", alt: "Magda Kerczyńska", name: "Magda Kerczyńska" },
+        { src: "/assets/img/team/founder-magda.webp", alt: "Magda Kercz", name: "Magda Kercz" },
       ],
     },
     story: {

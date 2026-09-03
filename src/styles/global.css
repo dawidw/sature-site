@@ -1417,11 +1417,22 @@ button {
 .contact-copy .btn { margin-top: 26px; }
 
 .contact-cal {
-  min-height: 560px;
+  /* Capped: Cal's month view grows to its own content, which runs well past
+     the column beside it once availability loads. The minimum sits below the
+     maximum so the two can't fight — a min taller than a max wins, and the cap
+     would do nothing. overflow-y rather than hidden, or the booking UI below
+     the fold becomes unreachable. */
+  min-height: 600px;
+  max-height: 750px;
+  /* 75px narrower than its column. Anchored right, so the far edge stays on
+     the section's gutter and the space opens between the copy and the
+     calendar rather than pulling it off that line. */
+  width: calc(100% - 75px);
+  margin-left: auto;
+  overflow-y: auto;
   border-radius: var(--radius-40);
   border: 1px solid var(--border-default);
   background: var(--surface-muted);
-  overflow: hidden;
 }
 
 /* ==========================================================================
@@ -1588,6 +1599,7 @@ button {
   background: var(--background-secondary);
   border-radius: var(--radius-16);
   padding: 24px;
+  box-shadow: var(--shadow-sm);
 }
 /* The list is the one the service blocks use; only its reading-width cap has
    to go, since here it is already inside a column. */
