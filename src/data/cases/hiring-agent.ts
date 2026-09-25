@@ -24,10 +24,10 @@ export const hiringAgent: CaseStudy = {
     titleRest: "for a leading HR platform in EU",
     badges: ["AI agent", "2026", "UX", "Vibe-coded prototype"],
     image: {
-      src: `${DIR}/hero.webp`,
-      width: 3024,
-      height: 1028,
-      alt: "The hiring agent chat panel open over the Tellent candidate pipeline",
+      src: `${DIR}/final-pipeline.jpg`,
+      width: 1844,
+      height: 1200,
+      alt: "The hiring agent open over the Tellent candidate pipeline, offering to report on the role",
     },
   },
 
@@ -190,15 +190,15 @@ export const hiringAgent: CaseStudy = {
             src: `${DIR}/final-overview.jpg`,
             width: 1844,
             height: 1200,
-            alt: "The agent's overview: a summary of the role, its candidates and what needs attention",
+            alt: "A spread of the agent's windows: its greeting, the drafts it produces and its recent conversations",
           },
         },
         {
           shot: {
-            src: `${DIR}/final-pipeline.jpg`,
+            src: `${DIR}/final-actions.jpg`,
             width: 1844,
             height: 1200,
-            alt: "The agent working inside the candidate pipeline",
+            alt: "The agent drafting interview ice-breakers, and asking what to do with them",
           },
         },
         {
@@ -206,7 +206,7 @@ export const hiringAgent: CaseStudy = {
             title: "One agent, two ways in",
             body: [
               {
-                p: "The agent answers where the work already happens — in the pipeline and on the candidate — rather than asking anyone to go somewhere else to ask a question.",
+                p: "The agent answers where the work already happens — in the pipeline and on the candidate — rather than asking anyone to go somewhere else to ask a question. What it drafts lands back in the record, not in a chat log.",
               },
             ],
           },

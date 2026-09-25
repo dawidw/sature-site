@@ -14,8 +14,8 @@ A case study is content, not markup. `src/components/case/` holds the template;
    load and nothing jumps.
 3. Add it to `caseStudies` in `src/data/cases/index.ts`.
 
-Its page is then live at `/work/<slug>` — `src/pages/work/[slug].astro` builds
-one page per entry. The project card for it becomes a link everywhere the
+Its page is then live at `/portfolio/<slug>` — `src/pages/portfolio/[slug].astro`
+builds one page per entry, and `/portfolio` lists every project. The project card for it becomes a link everywhere the
 moment the case study is in that list, and not before.
 
 ## Sections
@@ -34,6 +34,8 @@ A case study is a list of sections, rendered in order:
 
 `ProjectGrid.astro` takes any list of `Project` and draws the cards. The foot
 of every case study uses it for the other projects; a page can use it too:
+
+The portfolio page is that call; any other page can make the same one:
 
 ```astro
 ---

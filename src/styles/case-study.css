@@ -49,7 +49,7 @@
      wrap's, not the narrower column the copy keeps — times this picture's own
      ratio, halved. The hero has no tail of its own, so the picture's foot and
      the hero's are the same line. */
-  inset: 0 0 calc(min(var(--max-w), 100vw - 2 * clamp(24px, 4vw, 64px)) * var(--case-shot-ratio, 0.34) / 2);
+  inset: 0 0 calc(min(922px, 100vw - 2 * clamp(24px, 4vw, 64px)) * var(--case-shot-ratio, 0.65) / 2);
   background: var(--background-dark);
 }
 
@@ -132,9 +132,10 @@
 
 .case-hero-shot {
   display: block;
-  width: 100%;
+  width: min(922px, 100%);
   height: auto;
   margin-top: var(--space-48);
+  margin-inline: auto;
   border-radius: var(--radius-16);
   box-shadow: var(--shadow-lg);
 }
@@ -401,6 +402,26 @@
   }
 }
 
+/* --------------------------------------------------- the portfolio page --- */
+
+.portfolio-intro {
+  padding-top: calc(var(--header-total) + var(--space-64));
+  padding-bottom: var(--space-48);
+}
+
+.portfolio-intro > .wrap {
+  max-width: calc(922px + 2 * clamp(24px, 4vw, 64px));
+}
+
+.portfolio-lead {
+  max-width: 560px;
+  margin: var(--space-16) 0 0;
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body-lg);
+  letter-spacing: var(--ls-body-lg);
+  color: var(--text-secondary);
+}
+
 /* -------------------------------------------------------- small screens --- */
 
 @media (max-width: 860px) {
@@ -408,6 +429,7 @@
   .case-hero-shot { margin-top: var(--space-32); }
   .case-section { padding-bottom: var(--space-80); }
   .case-main > .case-section:first-child { padding-top: var(--space-48); }
+  .portfolio-intro { padding-top: calc(var(--header-total) + var(--space-32)); }
 
   .case-grid,
   .project-grid {

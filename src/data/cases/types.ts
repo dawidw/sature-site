@@ -56,7 +56,7 @@ export interface CaseHero {
 }
 
 export interface CaseStudy {
-  /** The URL is /work/<slug>. */
+  /** The URL is /portfolio/<slug>. */
   slug: string;
   meta: { title: string; description: string };
   hero: CaseHero;

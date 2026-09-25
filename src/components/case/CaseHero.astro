@@ -7,11 +7,11 @@ import { asset } from "../../lib/asset";
 
 interface Props {
   hero: CaseHero;
-  /** Where the back link goes; the work section of the home page by default. */
+  /** Where the back link goes; the portfolio page by default. */
   backHref?: string;
 }
 
-const { hero, backHref = "/#work" } = Astro.props;
+const { hero, backHref = "/portfolio" } = Astro.props;
 
 // The band is cut at the middle of the picture, whatever width the page is,
 // so the ratio of this case's own picture has to reach the stylesheet.
@@ -31,7 +31,7 @@ const shotRatio = hero.image.height / hero.image.width;
           stroke-linecap="round"
           stroke-linejoin="round"></path>
       </svg>
-      <span>Back to work</span>
+      <span>All work</span>
     </a>
 
     <p class="case-hero-eyebrow">{hero.eyebrow}</p>

@@ -47,7 +47,7 @@ export const projects: Project[] = [
   },
 ].map((project) => ({
   ...project,
-  href: caseStudies.some((study) => study.slug === project.slug) ? `/work/${project.slug}` : undefined,
+  href: caseStudies.some((study) => study.slug === project.slug) ? `/portfolio/${project.slug}` : undefined,
 }));
 
 /** Every project but the one being read. */
@@ -56,3 +56,13 @@ export function otherProjects(currentSlug: string): Project[] {
 }
 
 export const OTHER_PROJECTS_HEADING = "More of our work";
+
+/** The copy at the head of the portfolio page. */
+export const portfolioPage = {
+  meta: {
+    title: "Our work — Sature",
+    description: "Case studies from Sature: what we were asked for, what we designed, and what it changed.",
+  },
+  title: "Our work",
+  lead: "A handful of the products we have designed, and what changed once they shipped.",
+};
