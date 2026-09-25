@@ -1,0 +1,26 @@
+---
+// A row of project cards under a heading. Used at the foot of a case study
+// and ready for any page that wants to show the work — pass it the projects
+// it should show.
+import "../../styles/case-study.css";
+import type { Project } from "../../data/cases/types";
+import ProjectCard from "./ProjectCard.astro";
+
+interface Props {
+  projects: Project[];
+  heading?: string;
+  /** The id an anchor can reach it by, when it sits on a longer page. */
+  id?: string;
+}
+
+const { projects, heading, id } = Astro.props;
+---
+
+<section class="project-section" id={id}>
+  <div class="wrap">
+    {heading && <h2 class="case-heading">{heading}</h2>}
+    <div class="project-grid">
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,21 @@
+---
+// One page per case study. Add a file under src/data/cases, list it in that
+// folder's index, and its page exists — nothing here needs to change.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import CaseStudy from "../../components/case/CaseStudy.astro";
+import { caseStudies } from "../../data/cases";
+import { v1 as content } from "../../data/v1";
+
+export function getStaticPaths() {
+  return caseStudies.map((study) => ({
+    params: { slug: study.slug },
+    props: { study },
+  }));
+}
+
+const { study } = Astro.props;
+---
+
+<BaseLayout meta={study.meta} footer={content.footer}>
+  <CaseStudy study={study} />
+</BaseLayout>

@@ -1,0 +1,24 @@
+---
+// A picture in the 922px column. The file is exported at twice that, so the
+// width and height in the data are the exported pixels and the box is half of
+// them — the browser gets the ratio up front and the page never jumps.
+import type { CaseImage } from "../../data/cases/types";
+import { asset } from "../../lib/asset";
+
+interface Props {
+  image: CaseImage;
+}
+
+const { image } = Astro.props;
+---
+
+<figure class="case-shot">
+  <img
+    src={asset(image.src)}
+    width={image.width}
+    height={image.height}
+    alt={image.alt}
+    loading="lazy"
+    decoding="async"
+  />
+</figure>

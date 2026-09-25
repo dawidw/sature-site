@@ -1,0 +1,33 @@
+---
+// Copy blocks in order: paragraphs, plain lists, arrowed lists. Nothing here
+// renders markup from a string — a list is a list because the data says so.
+import type { CaseBlock } from "../../data/cases/types";
+
+interface Props {
+  blocks: CaseBlock[];
+}
+
+const { blocks } = Astro.props;
+---
+
+<div class="case-copy">
+  {
+    blocks.map((block) =>
+      "p" in block ? (
+        <p>{block.p}</p>
+      ) : "bullets" in block ? (
+        <ul class="case-copy-bullets">
+          {block.bullets.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      ) : (
+        <ul class="case-copy-arrows">
+          {block.arrows.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      )
+    )
+  }
+</div>

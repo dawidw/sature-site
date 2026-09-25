@@ -1,0 +1,81 @@
+---
+// The template a case study is: the hero, its sections in the order the data
+// lists them, and the other projects at the foot. A page hands it one
+// `CaseStudy` object and nothing else.
+import "../../styles/case-study.css";
+import type { CaseStudy } from "../../data/cases/types";
+import { OTHER_PROJECTS_HEADING, otherProjects } from "../../data/cases";
+import CaseCard from "./CaseCard.astro";
+import CaseCopy from "./CaseCopy.astro";
+import CaseHero from "./CaseHero.astro";
+import CaseShot from "./CaseShot.astro";
+import ProjectGrid from "./ProjectGrid.astro";
+
+interface Props {
+  study: CaseStudy;
+}
+
+const { study } = Astro.props;
+---
+
+<CaseHero hero={study.hero} />
+
+<div class="case-main">
+  {
+    study.sections.map((section) =>
+      section.kind === "prose" ? (
+        <section class="case-section case-prose" id={section.id} aria-label={section.label}>
+          <div class="wrap">
+            {section.cards.map((card, index) => (
+              <>
+                {index > 0 && <hr class="case-divider" />}
+                <div class="case-paragraph">
+                  <h2 class="case-paragraph-title">{card.title}</h2>
+                  <CaseCopy blocks={card.body} />
+                </div>
+              </>
+            ))}
+          </div>
+        </section>
+      ) : section.kind === "cards" ? (
+        <section class="case-section" id={section.id} aria-labelledby={`${section.id}-heading`}>
+          <div class="wrap">
+            <h2 class="case-heading" id={`${section.id}-heading`}>
+              {section.heading}
+            </h2>
+            <div class="case-grid">
+              {section.cards.map((card) => (
+                <CaseCard card={card} />
+              ))}
+            </div>
+            {section.note && <p class="case-aside">{section.note}</p>}
+          </div>
+        </section>
+      ) : (
+        <section class="case-section" id={section.id} aria-labelledby={`${section.id}-heading`}>
+          <div class="wrap">
+            <h2
+              class:list={["case-heading", section.centered && "case-heading-centered"]}
+              id={`${section.id}-heading`}
+            >
+              {section.heading}
+            </h2>
+            <div class="case-story">
+              {section.beats.map((beat) =>
+                "shot" in beat ? (
+                  <CaseShot image={beat.shot} />
+                ) : "note" in beat ? (
+                  <CaseCard card={beat.note} class="case-card-note" />
+                ) : (
+                  <CaseCard card={beat.card} />
+                )
+              )}
+            </div>
+          </div>
+        </section>
+      )
+    )
+  }
+
+  <ProjectGrid projects={otherProjects(study.slug)} heading={OTHER_PROJECTS_HEADING} />
+</div>

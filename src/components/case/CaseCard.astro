@@ -1,0 +1,23 @@
+---
+// One card: a title, optional copy, and the chip that says what kind of
+// outcome it was. `tone: "dark"` inverts it — one card per group, to lead the
+// eye, the way the dark panels do elsewhere on the site.
+import type { CaseCard } from "../../data/cases/types";
+import CaseCopy from "./CaseCopy.astro";
+
+interface Props {
+  card: CaseCard;
+  /** Extra class for a group that sizes its cards, e.g. .case-grid-impact. */
+  class?: string;
+}
+
+const { card, class: className } = Astro.props;
+---
+
+<article class:list={["case-card", card.tone === "dark" && "case-card-dark", className]}>
+  <div class="case-card-content">
+    <h3 class="case-card-title">{card.title}</h3>
+    {card.body.length > 0 && <CaseCopy blocks={card.body} />}
+  </div>
+  {card.tag && <span class="case-tag">{card.tag}</span>}
+</article>

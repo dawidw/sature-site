@@ -1,0 +1,55 @@
+---
+// The title block a case study opens with, on the site's dark ground: the
+// client over the title, the title in two lines with the first in italic
+// serif, the pills, and the product hanging off the band onto the page.
+import type { CaseHero } from "../../data/cases/types";
+import { asset } from "../../lib/asset";
+
+interface Props {
+  hero: CaseHero;
+  /** Where the back link goes; the work section of the home page by default. */
+  backHref?: string;
+}
+
+const { hero, backHref = "/#work" } = Astro.props;
+
+// The band is cut at the middle of the picture, whatever width the page is,
+// so the ratio of this case's own picture has to reach the stylesheet.
+const shotRatio = hero.image.height / hero.image.width;
+---
+
+<header class="case-hero" style={`--case-shot-ratio: ${shotRatio}`}>
+  <div class="case-hero-band" aria-hidden="true"></div>
+
+  <div class="wrap case-hero-inner">
+    <a class="case-back" href={asset(backHref)}>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path
+          d="M14 8.5L10 12L14 15.5"
+          stroke="currentColor"
+          stroke-width="1.4"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+      <span>Back to work</span>
+    </a>
+
+    <p class="case-hero-eyebrow">{hero.eyebrow}</p>
+    <h1 class="case-hero-title">
+      <em>{hero.titleAccent}</em>
+      <span>{hero.titleRest}</span>
+    </h1>
+    <ul class="case-hero-badges">
+      {hero.badges.map((badge) => <li>{badge}</li>)}
+    </ul>
+
+    <img
+      class="case-hero-shot"
+      src={asset(hero.image.src)}
+      width={hero.image.width}
+      height={hero.image.height}
+      alt={hero.image.alt}
+      fetchpriority="high"
+    />
+  </div>
+</header>

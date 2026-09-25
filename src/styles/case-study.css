@@ -1,0 +1,427 @@
+/* ==========================================================================
+   Case studies and project cards
+
+   The template a case study renders through, and the cards that link to one.
+   Every value here comes from the tokens in global.css — no colour, radius or
+   step of the type scale is invented, so a case study page and the landing
+   page stay one design as the tokens move.
+
+   The layout is a 922px column: the width a picture is exported at and the
+   width the copy is measured for. Groups sit 16px apart, sections 120px.
+   ========================================================================== */
+
+.case-main {
+  /* The last section already carries its own tail. */
+  padding-bottom: var(--space-80);
+}
+
+/* The hero's picture hangs onto the page; the first section clears its foot. */
+.case-main > .case-section:first-child {
+  padding-top: var(--space-80);
+}
+
+.case-section {
+  padding-bottom: var(--space-120);
+  scroll-margin-top: calc(var(--header-total) + var(--space-24));
+}
+
+.case-section > .wrap,
+.project-section > .wrap {
+  max-width: calc(922px + 2 * clamp(24px, 4vw, 64px));
+}
+
+/* ---------------------------------------------------------------- hero --- */
+
+/*
+ * The dark band ends part-way down the picture, so the product hangs off it
+ * onto the page — the same trick the team band plays with the page below it.
+ */
+.case-hero {
+  position: relative;
+  padding-top: calc(var(--header-total) + var(--space-64));
+  color: var(--text-on-dark);
+  text-align: center;
+}
+
+.case-hero-band {
+  position: absolute;
+  /* Ends halfway down the picture: the width the picture is drawn at — the
+     wrap's, not the narrower column the copy keeps — times this picture's own
+     ratio, halved. The hero has no tail of its own, so the picture's foot and
+     the hero's are the same line. */
+  inset: 0 0 calc(min(var(--max-w), 100vw - 2 * clamp(24px, 4vw, 64px)) * var(--case-shot-ratio, 0.34) / 2);
+  background: var(--background-dark);
+}
+
+.case-hero-inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.case-back {
+  position: absolute;
+  top: 0;
+  left: clamp(24px, 4vw, 64px);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: 10px var(--space-16) 10px var(--space-8);
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-on-dark);
+  font-size: var(--fs-label);
+  line-height: var(--lh-label);
+  letter-spacing: var(--ls-label);
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+  transition: background 0.2s var(--ease);
+}
+
+.case-back:hover { background: rgba(255, 255, 255, 0.16); }
+
+.case-hero-eyebrow {
+  margin: 0 0 var(--space-8);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--weight-medium);
+  font-size: var(--fs-body-lg);
+  line-height: 1.2;
+  color: var(--text-on-dark-soft);
+}
+
+.case-hero-title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(30px, 4.2vw, var(--fs-display));
+  line-height: var(--lh-display);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--ls-display);
+  text-wrap: balance;
+}
+
+.case-hero-title em {
+  display: block;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--weight-medium);
+}
+
+.case-hero-title span { display: block; }
+
+.case-hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-8);
+  margin: var(--space-24) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.case-hero-badges li {
+  padding: var(--space-8) var(--space-16);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-full);
+  font-size: var(--fs-label);
+  line-height: var(--lh-label);
+  letter-spacing: var(--ls-label);
+  font-weight: var(--weight-medium);
+}
+
+.case-hero-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: var(--space-48);
+  border-radius: var(--radius-16);
+  box-shadow: var(--shadow-lg);
+}
+
+/* --------------------------------------------------------------- type --- */
+
+.case-heading {
+  margin: 0 0 var(--space-16);
+  padding-inline: var(--space-20);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--weight-medium);
+  font-size: clamp(24px, 3vw, var(--fs-h2));
+  line-height: 1.2;
+  color: var(--text-secondary);
+}
+
+.case-heading-centered { text-align: center; }
+
+.case-copy {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
+}
+
+.case-copy p { margin: 0; }
+.case-copy > * + * { margin-top: var(--space-16); }
+
+.case-copy ul {
+  margin: var(--space-8) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.case-copy li + li { margin-top: var(--space-4); }
+
+.case-copy-bullets li { padding-left: var(--space-20); text-indent: calc(-1 * var(--space-20)); }
+.case-copy-bullets li::before { content: "• "; }
+.case-copy-arrows li::before { content: "→ "; color: var(--text-muted); }
+
+/* A title and its copy with no card around them: the narrow column a case
+   opens with, measured for reading rather than for the picture's width. */
+.case-paragraph {
+  width: min(560px, 100%);
+  margin-inline: auto;
+  color: var(--text-primary);
+}
+
+.case-paragraph-title {
+  margin: 0 0 var(--space-8);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  letter-spacing: var(--ls-h3);
+  font-weight: var(--weight-semibold);
+}
+
+.case-prose > .wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-48);
+}
+
+.case-divider {
+  width: min(605px, 100%);
+  height: 1px;
+  margin: 0 auto;
+  border: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--border-subtle) 30%,
+    var(--border-subtle) 70%,
+    transparent
+  );
+}
+
+/* An aside under a section's cards: quieter than the cards, centred. */
+.case-aside {
+  width: min(480px, 100%);
+  margin: var(--space-16) auto 0;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
+  color: var(--text-secondary);
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* -------------------------------------------------------------- cards --- */
+
+.case-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-20);
+  padding: 21px 21px 25px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-24);
+  background: var(--surface-primary);
+  box-shadow: var(--shadow-sm);
+  color: var(--text-primary);
+}
+
+.case-card-dark {
+  gap: var(--space-24);
+  padding: var(--space-20);
+  border-color: var(--border-dark-card);
+  background: var(--background-dark-card);
+  box-shadow: none;
+  color: var(--text-on-dark);
+}
+
+.case-card-content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.case-card-title {
+  margin: 0;
+  font-size: var(--fs-body-lg);
+  line-height: 1.4;
+  letter-spacing: var(--ls-body-lg);
+  font-weight: var(--weight-semibold);
+}
+
+/* Full-width cards keep a reading measure: the card is 922 wide, its copy
+   is not. */
+.case-card-note .case-copy { max-width: 680px; }
+
+.case-tag {
+  align-self: flex-start;
+  padding: var(--space-8);
+  border-radius: var(--radius-8);
+  background: var(--background-secondary);
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+}
+
+.case-card-dark .case-tag {
+  background: var(--surface-primary);
+  color: var(--text-primary);
+}
+
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-16);
+}
+
+/* ------------------------------------------------------------ pictures --- */
+
+.case-story {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+}
+
+.case-shot {
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--radius-24);
+  background: var(--background-secondary);
+}
+
+.case-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ------------------------------------------------------- project cards --- */
+
+.project-section { padding-bottom: var(--space-80); }
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-16);
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+  padding: var(--space-20) var(--space-20) var(--space-24);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-24);
+  background: var(--surface-primary);
+  box-shadow: var(--shadow-sm);
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.project-card-image {
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-16);
+  background: var(--background-secondary);
+}
+
+.project-card-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.project-card-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.project-card-title {
+  font-size: var(--fs-body-lg);
+  line-height: 1.4;
+  letter-spacing: var(--ls-body-lg);
+  font-weight: var(--weight-semibold);
+}
+
+.project-card-body {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
+  color: var(--text-secondary);
+}
+
+/* The whole card is the target: it lifts under the pointer and presses on
+   click, so the hit area and the thing that reacts are the same shape. */
+.project-card-link {
+  cursor: pointer;
+  transition:
+    background-color 0.2s var(--ease),
+    box-shadow 0.2s var(--ease),
+    translate 0.2s var(--ease);
+}
+
+@media (hover: hover) {
+  .project-card-link:hover {
+    background-color: var(--background-secondary);
+    box-shadow: var(--shadow-md);
+    translate: 0 -2px;
+  }
+}
+
+.project-card-link:active {
+  background-color: var(--background-tertiary);
+  box-shadow: var(--shadow-sm);
+  translate: 0 1px;
+  transition-duration: 90ms;
+}
+
+.project-card-link:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card-link:hover,
+  .project-card-link:active {
+    translate: none;
+  }
+}
+
+/* -------------------------------------------------------- small screens --- */
+
+@media (max-width: 860px) {
+  .case-hero { padding-top: calc(var(--header-total) + var(--space-32)); }
+  .case-hero-shot { margin-top: var(--space-32); }
+  .case-section { padding-bottom: var(--space-80); }
+  .case-main > .case-section:first-child { padding-top: var(--space-48); }
+
+  .case-grid,
+  .project-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  /* The back link sits over the title at this width; it takes its own line. */
+  .case-back {
+    position: static;
+    align-self: flex-start;
+    margin-bottom: var(--space-24);
+  }
+
+  .case-heading { padding-inline: 0; }
+}

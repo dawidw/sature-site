@@ -1,0 +1,32 @@
+---
+// A project: its picture, its name, what it was. With somewhere to go the
+// whole card is the link — one target, lifted under the pointer and pressed
+// on click. Without, it is the same card and nothing more.
+import type { Project } from "../../data/cases/types";
+import { asset } from "../../lib/asset";
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const Tag = project.href ? "a" : "article";
+const linkProps = project.href ? { href: asset(project.href) } : {};
+---
+
+<Tag class:list={["project-card", project.href && "project-card-link"]} {...linkProps}>
+  <span class="project-card-image">
+    <img
+      src={asset(project.image.src)}
+      width={project.image.width}
+      height={project.image.height}
+      alt={project.image.alt}
+      loading="lazy"
+      decoding="async"
+    />
+  </span>
+  <span class="project-card-copy">
+    <span class="project-card-title">{project.title}</span>
+    <span class="project-card-body">{project.body}</span>
+  </span>
+</Tag>

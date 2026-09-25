@@ -51,6 +51,11 @@
     { sel: "#faq .section-title" },
     { sel: ".accordion-item", stagger: true },
     { sel: ".contact-copy, .contact-visual", stagger: true },
+    // Case studies: a heading, then the things under it, each on its own.
+    { sel: ".case-heading, .case-paragraph, .case-aside" },
+    { sel: ".case-grid > .case-card", stagger: true },
+    { sel: ".case-story > .case-shot, .case-story > .case-card" },
+    { sel: ".project-grid > .project-card", stagger: true },
   ];
 
   const STEP_MS = 60;
