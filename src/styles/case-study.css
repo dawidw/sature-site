@@ -33,17 +33,30 @@
 /* ---------------------------------------------------------------- hero --- */
 
 /*
- * The dark band ends part-way down the picture, so the product hangs off it
- * onto the page — the same trick the team band plays with the page below it.
+ * Two grounds. The dark one is a band that ends halfway down the picture, so
+ * the product hangs off it onto the page — the trick the team band plays with
+ * the page below it. The violet one runs the whole hero: it is the ramp
+ * Tellent's own render carries, and a picture drawn to fade into it has
+ * nothing to hang off.
  */
 .case-hero {
   position: relative;
+  /* The bar is sticky and takes its height out of the flow, so the ground is
+     pulled back under it — as the landing page's hero wrap does — and the
+     height is added back as padding so the title sits clear of the bar. */
+  margin-top: calc(-1 * var(--header-total));
   padding-top: calc(var(--header-total) + var(--space-64));
   color: var(--text-on-dark);
   text-align: center;
+  /* The picture is a child of the hero rather than of the wrap: on the violet
+     ground it is wider than the page, and a column that centres it is the only
+     way it stays centred once it overflows. */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.case-hero-band {
+.case-hero-ground {
   position: absolute;
   /* Ends halfway down the picture: the width the picture is drawn at — the
      wrap's, not the narrower column the copy keeps — times this picture's own
@@ -53,8 +66,66 @@
   background: var(--background-dark);
 }
 
+/*
+ * Sampled row by row from Figma's own render of the hero (frame 247:63726),
+ * and drawn by the browser rather than shipped as a picture: it reaches the
+ * edge of any screen at full sharpness, and the grain goes over it separately.
+ */
+.case-hero-violet {
+  overflow: hidden;
+  background: #0a0a0a;
+}
+
+.case-hero-violet > .case-hero-ground {
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgb(12 6 13) 0,
+    rgb(16 7 20) 70px,
+    rgb(16 6 24) 130px,
+    rgb(13 5 27) 190px,
+    rgb(11 4 31) 250px,
+    rgb(11 3 35) 290px,
+    rgb(13 3 41) 330px,
+    rgb(19 4 52) 390px,
+    rgb(26 4 62) 450px,
+    rgb(35 4 73) 510px,
+    rgb(45 4 83) 570px,
+    rgb(55 4 93) 630px,
+    rgb(66 4 102) 690px,
+    rgb(78 4 111) 750px,
+    rgb(91 5 120) 810px,
+    rgb(103 5 126) 870px
+  );
+}
+
+/* The grain over the ramp, so the gradient does not band on a wide screen. */
+.case-hero-violet > .case-hero-ground::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.04 0 0 0 0 0.04 0 0 0 0 0.04 0 0 0 -2.4 1.55'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+  opacity: 0.55;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 20%, #000);
+  mask-image: linear-gradient(to bottom, transparent 20%, #000);
+}
+
+/* The render is drawn wider than the page and fades out at its own edges, so
+   it runs past the column rather than being capped by it. */
+.case-hero-violet .case-hero-shot {
+  width: min(1512px, 150vw);
+  max-width: none;
+  margin-top: var(--space-40);
+  border-radius: 0;
+  box-shadow: none;
+}
+
 .case-hero-inner {
   position: relative;
+  /* A flex item shrinks to its content; the back link is placed against this
+     block's own edge, so it has to be the page's width. */
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -131,11 +202,14 @@
 }
 
 .case-hero-shot {
+  /* The ground is positioned, so the picture has to be too, or it paints
+     underneath it. */
+  position: relative;
   display: block;
-  width: min(922px, 100%);
+  flex: none;
+  width: min(922px, 100% - 2 * clamp(24px, 4vw, 64px));
   height: auto;
   margin-top: var(--space-48);
-  margin-inline: auto;
   border-radius: var(--radius-16);
   box-shadow: var(--shadow-lg);
 }
@@ -405,7 +479,7 @@
 /* --------------------------------------------------- the portfolio page --- */
 
 .portfolio-intro {
-  padding-top: calc(var(--header-total) + var(--space-64));
+  padding-top: var(--space-64);
   padding-bottom: var(--space-48);
 }
 
@@ -429,7 +503,7 @@
   .case-hero-shot { margin-top: var(--space-32); }
   .case-section { padding-bottom: var(--space-80); }
   .case-main > .case-section:first-child { padding-top: var(--space-48); }
-  .portfolio-intro { padding-top: calc(var(--header-total) + var(--space-32)); }
+  .portfolio-intro { padding-top: var(--space-32); }
 
   .case-grid,
   .project-grid {

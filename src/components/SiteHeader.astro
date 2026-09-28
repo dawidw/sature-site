@@ -23,16 +23,22 @@ const links = [
   <div class="wrap header-inner">
     <BrandLogo />
 
-    <nav class="main-nav" id="main-nav" aria-label="Primary">
-      {
-        links.map((link) => (
-          <a href={section(link.href)} class={link.active && onHome ? "is-active" : undefined}>
-            <img src={asset(`/assets/img/icons/${link.icon}.svg`)} alt="" width="20" height="20" />
-            {link.label}
-          </a>
-        ))
-      }
-    </nav>
+    {
+      /* Only on the home page: off it the links point at sections that are
+         not on the page, and a bar of them reads as navigation that does
+         nothing. The mark goes home; the case study's own back link does the
+         rest. */
+      onHome && (
+        <nav class="main-nav" id="main-nav" aria-label="Primary">
+          {links.map((link) => (
+            <a href={link.href} class={link.active ? "is-active" : undefined}>
+              <img src={asset(`/assets/img/icons/${link.icon}.svg`)} alt="" width="20" height="20" />
+              {link.label}
+            </a>
+          ))}
+        </nav>
+      )
+    }
 
     <div class="header-actions">
       <a class="btn btn-dark btn-sm" href={section("#contact")} aria-label="Book a call">

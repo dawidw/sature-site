@@ -11,7 +11,7 @@
   if (!header) return;
 
   const darkSections = Array.from(
-    document.querySelectorAll(".hero, .section-dark, .cta-band, .site-footer")
+    document.querySelectorAll(".hero, .case-hero, .section-dark, .cta-band, .site-footer")
   );
   if (!darkSections.length) return;
 

@@ -23,11 +23,12 @@ export const hiringAgent: CaseStudy = {
     titleAccent: "Designing a hiring agent",
     titleRest: "for a leading HR platform in EU",
     badges: ["AI agent", "2026", "UX", "Vibe-coded prototype"],
+    ground: "violet",
     image: {
-      src: `${DIR}/final-pipeline.jpg`,
-      width: 1844,
-      height: 1200,
-      alt: "The hiring agent open over the Tellent candidate pipeline, offering to report on the role",
+      src: `${DIR}/hero.webp`,
+      width: 3024,
+      height: 1028,
+      alt: "The hiring agent's panel open over the Tellent candidate pipeline",
     },
   },
 
@@ -191,6 +192,14 @@ export const hiringAgent: CaseStudy = {
             width: 1844,
             height: 1200,
             alt: "A spread of the agent's windows: its greeting, the drafts it produces and its recent conversations",
+          },
+        },
+        {
+          shot: {
+            src: `${DIR}/final-pipeline.jpg`,
+            width: 1844,
+            height: 1200,
+            alt: "The agent open over the pipeline, offering to report on how the role is doing",
           },
         },
         {

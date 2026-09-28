@@ -16,10 +16,11 @@ const { hero, backHref = "/portfolio" } = Astro.props;
 // The band is cut at the middle of the picture, whatever width the page is,
 // so the ratio of this case's own picture has to reach the stylesheet.
 const shotRatio = hero.image.height / hero.image.width;
+const ground = hero.ground ?? "dark";
 ---
 
-<header class="case-hero" style={`--case-shot-ratio: ${shotRatio}`}>
-  <div class="case-hero-band" aria-hidden="true"></div>
+<header class:list={["case-hero", `case-hero-${ground}`]} style={`--case-shot-ratio: ${shotRatio}`}>
+  <div class="case-hero-ground" aria-hidden="true"></div>
 
   <div class="wrap case-hero-inner">
     <a class="case-back" href={asset(backHref)}>
@@ -43,13 +44,14 @@ const shotRatio = hero.image.height / hero.image.width;
       {hero.badges.map((badge) => <li>{badge}</li>)}
     </ul>
 
-    <img
-      class="case-hero-shot"
-      src={asset(hero.image.src)}
-      width={hero.image.width}
-      height={hero.image.height}
-      alt={hero.image.alt}
-      fetchpriority="high"
-    />
   </div>
+
+  <img
+    class="case-hero-shot"
+    src={asset(hero.image.src)}
+    width={hero.image.width}
+    height={hero.image.height}
+    alt={hero.image.alt}
+    fetchpriority="high"
+  />
 </header>

@@ -53,6 +53,13 @@ export interface CaseHero {
   /** Year, craft, anything else worth a pill. */
   badges: string[];
   image: CaseImage;
+  /**
+   * What the title sits on. "dark" is the site's near-black; "violet" is the
+   * ramp Tellent's own render carries, for a case whose picture was drawn to
+   * fade into it. A picture on the violet ground runs the full width of the
+   * screen rather than keeping the column.
+   */
+  ground?: "dark" | "violet";
 }
 
 export interface CaseStudy {
