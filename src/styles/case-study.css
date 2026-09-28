@@ -74,6 +74,10 @@
 .case-hero-violet {
   overflow: hidden;
   background: #0a0a0a;
+  /* The client's name in the pink the design sets it in — the one warm note
+     against the ramp. No token for it in the style guide; it belongs to this
+     ground, not to the site. */
+  --case-eyebrow: #f68ef6;
 }
 
 .case-hero-violet > .case-hero-ground {
@@ -136,7 +140,7 @@
   font-weight: var(--weight-medium);
   font-size: var(--fs-body-lg);
   line-height: 1.2;
-  color: var(--text-on-dark-soft);
+  color: var(--case-eyebrow, var(--text-on-dark-soft));
 }
 
 .case-hero-title {
@@ -144,7 +148,9 @@
   font-family: var(--font-sans);
   font-size: clamp(30px, 4.2vw, var(--fs-display));
   line-height: var(--lh-display);
-  font-weight: var(--weight-medium);
+  /* Lighter than the landing page's headings: a case study opens on a picture
+     and the title sits over it, where medium reads as shouting. */
+  font-weight: var(--weight-regular);
   letter-spacing: var(--ls-display);
   text-wrap: balance;
 }
@@ -153,7 +159,7 @@
   display: block;
   font-family: var(--font-serif);
   font-style: italic;
-  font-weight: var(--weight-medium);
+  font-weight: var(--weight-regular);
 }
 
 .case-hero-title span { display: block; }
