@@ -123,34 +123,11 @@
 
 .case-hero-inner {
   position: relative;
-  /* A flex item shrinks to its content; the back link is placed against this
-     block's own edge, so it has to be the page's width. */
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
-.case-back {
-  position: absolute;
-  top: 0;
-  left: clamp(24px, 4vw, 64px);
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-4);
-  padding: 10px var(--space-16) 10px var(--space-8);
-  border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--text-on-dark);
-  font-size: var(--fs-label);
-  line-height: var(--lh-label);
-  letter-spacing: var(--ls-label);
-  font-weight: var(--weight-medium);
-  text-decoration: none;
-  transition: background 0.2s var(--ease);
-}
-
-.case-back:hover { background: rgba(255, 255, 255, 0.16); }
 
 .case-hero-eyebrow {
   margin: 0 0 var(--space-8);
@@ -512,12 +489,5 @@
 }
 
 @media (max-width: 640px) {
-  /* The back link sits over the title at this width; it takes its own line. */
-  .case-back {
-    position: static;
-    align-self: flex-start;
-    margin-bottom: var(--space-24);
-  }
-
   .case-heading { padding-inline: 0; }
 }

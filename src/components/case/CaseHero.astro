@@ -7,11 +7,9 @@ import { asset } from "../../lib/asset";
 
 interface Props {
   hero: CaseHero;
-  /** Where the back link goes; the portfolio page by default. */
-  backHref?: string;
 }
 
-const { hero, backHref = "/portfolio" } = Astro.props;
+const { hero } = Astro.props;
 
 // The band is cut at the middle of the picture, whatever width the page is,
 // so the ratio of this case's own picture has to reach the stylesheet.
@@ -23,18 +21,6 @@ const ground = hero.ground ?? "dark";
   <div class="case-hero-ground" aria-hidden="true"></div>
 
   <div class="wrap case-hero-inner">
-    <a class="case-back" href={asset(backHref)}>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path
-          d="M14 8.5L10 12L14 15.5"
-          stroke="currentColor"
-          stroke-width="1.4"
-          stroke-linecap="round"
-          stroke-linejoin="round"></path>
-      </svg>
-      <span>All work</span>
-    </a>
-
     <p class="case-hero-eyebrow">{hero.eyebrow}</p>
     <h1 class="case-hero-title">
       <em>{hero.titleAccent}</em>
@@ -43,7 +29,6 @@ const ground = hero.ground ?? "dark";
     <ul class="case-hero-badges">
       {hero.badges.map((badge) => <li>{badge}</li>)}
     </ul>
-
   </div>
 
   <img
