@@ -1,6 +1,7 @@
 ---
 import type { SiteContent } from "../data/types";
 import { asset } from "../lib/asset";
+import { projects } from "../data/cases";
 
 interface Props {
   work: SiteContent["work"];
@@ -47,4 +48,17 @@ const { work } = Astro.props;
       }
     </ul>
   </div>
+
+  {/* The way into the case studies: the carousel shows the work, the pages
+      tell the story behind it. Written here rather than in the content files
+      because whether there is anything to read is decided by that list. */}
+  {
+    projects.length > 0 && (
+      <div class="wrap wrap-gutter-80 work-cases">
+        <a class="btn btn-dark" href={asset("/portfolio")}>
+          Read the case studies
+        </a>
+      </div>
+    )
+  }
 </section>

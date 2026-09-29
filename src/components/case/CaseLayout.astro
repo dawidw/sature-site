@@ -1,0 +1,21 @@
+---
+// The frame every case study sits in: the portfolio's own ground and tokens,
+// the hero, the 922px column, and the viewer its pictures open in.
+import "../../styles/case-study.css";
+import Lightbox from "./Lightbox.astro";
+
+interface Props {
+  /** The class the case's own sections hang off, e.g. cs-case--agent. */
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={["cs-page", className]}>
+  <slot name="hero" />
+  <main class="page cs-main">
+    <slot />
+  </main>
+  <Lightbox />
+</div>

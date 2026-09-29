@@ -1219,6 +1219,8 @@ button {
   margin-bottom: 24px;
 }
 .work-caption { margin-bottom: 40px; }
+/* Under the carousel: the pages behind the pictures. */
+.work-cases { margin-top: 40px; }
 .work-caption-title {
   font-family: var(--font-serif);
   font-style: italic;

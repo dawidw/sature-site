@@ -1,0 +1,22 @@
+---
+// Context and the problem, one above the other, a hairline between.
+import type { Card } from "../../data/cases/types";
+import CsBars from "./CsBars.astro";
+import CsParagraph from "./CsParagraph.astro";
+
+interface Props {
+  context: Card;
+  problem: Card;
+}
+
+const { context, problem } = Astro.props;
+---
+
+<section id="context" class="cs-section cs-context" aria-label="Context">
+  <CsParagraph card={context} />
+  <hr class="cs-divider cs-divider--wide" />
+  <div class="cs-context__problem">
+    <CsBars class="cs-bars--context" />
+    <CsParagraph card={problem} />
+  </div>
+</section>

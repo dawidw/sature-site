@@ -51,6 +51,16 @@
     { sel: "#faq .section-title" },
     { sel: ".accordion-item", stagger: true },
     { sel: ".contact-copy, .contact-visual", stagger: true },
+    // Case studies, as the portfolio reveals them: a heading, then what is
+    // under it — cards as a set, pictures one at a time.
+    { sel: ".cs-main .cs-heading" },
+    { sel: ".cs-main .cs-paragraph, .cs-main .cs-lead, .cs-main .cs-scope__intro" },
+    { sel: ".cs-main .cs-grid > .cs-card", stagger: true },
+    { sel: ".cs-main .cs-stack > .cs-card", stagger: true },
+    { sel: ".cs-main .cs-shot, .cs-main .cs-video, .cs-main .cs-findings, .cs-main .cs-framework" },
+    { sel: ".cs-main .cs-notes, .cs-main .cs-scope > .cs-card" },
+    { sel: ".cs-page .cases > .case", stagger: true },
+    { sel: ".cs-portfolio__title, .cs-portfolio__lead" },
   ];
 
   const STEP_MS = 60;

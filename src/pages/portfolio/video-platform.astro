@@ -1,0 +1,113 @@
+---
+// Frame 247:42698, section for section.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import CaseLayout from "../../components/case/CaseLayout.astro";
+import CsCard from "../../components/case/CsCard.astro";
+import CsCardGrid from "../../components/case/CsCardGrid.astro";
+import CsContext from "../../components/case/CsContext.astro";
+import CsHeading from "../../components/case/CsHeading.astro";
+import CsHero from "../../components/case/CsHero.astro";
+import CsOtherProjects from "../../components/case/CsOtherProjects.astro";
+import CsParagraph from "../../components/case/CsParagraph.astro";
+import CsShot from "../../components/case/CsShot.astro";
+import {
+  CONTEXT,
+  DESKTOP,
+  HERO,
+  IMPACT,
+  PROCESS,
+  ROLE,
+  SHELL,
+  TERMINAL,
+  THOUGHTS,
+  WEB,
+} from "../../data/cases/video-platform";
+import { asset } from "../../lib/asset";
+import { v1 as content } from "../../data/v1";
+
+const [context, problem] = CONTEXT;
+const stories = [
+  { story: SHELL, centered: true },
+  { story: TERMINAL, centered: false },
+];
+
+const meta = {
+  title: "A video recording platform for sales — Sature",
+  description:
+    "Case study: design and frontend implementation of telle, an internal video recording platform for sales.",
+};
+---
+
+<BaseLayout meta={meta} footer={content.footer}>
+  <CaseLayout>
+    {/*
+      The hero's ground is a band rather than the whole header: the picture
+      under the title hangs off its bottom edge onto the page, as the frame
+      draws it.
+    */}
+    <CsHero slot="hero" content={HERO} class="cs-hero--band">
+      <span class="cs-hero__band" aria-hidden="true"><span class="cs-hero__glow"></span></span>
+      <img
+        class="cs-hero__shot squircle"
+        src={asset(HERO.shot.src)}
+        width={HERO.shot.width}
+        height={HERO.shot.height}
+        alt={HERO.shot.alt}
+        fetchpriority="high"
+      />
+    </CsHero>
+
+    <CsContext context={context} problem={problem} />
+    <CsCardGrid id="impact" heading={IMPACT.heading} cards={IMPACT.cards} class="cs-grid--impact" />
+    <CsCardGrid id="role" heading={ROLE.heading} cards={ROLE.cards} />
+    <CsCardGrid id="process" heading={PROCESS.heading} cards={PROCESS.cards} class="cs-grid--process" />
+
+    <section id="design" class="cs-section cs-section--column cs-telle-design" aria-label="Design">
+      {
+        stories.map(({ story, centered }) => (
+          <div class="cs-block cs-group cs-story">
+            <CsHeading inset={!centered} centered={centered}>
+              {story.heading}
+            </CsHeading>
+            <div class="cs-picture-with-note cs-picture-with-note--tight">
+              <CsShot asset={story.shot} />
+              <CsParagraph card={story.note} />
+            </div>
+          </div>
+        ))
+      }
+
+      <div class="cs-block cs-group cs-story">
+        <CsHeading inset>{DESKTOP.heading}</CsHeading>
+        <div class="cs-picture-with-note cs-picture-with-note--tight">
+          <div class="cs-pair">
+            {DESKTOP.branding.shots.map((shot) => <CsShot asset={shot} />)}
+          </div>
+          <CsParagraph card={DESKTOP.branding.note} />
+        </div>
+        <div class="cs-picture-with-note cs-picture-with-note--tight cs-picture-with-note--follows">
+          <div class="cs-pair">
+            {DESKTOP.app.shots.map((shot) => <CsShot asset={shot} />)}
+          </div>
+          <CsShot asset={DESKTOP.app.welcome} />
+          <CsParagraph card={DESKTOP.app.note} />
+        </div>
+      </div>
+
+      <div class="cs-block cs-group cs-story cs-story--shots">
+        <CsHeading inset>{WEB.heading}</CsHeading>
+        {WEB.shots.map((shot) => <CsShot asset={shot} />)}
+      </div>
+    </section>
+
+    <section id="thoughts" class="cs-section cs-section--column cs-thoughts" aria-label="Thoughts">
+      <div class="cs-block cs-group">
+        <CsHeading inset>{THOUGHTS.heading}</CsHeading>
+        <div class="cs-grid">
+          {THOUGHTS.cards.map((card) => <CsCard card={card} />)}
+        </div>
+      </div>
+      <CsOtherProjects current="video-platform" />
+    </section>
+  </CaseLayout>
+</BaseLayout>

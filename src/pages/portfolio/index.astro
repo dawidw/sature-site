@@ -1,0 +1,20 @@
+---
+// The work, one card per project. A project with a case study is a link; the
+// rest are the same card and nothing more, until their case study is written.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectGrid from "../../components/case/ProjectGrid.astro";
+import { portfolioPage, projects } from "../../data/cases";
+import { v1 as content } from "../../data/v1";
+---
+
+<BaseLayout meta={portfolioPage.meta} footer={content.footer}>
+  <div class="cs-page cs-portfolio">
+    <main class="page">
+      <section class="cs-section cs-section--column cs-portfolio__intro">
+        <h1 class="cs-portfolio__title">{portfolioPage.title}</h1>
+        <p class="cs-portfolio__lead">{portfolioPage.lead}</p>
+      </section>
+      <ProjectGrid projects={projects} />
+    </main>
+  </div>
+</BaseLayout>

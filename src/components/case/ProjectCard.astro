@@ -1,0 +1,32 @@
+---
+// A project: its picture, its title and its summary. With somewhere to go the
+// whole card is the link — one target, lifted under the pointer and pressed on
+// click. The picture inside opens nothing.
+import type { Project } from "../../data/cases/types";
+import { asset } from "../../lib/asset";
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const Tag = project.href ? "a" : "article";
+const linkProps = project.href ? { href: asset(project.href) } : {};
+---
+
+<Tag class:list={["card", "case", project.href && "case--link", "squircle"]} {...linkProps}>
+  <span class="card-image case__image squircle">
+    <img
+      src={asset(project.image.src)}
+      width={project.image.width}
+      height={project.image.height}
+      alt={project.image.alt}
+      loading="lazy"
+      decoding="async"
+    />
+  </span>
+  <span class="case__copy">
+    <span class="case__title">{project.title}</span>
+    <span class="case__body">{project.body}</span>
+  </span>
+</Tag>

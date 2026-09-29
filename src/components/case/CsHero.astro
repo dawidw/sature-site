@@ -1,0 +1,28 @@
+---
+// The title block every case study opens with. What sits under it — and how
+// the dark ground is drawn — is the case study's own, passed in as a slot and
+// a variant class.
+import type { HeroContent } from "../../data/cases/types";
+
+interface Props {
+  content: HeroContent;
+  class?: string;
+}
+
+const { content, class: className } = Astro.props;
+---
+
+<header class:list={["cs-hero", className]}>
+  <div class="cs-hero__text">
+    <p class="cs-hero__eyebrow">{content.eyebrow}</p>
+    <h1 class="cs-hero__title">
+      <span class="cs-hero__accent">{content.titleAccent}</span>
+      <br />
+      {content.titleRest}
+    </h1>
+    <ul class="cs-hero__badges">
+      {content.badges.map((badge) => <li>{badge}</li>)}
+    </ul>
+  </div>
+  <slot />
+</header>

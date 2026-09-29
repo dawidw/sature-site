@@ -1,0 +1,22 @@
+---
+// A row of project cards, for the portfolio page and anywhere else the work
+// should be shown.
+import "../../styles/case-study.css";
+import type { Project } from "../../data/cases/types";
+import ProjectCard from "./ProjectCard.astro";
+
+interface Props {
+  projects: Project[];
+  heading?: string;
+  id?: string;
+}
+
+const { projects, heading, id } = Astro.props;
+---
+
+<section class="cs-section cs-section--column cs-projects" id={id}>
+  {heading && <h2 class="cs-heading cs-heading--inset-sm">{heading}</h2>}
+  <div class="cases">
+    {projects.map((project) => <ProjectCard project={project} />)}
+  </div>
+</section>

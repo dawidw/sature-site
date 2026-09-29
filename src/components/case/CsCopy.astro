@@ -1,0 +1,45 @@
+---
+// Copy blocks in order. A line break inside a string is a line break on the
+// page, as Figma sets them.
+import type { Block } from "../../data/cases/types";
+
+interface Props {
+  blocks: Block[];
+  class?: string;
+}
+
+const { blocks, class: className } = Astro.props;
+const lines = (text: string) => text.split("\n");
+---
+
+<div class:list={["cs-copy", className]}>
+  {
+    blocks.map((block) =>
+      "p" in block ? (
+        <p class={block.gap ? "cs-copy__gap" : undefined}>
+          {lines(block.p).map((line, index) => (
+            <Fragment>
+              {index > 0 && <br />}
+              {line}
+            </Fragment>
+          ))}
+        </p>
+      ) : "example" in block ? (
+        <p class="cs-copy__example">{block.example}</p>
+      ) : (
+        <ul class={"bullets" in block ? "cs-copy__bullets" : "cs-copy__arrows"}>
+          {("bullets" in block ? block.bullets : block.arrows).map((item) => (
+            <li>
+              {lines(item).map((line, index) => (
+                <Fragment>
+                  {index > 0 && <br />}
+                  {line}
+                </Fragment>
+              ))}
+            </li>
+          ))}
+        </ul>
+      )
+    )
+  }
+</div>

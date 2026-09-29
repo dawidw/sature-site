@@ -1,0 +1,35 @@
+---
+// A picture on the page that opens itself in the viewer: the button takes the
+// picture's place and shape, the image inside fills it, and the viewer reads
+// the full file's path off the button.
+import type { Asset } from "../../data/cases/types";
+import { asset as path } from "../../lib/asset";
+
+interface Props {
+  asset: Asset;
+  class?: string;
+  sizes?: string;
+}
+
+const { asset, class: className, sizes = "(max-width: 954px) calc(100vw - 32px), 922px" } = Astro.props;
+---
+
+<button
+  type="button"
+  class:list={["zoomable", "squircle", "cs-shot", className]}
+  aria-label={`View full size: ${asset.alt}`}
+  data-full={path(asset.full.src)}
+  data-full-width={asset.full.width}
+  data-full-height={asset.full.height}
+  data-alt={asset.alt}
+>
+  <img
+    src={path(asset.src)}
+    width={asset.width}
+    height={asset.height}
+    sizes={sizes}
+    alt=""
+    loading="lazy"
+    decoding="async"
+  />
+</button>

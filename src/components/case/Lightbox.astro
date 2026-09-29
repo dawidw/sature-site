@@ -1,0 +1,81 @@
+---
+// One viewer for every picture on the page.
+//
+// A native <dialog> opened modally, which brings the parts that are easy to get
+// wrong for free: focus moves into it and is trapped there, Escape closes it,
+// the page behind stops taking clicks, and focus returns to the picture that
+// opened it on close.
+//
+// The full file can be a few hundred kilobytes, so the picture already on the
+// page is shown straight away in its place and the full one fades in over it
+// once it has arrived — the viewer never opens onto an empty frame.
+---
+
+<dialog class="lightbox" data-lightbox>
+  <div class="lightbox__stage">
+    <button type="button" class="lightbox__picture" aria-label="View at actual size">
+      <img class="lightbox__preview" alt="" />
+      <img class="lightbox__full" alt="" />
+    </button>
+  </div>
+  <button type="button" class="button lightbox__close squircle" data-lightbox-close>Close</button>
+</dialog>
+
+<script>
+  // Ported from the portfolio's Lightbox component. One dialog per page; the
+  // picture that opens it carries the full file's path on its own dataset, so
+  // nothing has to be registered up front and pictures added later still work.
+  const dialog = document.querySelector<HTMLDialogElement>("[data-lightbox]");
+  if (dialog) {
+    const stage = dialog.querySelector<HTMLDivElement>(".lightbox__stage")!;
+    const picture = dialog.querySelector<HTMLButtonElement>(".lightbox__picture")!;
+    const preview = dialog.querySelector<HTMLImageElement>(".lightbox__preview")!;
+    const full = dialog.querySelector<HTMLImageElement>(".lightbox__full")!;
+    const close = dialog.querySelector<HTMLButtonElement>("[data-lightbox-close]")!;
+
+    /* Whether the full file is ready to be shown over the preview. Asked of the
+       element as well as listened for: a file the browser already holds can
+       finish before the listener is attached, and then the event never arrives
+       and the full picture would stay invisible behind its preview for good. */
+    const markLoaded = () => {
+      if (full.complete && full.naturalWidth > 0) full.dataset.loaded = "";
+    };
+    full.addEventListener("load", markLoaded);
+
+    const setActual = (on: boolean) => {
+      if (on) stage.dataset.actual = "";
+      else delete stage.dataset.actual;
+      picture.setAttribute("aria-label", on ? "Fit to screen" : "View at actual size");
+    };
+
+    document.addEventListener("click", (event) => {
+      const zoomable = (event.target as HTMLElement).closest<HTMLElement>(".zoomable");
+      if (!zoomable) return;
+      const source = zoomable.querySelector("img");
+      const { full: src, fullWidth, fullHeight, alt } = zoomable.dataset;
+      if (!src || !source) return;
+
+      delete full.dataset.loaded;
+      setActual(false);
+      preview.src = source.currentSrc || source.src;
+      full.src = src;
+      full.alt = alt ?? "";
+      full.width = Number(fullWidth);
+      full.height = Number(fullHeight);
+      dialog.setAttribute("aria-label", alt ?? "");
+      picture.style.setProperty("--full-width", `${fullWidth}px`);
+      picture.style.setProperty("--ratio", String(Number(fullWidth) / Number(fullHeight)));
+      picture.style.aspectRatio = `${fullWidth} / ${fullHeight}`;
+      markLoaded();
+      dialog.showModal();
+    });
+
+    /* A click on the backdrop lands on the dialog itself, and one on the
+       stage's own padding lands on the stage; anything else is the picture. */
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog || event.target === stage) dialog.close();
+    });
+    picture.addEventListener("click", () => setActual(!("actual" in stage.dataset)));
+    close.addEventListener("click", () => dialog.close());
+  }
+</script>

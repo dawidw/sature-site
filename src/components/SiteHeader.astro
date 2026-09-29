@@ -3,7 +3,13 @@ import BrandLogo from "./BrandLogo.astro";
 import { asset } from "../lib/asset";
 
 // Section links are fixed across versions — they mirror the page's own
-// anchors, so they live here rather than in the content files.
+// anchors, so they live here rather than in the content files. Off the home
+// page (a case study, the portfolio) the bare hash would point at a section
+// that is not there, so the links carry the home page with them.
+const home = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/`;
+const onHome = Astro.url.pathname === home || Astro.url.pathname === home.slice(0, -1);
+const section = (hash: string) => (onHome ? hash : `${home}${hash}`);
+
 const links = [
   { label: "Home", href: "#top", icon: "nav-home", active: true },
   { label: "About us", href: "#about", icon: "nav-about" },
@@ -17,19 +23,25 @@ const links = [
   <div class="wrap header-inner">
     <BrandLogo />
 
-    <nav class="main-nav" id="main-nav" aria-label="Primary">
-      {
-        links.map((link) => (
-          <a href={link.href} class={link.active ? "is-active" : undefined}>
-            <img src={asset(`/assets/img/icons/${link.icon}.svg`)} alt="" width="20" height="20" />
-            {link.label}
-          </a>
-        ))
-      }
-    </nav>
+    {
+      /* Only on the home page: off it the links point at sections that are
+         not on the page, and a bar of them reads as navigation that does
+         nothing. The mark goes home; the case study's own back link does the
+         rest. */
+      onHome && (
+        <nav class="main-nav" id="main-nav" aria-label="Primary">
+          {links.map((link) => (
+            <a href={link.href} class={link.active ? "is-active" : undefined}>
+              <img src={asset(`/assets/img/icons/${link.icon}.svg`)} alt="" width="20" height="20" />
+              {link.label}
+            </a>
+          ))}
+        </nav>
+      )
+    }
 
     <div class="header-actions">
-      <a class="btn btn-dark btn-sm" href="#contact" aria-label="Book a call">
+      <a class="btn btn-dark btn-sm" href={section("#contact")} aria-label="Book a call">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
           <path
             fill-rule="evenodd"
