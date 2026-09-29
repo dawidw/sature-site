@@ -1,0 +1,23 @@
+---
+interface Props {
+  /** Figma sets the titles inside a section 20px in from the column. */
+  inset?: boolean;
+  centered?: boolean;
+  id?: string;
+  class?: string;
+}
+
+const { inset = false, centered = false, id, class: className } = Astro.props;
+---
+
+<h2
+  id={id}
+  class:list={[
+    "cs-heading",
+    inset && "cs-heading--inset",
+    centered && "cs-heading--centered",
+    className,
+  ]}
+>
+  <slot />
+</h2>

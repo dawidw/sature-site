@@ -1,0 +1,22 @@
+---
+// A section title over a grid of cards.
+import type { Card } from "../../data/cases/types";
+import CsCard from "./CsCard.astro";
+import CsHeading from "./CsHeading.astro";
+
+interface Props {
+  id: string;
+  heading: string;
+  cards: Card[];
+  class?: string;
+}
+
+const { id, heading, cards, class: className } = Astro.props;
+---
+
+<section id={id} class="cs-section cs-section--column cs-card-section" aria-labelledby={`${id}-heading`}>
+  <CsHeading id={`${id}-heading`}>{heading}</CsHeading>
+  <div class:list={["cs-grid", className]}>
+    {cards.map((card) => <CsCard card={card} />)}
+  </div>
+</section>

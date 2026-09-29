@@ -1,0 +1,10 @@
+---
+// The faint vertical rules Figma lays behind a few blocks. Decoration only.
+interface Props {
+  class: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<span class:list={["cs-bars", className]} aria-hidden="true"></span>

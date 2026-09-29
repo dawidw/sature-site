@@ -1,7 +1,7 @@
 ---
-// A project: its picture, its name, what it was. With somewhere to go the
-// whole card is the link — one target, lifted under the pointer and pressed
-// on click. Without, it is the same card and nothing more.
+// A project: its picture, its title and its summary. With somewhere to go the
+// whole card is the link — one target, lifted under the pointer and pressed on
+// click. The picture inside opens nothing.
 import type { Project } from "../../data/cases/types";
 import { asset } from "../../lib/asset";
 
@@ -14,8 +14,8 @@ const Tag = project.href ? "a" : "article";
 const linkProps = project.href ? { href: asset(project.href) } : {};
 ---
 
-<Tag class:list={["project-card", project.href && "project-card-link"]} {...linkProps}>
-  <span class="project-card-image">
+<Tag class:list={["card", "case", project.href && "case--link", "squircle"]} {...linkProps}>
+  <span class="card-image case__image squircle">
     <img
       src={asset(project.image.src)}
       width={project.image.width}
@@ -25,8 +25,8 @@ const linkProps = project.href ? { href: asset(project.href) } : {};
       decoding="async"
     />
   </span>
-  <span class="project-card-copy">
-    <span class="project-card-title">{project.title}</span>
-    <span class="project-card-body">{project.body}</span>
+  <span class="case__copy">
+    <span class="case__title">{project.title}</span>
+    <span class="case__body">{project.body}</span>
   </span>
 </Tag>

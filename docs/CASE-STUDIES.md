@@ -1,56 +1,47 @@
 # Case studies and project cards
 
-A case study is content, not markup. `src/components/case/` holds the template;
-`src/data/cases/` holds what goes through it.
+The two case studies are reproductions of Figma frames 247:41705 (the hiring
+agent) and 247:42698 (the video platform), first built in Maciej's portfolio
+and carried over whole: the same 922px column, the same cards, the same
+spacing between groups.
 
-## Writing one
+## Where things are
 
-1. Copy `src/data/cases/hiring-agent.ts` to `src/data/cases/<slug>.ts` and
-   rewrite the copy. The shape it must satisfy is `CaseStudy` in
-   `src/data/cases/types.ts` — the editor will say what is missing.
-2. Put the pictures under `public/assets/img/cases/<slug>/`. Export them at
-   1844px wide (twice the 922px column) and write their real pixel size into
-   the data: the page draws them at half, so the ratio is known before they
-   load and nothing jumps.
-3. Add it to `caseStudies` in `src/data/cases/index.ts`.
+- `src/pages/portfolio/index.astro` — the work, one card per project.
+- `src/pages/portfolio/<slug>.astro` — one page per case study. Each page is
+  the frame's own sequence of sections; the pieces it is built from live in
+  `src/components/case/`.
+- `src/data/cases/<slug>.ts` — everything the frame says, as data. No copy and
+  no picture is written into a component.
+- `src/data/cases/index.ts` — the projects, and which of them have a page.
+- `src/styles/case-study.css` — the portfolio's stylesheet, every rule scoped
+  under `.cs-page` so none of it reaches the header, the footer, or the
+  landing page. It carries its own tokens for the same reason.
 
-Its page is then live at `/portfolio/<slug>` — `src/pages/portfolio/[slug].astro`
-builds one page per entry, and `/portfolio` lists every project. The project card for it becomes a link everywhere the
-moment the case study is in that list, and not before.
+## Writing the next one
 
-## Sections
+1. Export the pictures at 3x from the frame and put them under
+   `public/assets/img/cases/<slug>/{shots,full}`; the page shows the 2x file,
+   the viewer opens the 3x one.
+2. Copy `src/data/cases/video-platform.ts` and rewrite it. `shot()` takes the
+   frame's own width and height, so the browser knows the ratio before the
+   file lands.
+3. Copy the page beside it and arrange the sections the frame has.
+4. Add the project to `src/data/cases/index.ts` with its `href`. That is what
+   turns its card into a link, on the portfolio page and at the foot of every
+   other case study.
 
-A case study is a list of sections, rendered in order:
+## The pieces
 
-- `prose` — short pieces of prose in a reading column, a hairline between.
-  The opening: what the situation was, what the brief was.
-- `cards` — a heading over a two-column grid of cards, with an optional
-  centred `note` under it. Outcomes, roles, phases. One card per group can be
-  `tone: "dark"`.
-- `story` — a heading over a run of `beats`: a `shot` (a picture), a `note`
-  (a full-width card that says what the picture taught), or a `card`.
-
-## Project cards
-
-`ProjectGrid.astro` takes any list of `Project` and draws the cards. The foot
-of every case study uses it for the other projects; a page can use it too:
-
-The portfolio page is that call; any other page can make the same one:
-
-```astro
----
-import ProjectGrid from "../components/case/ProjectGrid.astro";
-import { projects } from "../data/cases";
----
-
-<ProjectGrid projects={projects} heading="Selected work" id="work" />
-```
-
-A project with a case study is a link — the whole card, lifting on hover and
-pressing on click. One without is the same card and nothing more.
+`CsHero`, `CsContext`, `CsCardGrid`, `CsCard`, `CsNotes`, `CsParagraph`,
+`CsCopy`, `CsHeading`, `CsShot`, `CsBars`, `CsOtherProjects`, and `CaseLayout`
+around all of them. A picture is a `CsShot`, which is a button: the viewer in
+`Lightbox.astro` reads the full file off its dataset, so nothing has to be
+registered up front.
 
 ## Styling
 
-`src/styles/case-study.css`, built entirely from the tokens in `global.css`.
-If a case study needs a colour or a radius that is not there, add it to the
-style guide in Figma first, then to `global.css` — not here.
+Change the portfolio's stylesheet and re-scope it, or edit
+`src/styles/case-study.css` knowing the two have parted ways. Values here come
+from the Figma frames, not from the landing page's style guide — that is the
+point of the scope.

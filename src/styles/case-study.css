@@ -1,88 +1,112 @@
 /* ==========================================================================
-   Case studies and project cards
+   Case studies — the portfolio's stylesheet, scoped
 
-   The template a case study renders through, and the cards that link to one.
-   Every value here comes from the tokens in global.css — no colour, radius or
-   step of the type scale is invented, so a case study page and the landing
-   page stay one design as the tokens move.
+   The two case studies reproduce Figma frames 247:41705 and 247:42698 down to
+   the 922px column and the spacing between its groups, so they carry the
+   portfolio's own tokens rather than the landing page's: every rule below is
+   the portfolio's, prefixed with .cs-page, and nothing here can reach the
+   header, the footer, or the landing page.
 
-   The layout is a 922px column: the width a picture is exported at and the
-   width the copy is measured for. Groups sit 16px apart, sections 120px.
+   Generated from portfolio/{tokens,portfolio}.css and
+   portfolio/case-study/case-study.css, with the Sature-specific rules at the
+   foot of the file.
    ========================================================================== */
 
-.case-main {
-  /* The last section already carries its own tail. */
-  padding-bottom: var(--space-80);
-}
 
-/* The hero's picture hangs onto the page; the first section clears its foot. */
-.case-main > .case-section:first-child {
-  padding-top: var(--space-80);
-}
-
-.case-section {
-  padding-bottom: var(--space-120);
-  scroll-margin-top: calc(var(--header-total) + var(--space-24));
-}
-
-.case-section > .wrap,
-.project-section > .wrap {
-  max-width: calc(922px + 2 * clamp(24px, 4vw, 64px));
-}
-
-/* ---------------------------------------------------------------- hero --- */
+/* ======================= tokens.css ======================= */
 
 /*
- * Two grounds. The dark one is a band that ends halfway down the picture, so
- * the product hangs off it onto the page — the trick the team band plays with
- * the page below it. The violet one runs the whole hero: it is the ramp
- * Tellent's own render carries, and a picture drawn to fade into it has
- * nothing to hang off.
+ * The portfolio's design tokens, in two tiers.
+ *
+ * Primitives are the raw values, each one read from Figma file
+ * SDAlLcbZJQNTwPG4In2AxB (frame 322:102488) — nothing here was picked by eye.
+ * Semantic tokens say what a value is for, and components only ever reach for
+ * those. Retinting the page is a change to the second tier; adding a surface is
+ * a new semantic token pointing at an existing primitive. A component that
+ * names a primitive directly is a bug.
+ *
+ * Two families only, and both from the file: Geist for everything set upright,
+ * Lora Medium Italic for the voice lines between sections.
  */
-.case-hero {
-  position: relative;
-  /* The bar is sticky and takes its height out of the flow, so the ground is
-     pulled back under it — as the landing page's hero wrap does — and the
-     height is added back as padding so the title sits clear of the bar. */
-  margin-top: calc(-1 * var(--header-total));
-  padding-top: calc(var(--header-total) + var(--space-64));
-  color: var(--text-on-dark);
-  text-align: center;
-  /* The picture is a child of the hero rather than of the wrap: on the violet
-     ground it is wider than the page, and a column that centres it is the only
-     way it stays centred once it overflows. */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
-.case-hero-ground {
-  position: absolute;
-  /* Ends halfway down the picture: the width the picture is drawn at — the
-     wrap's, not the narrower column the copy keeps — times this picture's own
-     ratio, halved. The hero has no tail of its own, so the picture's foot and
-     the hero's are the same line. */
-  inset: 0 0 calc(min(922px, 100vw - 2 * clamp(24px, 4vw, 64px)) * var(--case-shot-ratio, 0.65) / 2);
-  background: var(--background-dark);
-}
 
-/*
- * Sampled row by row from Figma's own render of the hero (frame 247:63726),
- * and drawn by the browser rather than shipped as a picture: it reaches the
- * edge of any screen at full sharpness, and the grain goes over it separately.
- */
-.case-hero-violet {
-  overflow: hidden;
-  background: #0a0a0a;
-  /* The client's name in the pink the design sets it in — the one warm note
-     against the ramp. No token for it in the style guide; it belongs to this
-     ground, not to the site. */
-  --case-eyebrow: #f68ef6;
-}
+.cs-page,
+.lightbox {
+  /* ------------------------------------------------------------ primitives */
 
-.case-hero-violet > .case-hero-ground {
-  inset: 0;
-  background: linear-gradient(
+  --white: #ffffff;
+  --neutral-25: #fafafa; /* frame fill, `Relevant info` fill */
+  --neutral-50: #f2f2f2; /* border/subtle, the menu's track */
+  --neutral-100: #e6e6e6; /* the menu's hover */
+  --neutral-150: #e2e2e1; /* tertiary/border/rest */
+  --neutral-300: #d1d1d1; /* border/default */
+  --neutral-500: #787878; /* text/secondary */
+  --neutral-600: #5a5a5a; /* the menu's resting labels */
+  --neutral-700: #555555; /* case study copy */
+  --neutral-900: #1a1a1a; /* text/primary */
+
+  /* The case studies' own greys, frame 247:41705. */
+  --neutral-75: #f5f5f5; /* the framework panel */
+  --neutral-450: #a3a3a3; /* neutral/400 — the dark menu's resting labels */
+  --neutral-800: #383838; /* the dark menu's active pill */
+  --neutral-850: #262626; /* the dark menu's track */
+  --neutral-950: #151515; /* the inverted card */
+  --neutral-990: #0a0a0a; /* under the hero's gradient */
+  --neutral-985: #0e080f; /* the video platform hero's band */
+
+  --lilac-50: #faeffd; /* the core findings panel */
+  --pink-300: #f68ef6; /* the hero's `tellent.com` */
+  --violet-400: #9980ff; /* the video platform hero's `telle.me` */
+  --lavender-200: #d6ccfc; /* the screening agent hero's `fonte` */
+  --indigo-700: #2700c1; /* the video platform hero's glow */
+  --pink-400: #e55fad; /* the glow's rim */
+  --teal-900: #2f4641; /* the outcome tags' ink */
+
+  /* ------------------------------------------------------------- semantic */
+
+  --color-page: var(--neutral-25);
+  --color-surface: var(--white);
+  --color-surface-muted: var(--neutral-25);
+  --color-control: var(--white);
+  --color-control-hover: var(--neutral-25);
+
+  --color-border-subtle: var(--neutral-50);
+  --color-border-control: var(--neutral-150);
+  --color-border-default: var(--neutral-300);
+
+  --color-text-primary: var(--neutral-900);
+  --color-text-secondary: var(--neutral-500);
+  --color-text-body: var(--neutral-700);
+
+  --color-nav-track: var(--neutral-50);
+  --color-nav-hover: var(--neutral-100);
+  --color-nav-raised: var(--white);
+  --color-nav-muted: var(--neutral-600);
+
+  /* The inverted card and the dark hero. */
+  /* A card that is a link: a touch greyer under the pointer, greyer again pressed. */
+  --color-card-hover: var(--neutral-25);
+  --color-card-pressed: var(--neutral-50);
+
+  --color-surface-inverse: var(--neutral-950);
+  --color-text-inverse: var(--white);
+  --color-border-inverse: rgb(248 236 253 / 0.05);
+  --color-surface-sunken: var(--neutral-75);
+  --color-surface-accent: var(--lilac-50);
+  --color-tag-ink: var(--teal-900);
+  --color-tag-surface: var(--neutral-25);
+
+  /* The small dark tip that confirms a copy. */
+  --color-tooltip: var(--neutral-900);
+  --color-tooltip-ink: var(--white);
+  --color-hero-page: var(--neutral-990);
+  /*
+   * The hero's gradient, sampled row by row from Figma's own render of frame
+   * 247:63726 (a 400px band down its middle, averaged to lift out the grain).
+   * Drawn by the browser rather than shipped as a picture, so it reaches the
+   * edges of any screen at full sharpness; the grain goes over it separately.
+   */
+  --gradient-hero: linear-gradient(
     to bottom,
     rgb(12 6 13) 0,
     rgb(16 7 20) 70px,
@@ -101,11 +125,1364 @@
     rgb(91 5 120) 810px,
     rgb(103 5 126) 870px
   );
+  --color-hero-eyebrow: var(--pink-300);
+  --color-hero-eyebrow-telle: var(--violet-400);
+  --color-hero-eyebrow-fonte: var(--lavender-200);
+  --color-hero-band: var(--neutral-985);
+  /*
+   * The video platform hero's glow, as Figma's radial fill on its blurred circle:
+   * full indigo at the centre, fading through a faint pink rim to nothing.
+   */
+  --gradient-hero-glow: radial-gradient(
+    circle 1259.5px at 760px 524.5px,
+    var(--indigo-700) 0,
+    rgb(39 0 193 / 0.15) 56.79%,
+    rgb(229 95 173 / 0.1) 78.85%,
+    rgb(39 0 193 / 0) 100%
+  );
+  --color-hero-chip-border: rgb(255 255 255 / 0.25);
+
+  --color-nav-dark-track: var(--neutral-850);
+  --color-nav-dark-raised: var(--neutral-800);
+  --color-nav-dark-muted: var(--neutral-450);
+
+  /* Behind the lightbox: the ink colour, nearly opaque. */
+  --color-overlay: color-mix(in srgb, var(--neutral-900) 88%, transparent);
+
+  /* Effect/shadow-sm, and the button's own shadow/sm, which is a warmer black. */
+  --shadow-card: 0 1px 2px 0 rgb(0 0 0 / 0.06);
+  --shadow-control: 0 1px 2px 0 rgb(24 24 26 / 0.06);
+  /* The same card lifted a couple of pixels towards the pointer. */
+  --shadow-card-hover:
+    0 6px 16px -4px rgb(0 0 0 / 0.08),
+    0 2px 6px -2px rgb(0 0 0 / 0.05);
+  /*
+   * Something floating over the page rather than sitting on it. The card's own
+   * hairline of shadow is right for a card and too little for a popover laid
+   * over another white card — this is the sature studio site's shadow-lg.
+   */
+  --shadow-popover:
+    0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  /* ----------------------------------------------------------------- shape */
+
+  --radius-10: 10px;
+  --radius-12: 12px;
+  --radius-16: 16px;
+  --radius-20: 20px;
+  --radius-24: 24px;
+  --radius-full: 999px;
+
+  /*
+   * Squircle corners, as Figma's corner smoothing draws them.
+   *
+   * `corner-shape` is new, so every container states a plain radius first and
+   * the smoothing arrives only where the browser can draw it. A superellipse
+   * pulls its curve in towards the corner, which makes the same radius read as
+   * tighter — so where it applies, the radius grows to keep the corner's visual
+   * weight where Figma has it.
+   */
+  --squircle-shape: superellipse(1.6);
+  --squircle-scale: 1.4;
+
+  /* ------------------------------------------------------------ typography */
+
+  --font-sans: "Geist", system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Lora", "Iowan Old Style", "Georgia", serif;
+
+  /* Figma tracking is a percentage of the size: -1% of 16 is -0.16px. */
+  --text-body: 400 16px/24px var(--font-sans);
+  --text-body-tracking: -0.16px;
+  --text-title: 600 18px/24px var(--font-sans);
+  --text-title-tracking: -0.0396px;
+  --text-label: 500 14px/20px var(--font-sans);
+  --text-voice: italic 500 24px/32px var(--font-serif);
+  --text-voice-small: italic 500 16px/20px var(--font-serif);
+  --text-voice-large: italic 500 32px/48px var(--font-serif);
+
+  /* Case studies: section titles, the lead beside one, the hero. */
+  --text-voice-title: italic 500 32px/32px var(--font-serif);
+  --text-lead: 500 20px/28px var(--font-sans);
+  --text-lead-tracking: -0.38px;
+  --text-body-tracking-tight: -0.304px;
+  --text-hero-accent: italic 400 40px/56px var(--font-serif);
+  --text-hero: 400 40px/56px var(--font-sans);
+  --text-hero-eyebrow: italic 500 20px/24px var(--font-serif);
+  --text-chip: 500 16px/20px var(--font-sans);
+  --text-tag: 500 12px/14px var(--font-sans);
+  --text-findings-title: 500 22px/28px var(--font-sans);
+
+  /* ---------------------------------------------------------------- layout */
+
+  --column: 922px;
+  --gutter: 16px;
+  --section-gap: 40px;
+  /* The nav's 52px, its 16px inset from the top, and 16px of air under it. */
+  --nav-clearance: 84px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* The grain over the ramp, so the gradient does not band on a wide screen. */
-.case-hero-violet > .case-hero-ground::after {
-  content: "";
+
+/* ======================= portfolio.css ======================= */
+
+/*
+ * The portfolio — Figma file SDAlLcbZJQNTwPG4In2AxB, frame 322:102488.
+ *
+ * Every colour, radius and type setting comes from tokens.css; this file only
+ * arranges them. Spacing is the frame's own: a 922px column, 40px between the
+ * blocks that make up a section, and the 80px the italic interludes carry above
+ * and below them.
+ */
+
+.cs-page {
+  background: var(--color-page);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+.cs-page h1,
+.cs-page h2,
+.cs-page h3,
+.cs-page p {
+  margin: 0;
+}/* ------------------------------------------------------------- squircles */
+
+
+
+.cs-page .squircle {
+  border-radius: var(--r, 0);
+}
+
+@supports (corner-shape: superellipse(2)) {
+  .cs-page .squircle {
+    corner-shape: var(--squircle-shape);
+    border-radius: calc(var(--r, 0px) * var(--squircle-scale));
+  }
+}/* ----------------------------------------------------------------- layout */
+
+
+
+.cs-page .page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-gap);
+  max-width: calc(var(--column) + 2 * var(--gutter));
+  margin: 0 auto;
+  padding: 120px var(--gutter) 80px;
+}
+
+.cs-page .section {
+  display: flex;
+  flex-direction: column;
+  /* Clear the fixed bar when a section is scrolled to from it. */
+  scroll-margin-top: var(--nav-clearance);
+}
+
+.cs-page #intro {
+  scroll-margin-top: 120px;
+}
+
+.cs-page #case-studies,
+.cs-page #visual-design {
+  gap: var(--section-gap);
+}
+
+.cs-page #why {
+  gap: 80px;
+}
+
+.cs-page .section__group {
+  display: flex;
+  flex-direction: column;
+}
+
+.cs-page .stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}/* ------------------------------------------------------------ type roles */
+
+
+
+.cs-page .section-header {
+  padding: 0 20px 16px;
+  font: var(--text-voice);
+  color: var(--color-text-secondary);
+}
+
+.cs-page .voice-small {
+  font: var(--text-voice-small);
+  color: var(--color-text-secondary);
+}
+
+.cs-page .voice-large {
+  max-width: 759px;
+  margin: 0 auto;
+  padding: 80px 0;
+  font: var(--text-voice-large);
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.cs-page .voice-large--narrow {
+  max-width: 600px;
+}
+
+.cs-page .card-title {
+  font: var(--text-title);
+  letter-spacing: var(--text-title-tracking);
+}
+
+.cs-page .card-title--small {
+  font: 600 16px/24px var(--font-sans);
+  letter-spacing: var(--text-body-tracking);
+}/* ------------------------------------------------------------ containers */
+
+
+
+.cs-page .card {
+  --r: var(--radius-20);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: var(--shadow-card);
+}/* Figma's tertiary `button`: a white chip on a hairline, 32px tall. */
+
+
+.cs-page .button {
+  --r: var(--radius-10);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--color-border-control);
+  background: var(--color-control);
+  box-shadow: var(--shadow-control);
+  color: var(--color-text-primary);
+  font: var(--text-label);
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.cs-page .button--tall {
+  height: 36px;
+}
+
+.cs-page .button:hover {
+  background: var(--color-control-hover);
+}
+
+.cs-page .button:focus-visible,
+.cs-page .tools__trigger:focus-visible,
+.cs-page .copy-field:focus-visible {
+  outline: 2px solid var(--color-text-primary);
+  outline-offset: 2px;
+}
+
+.cs-page .button img {
+  display: block;
+  flex: none;
+}
+
+.cs-page .button__logo {
+  border-radius: 4px;
+}/* ------------------------------------------------------------------ intro */
+
+
+
+.cs-page .intro {
+  --r: var(--radius-24);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+}
+
+.cs-page .intro__top {
+  display: flex;
+  gap: 16px;
+}
+
+.cs-page .intro__person {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.cs-page .intro__avatar {
+  display: block;
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+}
+
+.cs-page .intro__who {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cs-page .intro__name {
+  font: var(--text-title);
+  letter-spacing: var(--text-title-tracking);
+}
+
+.cs-page .intro__bio {
+  max-width: 369px;
+  font: var(--text-body);
+  letter-spacing: var(--text-body-tracking);
+  color: var(--color-text-secondary);
+}
+
+.cs-page .intro__rule {
+  display: block;
+  height: 1px;
+  background: var(--color-border-subtle);
+}/* Figma draws this rule 241px tall, past the 224px columns beside it, and the
+   row takes its height from it. The height stays; the line itself is not shown. */
+
+
+.cs-page .intro__rule--vertical {
+  width: 1px;
+  height: auto;
+  min-height: 241px;
+  opacity: 0;
+}
+
+.cs-page .info {
+  --r: var(--radius-20);
+  display: flex;
+  flex: 0 0 429px;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 224px;
+  padding: 20px;
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-surface-muted);
+}
+
+.cs-page .info__heading {
+  font: var(--text-voice-small);
+  color: var(--color-text-secondary);
+}
+
+.cs-page .info__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font: var(--text-body);
+  letter-spacing: var(--text-body-tracking);
+}
+
+.cs-page .info__list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cs-page .info__list img {
+  display: block;
+  flex: none;
+}/*
+ * A line of contact info that copies itself: the text and the iconoir copy
+ * glyph beside it are one button. The glyph sits in secondary ink and comes up
+ * to full ink with the text under the pointer.
+ */
+
+
+.cs-page .copy-field {
+  --press-depth: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: -2px -6px;
+  padding: 2px 6px;
+  border: 0;
+  border-radius: var(--radius-10);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: left;
+  cursor: copy;
+}
+
+.cs-page .copy-field__icon {
+  display: block;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  color: var(--color-text-secondary);
+  transition: color 150ms var(--ease-out);
+}
+
+@media (hover: hover) {
+  .cs-page .copy-field:hover {
+    background: var(--color-nav-track);
+  }
+
+  .cs-page .copy-field:hover .copy-field__icon {
+    color: var(--color-text-primary);
+  }
+}
+
+.cs-page .copy-field:active {
+  background: var(--color-nav-hover);
+}
+
+.cs-page .visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}/*
+ * "Copied": a small dark tip 8px to the right of the button that was clicked,
+ * centred on it. It settles in from a slight blur, holds, and then dissolves
+ * where it stands — losing focus and opacity together, with no travel — and
+ * the component removes it when the animation ends.
+ */
+
+
+.cs-page .copy-toast {
+  position: fixed;
+  z-index: 100;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: var(--color-tooltip);
+  color: var(--color-tooltip-ink);
+  font: 500 13px/18px var(--font-sans);
+  white-space: nowrap;
+  pointer-events: none;
+  translate: 0 -50%;
+  transform-origin: left center;
+  animation: copy-toast 1400ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes copy-toast {
+  0% {
+    opacity: 0;
+    filter: blur(3px);
+    transform: scale(0.96);
+  }
+  14% {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+  62% {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    filter: blur(6px);
+    transform: scale(1.02);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-page .copy-toast {
+    animation-name: copy-toast-fade;
+  }
+
+  @keyframes copy-toast-fade {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    14%,
+    62% {
+      opacity: 1;
+    }
+  }
+}
+
+.cs-page .info__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+}/* --------------------------------------------------------------- popovers *//*
+ * One dressing for every popover on the page — the tool explanations: the
+ * intro card's surface and hairline at a 12px
+ * corner, lifted by a floating shadow, with a 14px title in primary ink over
+ * 14px secondary copy. Each popover only says where it goes.
+ */
+
+
+
+
+.cs-page .popover {
+  --r: var(--radius-12);
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-popover);
+  opacity: 0;
+  visibility: hidden;
+  translate: 0 -4px;
+  pointer-events: none;
+}
+
+.cs-page .popover[data-open] {
+  opacity: 1;
+  visibility: visible;
+  translate: 0 0;
+  pointer-events: auto;
+}
+
+.cs-page .popover__title {
+  font: var(--text-label);
+  color: var(--color-text-primary);
+}
+
+.cs-page .popover__text {
+  font: 400 14px/20px var(--font-sans);
+  color: var(--color-text-secondary);
+}
+
+.cs-page .popover__group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}/* ------------------------------------------------------------------ tools */
+
+
+
+.cs-page .tools {
+  /* A formatting context of its own, so the list's negative margins below stay
+     inside it instead of collapsing through into the card's spacing. */
+  display: flow-root;
+  position: relative;
+  --tool-slot: 40px;
+  --tool-card-width: min(280px, 100%);
+}/*
+ * Each icon sits in a 40px wrapper — 8px around the 24px glyph — which is what
+ * shows the hover. The list is pulled out by those 8px on every side, so the
+ * glyphs themselves land exactly where Figma draws them: 16px apart, flush with
+ * the heading above.
+ */
+
+
+.cs-page .tools__list {
+  display: flex;
+  margin: -8px;
+  padding: 0;
+  list-style: none;
+}
+
+.cs-page .tools__trigger {
+  --r: var(--radius-12);
+  --press-depth: 0;
+  display: grid;
+  place-items: center;
+  width: var(--tool-slot);
+  height: var(--tool-slot);
+  padding: 0;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+}
+
+.cs-page .tools__trigger img {
+  display: block;
+  width: 24px;
+  height: 24px;
+}/* The same surface as the `Relevant info` box beside it. */
+
+
+.cs-page .tools__trigger:hover,
+.cs-page .tools__trigger[data-open] {
+  border-color: var(--color-border-subtle);
+  background: var(--color-surface-muted);
+}/*
+ * 8px under the wrapper. Placed from the row rather than from its own icon, so
+ * it can be kept inside the card on a narrow screen: it starts under its icon
+ * and is pushed back only when that would run it past the edge.
+ */
+
+
+.cs-page .tools__card {
+  top: calc(100% + 8px + 8px);
+  left: clamp(
+    -8px,
+    calc(var(--tool-index) * var(--tool-slot) - 8px),
+    calc(100% - var(--tool-card-width))
+  );
+  width: var(--tool-card-width);
+}/* ----------------------------------------------------------------- impact */
+
+
+
+.cs-page .impact {
+  display: flex;
+  gap: 24px;
+  padding: 24px 20px;
+}
+
+.cs-page .impact__title {
+  flex: 0 0 calc(50% - 32px);
+  font: 600 18px/23px var(--font-sans);
+  letter-spacing: var(--text-title-tracking);
+}
+
+.cs-page .impact__points {
+  flex: 1 1 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font: var(--text-body);
+  letter-spacing: var(--text-body-tracking);
+}
+
+.cs-page .impact__points li::before {
+  content: '✓';
+  margin-right: 6px;
+}/* ----------------------------------------------------------- case studies */
+
+
+
+.cs-page .cases {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.cs-page .case,
+.cs-page .startup {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px 24px;
+}
+
+.cs-page .case {
+  gap: 20px;
+}
+
+.cs-page .startup {
+  gap: 24px;
+}/*
+ * Every picture is a button that opens it at full size. The button takes the
+ * picture's place and shape; the image inside fills it.
+ */
+
+
+.cs-page .zoomable {
+  --press-depth: 0;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: hidden;
+  cursor: zoom-in;
+}
+
+.cs-page .zoomable img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cs-page .zoomable:focus-visible {
+  outline: 2px solid var(--color-text-primary);
+  outline-offset: 3px;
+}/* A card's header picture. Just a picture — the card around it may be a link,
+   the picture never opens anything of its own. */
+
+
+.cs-page .card-image {
+  display: block;
+  overflow: hidden;
+}
+
+.cs-page .card-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cs-page .case__image {
+  --r: var(--radius-16);
+  aspect-ratio: 411 / 305;
+}
+
+.cs-page .startup__image {
+  --r: var(--radius-20);
+  aspect-ratio: 880 / 560;
+}
+
+.cs-page .case__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cs-page .startup__copy {
+  max-width: 550px;
+}
+
+.cs-page .case__title {
+  font: var(--text-title);
+  letter-spacing: var(--text-title-tracking);
+}
+
+.cs-page .case__body {
+  font: var(--text-body);
+  letter-spacing: -0.304px;
+  color: var(--color-text-body);
+}/* ---------------------------------------------------------- visual design */
+
+
+
+.cs-page .tiles {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.cs-page .tile {
+  --r: var(--radius-20);
+}
+
+.cs-page .tile img {
+  height: auto;
+}
+
+.cs-page .embed {
+  --r: var(--radius-20);
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--color-surface);
+}/* The hairline sits over the frame, so the prototype's own page colour cannot
+   paint over the edge of the tile. */
+
+
+.cs-page .embed::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: inherit;
+  corner-shape: inherit;
+  pointer-events: none;
+}
+
+.cs-page .embed__frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  border: 0;
+  transform-origin: 0 0;
+}/* -------------------------------------------------------------------- why */
+
+
+
+.cs-page .why {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+}
+
+.cs-page .why__body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 600px;
+  font: var(--text-body);
+  letter-spacing: var(--text-body-tracking);
+  color: var(--color-text-secondary);
+  white-space: pre-line;
+}
+
+.cs-page .thanks {
+  font: 600 16px/24px var(--font-sans);
+  letter-spacing: var(--text-body-tracking);
+  text-align: center;
+}/* ------------------------------------------------------------- navigation *//*
+ * The sature lab menu, fixed over the page from the first frame. The component
+ * draws in its own palette; the variables below point that palette at this
+ * page's tokens, so the bar holds no colour of its own.
+ */
+
+
+
+
+.cs-page .portfolio-nav {
+  position: fixed;
+  z-index: 50;
+  top: 16px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.cs-page .portfolio-nav > * {
+  width: auto;
+  pointer-events: auto;
+}/*
+ * The bar stays centred on the page and the back button keeps to the left edge
+ * of the screen, the same 16px in from it as the bar is down from the top. The
+ * row is not a positioning context, so the button is placed against the fixed
+ * strip that spans the whole width.
+ */
+
+
+.cs-page .portfolio-nav__row {
+  display: flex;
+  align-items: stretch;
+}/*
+ * Back: a pill of the bar's own track colour and height, its label set like
+ * the bar's labels, and the same hover wash. It follows the bar between the
+ * light and dark schemes.
+ */
+
+
+.cs-page .portfolio-nav__back {
+  --back-track: var(--color-nav-track);
+  --back-ink: var(--color-nav-muted);
+  --back-hover: var(--color-nav-hover);
+  --back-ink-hover: var(--color-text-primary);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px 0 16px;
+  border-radius: var(--radius-full);
+  background: var(--back-track);
+  box-shadow: var(--shadow-card);
+  color: var(--back-ink);
+  font: 500 16px/24px var(--font-sans);
+  letter-spacing: var(--text-body-tracking-tight);
+  white-space: nowrap;
+  text-decoration: none;
+  transition:
+    background-color 260ms var(--ease-out),
+    color 200ms var(--ease-out),
+    box-shadow 260ms var(--ease-out);
+}
+
+.cs-page .portfolio-nav[data-scheme='dark'] .portfolio-nav__back {
+  --back-track: var(--color-nav-dark-track);
+  --back-ink: var(--color-nav-dark-muted);
+  --back-hover: color-mix(in srgb, var(--color-nav-dark-raised) 55%, var(--color-nav-dark-track));
+  --back-ink-hover: var(--color-text-inverse);
+  box-shadow: none;
+}
+
+.cs-page .portfolio-nav__back:hover {
+  background: var(--back-hover);
+  color: var(--back-ink-hover);
+}
+
+.cs-page .portfolio-nav__back:active {
+  translate: 0 1px;
+}
+
+.cs-page .portfolio-nav__back:focus-visible {
+  outline: 2px solid var(--back-ink-hover);
+  outline-offset: 2px;
+}
+
+.cs-page .portfolio-nav__back-icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+}
+
+.cs-page .portfolio-nav .sature-menu {
+  --menu-bar: var(--color-nav-track);
+  --menu-hover: var(--color-nav-hover);
+  --menu-raised: var(--color-nav-raised);
+  --menu-ink: var(--color-text-primary);
+  --menu-ink-muted: var(--color-nav-muted);
+  --menu-focus: var(--color-text-primary);
+  --menu-aura-ink: var(--color-nav-muted);
+}/* Over white cards the grey track alone does not lift off the page. The
+   track eases between schemes along with the labels and the pill. */
+
+
+.cs-page .portfolio-nav .sature-menu__bar {
+  box-shadow: var(--shadow-card);
+  transition:
+    background-color 260ms var(--ease-out),
+    box-shadow 260ms var(--ease-out);
+}/* ------------------------------------------------------------------ motion */
+
+
+
+@media (prefers-reduced-motion: no-preference) {
+  .cs-page .tools__trigger {
+    transition:
+      transform var(--press-out),
+      background-color 150ms var(--ease-out),
+      border-color 150ms var(--ease-out);
+  }
+
+  .cs-page .popover {
+    transition:
+      opacity 160ms var(--ease-out),
+      translate 220ms var(--ease-out),
+      visibility 0s linear 160ms;
+  }
+
+  .cs-page .popover[data-open] {
+    transition:
+      opacity 160ms var(--ease-out),
+      translate 220ms var(--ease-out),
+      visibility 0s;
+  }
+}/* ------------------------------------------------------------- small screens */
+
+
+
+@media (max-width: 760px) {
+  .cs-page .section-header {
+    padding-inline: 4px;
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .cs-page .intro {
+    padding: 20px;
+  }
+
+  .cs-page .intro__top {
+    flex-direction: column;
+  }
+
+  .cs-page .intro__rule--vertical {
+    display: none;
+  }
+
+  .cs-page .info {
+    flex-basis: auto;
+    min-height: 0;
+  }
+
+  .cs-page .impact {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .cs-page .cases {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cs-page .voice-large {
+    padding: 48px 0;
+    font-size: 24px;
+    line-height: 36px;
+  }
+}/*
+ * Five words have to fit a phone. The type steps down to 14px and the items
+ * tighten; on the narrowest screens the bar scrolls sideways rather than
+ * wrapping or pushing past the edge.
+ *//*
+ * Below 900px the widest bar (the hiring agent's, 629px) would run into a
+ * button at the screen's edge, so the button joins the row as a circle with
+ * the arrow alone, and the bar takes what is left.
+ */
+
+
+
+@media (max-width: 900px) {/* The row spans the screen so the button still sits at its left edge; the
+     bar is centred in the room to the button's right. */
+  
+  .cs-page .portfolio-nav > .portfolio-nav__row {
+    gap: 8px;
+    width: calc(100vw - 2 * var(--gutter));
+  }
+
+  .cs-page .portfolio-nav__back {
+    position: static;
+    flex: none;
+    justify-content: center;
+    width: 48px;
+    padding: 0;
+  }
+
+  .cs-page .portfolio-nav__back-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }/* The menu centres its bar in a grid cell of its own, which lets a bar wider
+     than the cell spill out both sides. Here the cell takes the room that is
+     left and the bar is held inside it, scrolling sideways instead. */
+
+  
+  .cs-page .portfolio-nav__row .sature-menu {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .cs-page .portfolio-nav__row .sature-menu__slot {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+  }/* Doubled up to outrank the phone rule below that caps the bar at the full
+     viewport — beside the button it has less than that. */
+
+  
+  .cs-page .portfolio-nav .portfolio-nav__row .sature-menu__bar {
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .cs-page .portfolio-nav .sature-menu {
+    --menu-text: 500 14px/20px var(--font-sans);
+    --menu-tracking: -0.14px;
+  }
+
+  .cs-page .portfolio-nav .sature-menu__item {
+    padding: 10px 10px;
+  }
+}/* A 390px phone fits all five at 6px a side; anything narrower scrolls. */
+
+
+@media (max-width: 420px) {
+  .cs-page .portfolio-nav .sature-menu__item {
+    padding-inline: 6px;
+  }
+
+  .cs-page .portfolio-nav .sature-menu__bar {
+    max-width: calc(100vw - 2 * var(--gutter));
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+}/* ----------------------------------------------------------------- reveal *//*
+ * The studio site's entrance motion. The hidden half is applied by
+ * useReveal.ts, never from here: if the script does not run, `.reveal` is never
+ * added and nothing on the page can be hidden by this block.
+ *
+ * Opacity finishes well before the transform, so a block is readable while it
+ * is still settling. Only opacity and transform — both composited, neither
+ * touching layout.
+ *
+ * Prefixed with `.page` for weight, not scope: some of these blocks are
+ * buttons, and the shared press rule in foundation.css (`button:not(:disabled)`)
+ * would otherwise outrank a single class and replace this transition with its
+ * own.
+ */
+
+
+
+
+.cs-page .page .reveal {
+  opacity: 0;
+  transform: translateY(14px) scale(0.985);
+  transition:
+    opacity 0.42s var(--ease-out) var(--reveal-delay, 0ms),
+    transform 0.64s var(--ease-out) var(--reveal-delay, 0ms);
+}
+
+.cs-page .page .reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-page .page .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}/* ------------------------------------------------------------- link cards *//*
+ * A project card that leads to its case study. The whole card is the target:
+ * under the pointer it lifts a couple of pixels onto a softer shadow and its
+ * surface greys a touch; pressed, it greys further and settles back down, a
+ * pixel below where it rests.
+ *
+ * `translate`, not `transform`, so it never fights the reveal, which owns
+ * `transform`. And the transition names the reveal's two properties again with
+ * their own timing: this rule outranks `.page .reveal` and would otherwise
+ * replace its transition outright.
+ */
+
+
+
+
+.cs-page .page .case--link {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    opacity 0.42s var(--ease-out) var(--reveal-delay, 0ms),
+    transform 0.64s var(--ease-out) var(--reveal-delay, 0ms),
+    translate 220ms var(--ease-out),
+    background-color 160ms var(--ease-out),
+    box-shadow 220ms var(--ease-out);
+}
+
+@media (hover: hover) {
+  .cs-page .page .case--link:hover {
+    background-color: var(--color-card-hover);
+    box-shadow: var(--shadow-card-hover);
+    translate: 0 -2px;
+  }
+}
+
+.cs-page .page .case--link:active {
+  background-color: var(--color-card-pressed);
+  box-shadow: var(--shadow-card);
+  translate: 0 1px;
+  transition-duration: 0.42s, 0.64s, 90ms, 90ms, 90ms;
+}
+
+.cs-page .page .case--link:focus-visible {
+  outline: 2px solid var(--color-text-primary);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-page .page .case--link:hover,
+  .cs-page .page .case--link:active {
+    translate: none;
+  }
+}/* --------------------------------------------------------------- lightbox */
+
+
+
+html:has(.lightbox[open]) {
+  overflow: hidden;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: hidden;
+}
+
+.lightbox::backdrop {
+  background: var(--color-overlay);
+}/*
+ * Fitted by default: as wide as the file, the screen, or the height allows —
+ * whichever is least. Auto margins centre it when it is smaller than the stage
+ * and, unlike centring the grid, never push an overflowing picture out past the
+ * start edge where scrolling cannot reach it.
+ */
+
+
+.lightbox__stage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  padding: 72px 24px 24px;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.lightbox__picture {
+  --r: var(--radius-12);
+  --press-depth: 0;
+  position: relative;
+  display: block;
+  width: min(var(--full-width), 100%, calc((100dvh - 96px) * var(--ratio)));
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r);
+  background: transparent;
+  overflow: hidden;
+  cursor: zoom-in;
+}
+
+.lightbox__stage[data-actual] .lightbox__picture {
+  width: var(--full-width);
+  max-width: none;
+  cursor: zoom-out;
+}
+
+.lightbox__preview,
+.lightbox__full {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.lightbox__full {
+  opacity: 0;
+}
+
+.lightbox__full[data-loaded] {
+  opacity: 1;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .lightbox[open],
+  .lightbox[open]::backdrop {
+    animation: lightbox-in 200ms var(--ease-out);
+  }
+
+  .lightbox__full {
+    transition: opacity 240ms var(--ease-out);
+  }
+
+  @keyframes lightbox-in {
+    from {
+      opacity: 0;
+    }
+  }
+}
+
+
+/* ======================= case-study/case-study.css ======================= */
+
+/*
+ * The case studies — Figma file SDAlLcbZJQNTwPG4In2AxB: the hiring agent (frame
+ * 247:41705), the video platform (247:42698) and the screening agent
+ * (288:93313). One stylesheet for all three, so they read as one system.
+ *
+ * Built on the portfolio: its tokens, its cards, its lightbox, its reveal. This
+ * file only adds what the case studies draw that the portfolio page does not —
+ * the dark heroes, the inverted card, the panels — and the frames' own rhythm:
+ * a 922px column, 16px between the things in a group, and 120px (80px after
+ * the lighter groups) before the next.
+ *//* -------------------------------------------------------------------- page */
+
+
+
+.cs-page .cs-main {
+  gap: 0;
+  padding-top: 0;
+  padding-bottom: 40px;
+}
+
+.cs-page .cs-section {
+  scroll-margin-top: var(--nav-clearance);
+}
+
+.cs-page .cs-section--column,
+.cs-page .cs-block,
+.cs-page .cs-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.cs-page .cs-group {
+  gap: 16px;
+}/* ------------------------------------------------------------- navigation *//* Figma's dark menu: a #262626 track, a #383838 pill, labels at 16/24. */
+
+
+
+
+.cs-page .portfolio-nav[data-scheme='dark'] .sature-menu {
+  --menu-bar: var(--color-nav-dark-track);
+  --menu-hover: color-mix(in srgb, var(--color-nav-dark-raised) 55%, var(--color-nav-dark-track));
+  --menu-raised: var(--color-nav-dark-raised);
+  --menu-ink: var(--color-text-inverse);
+  --menu-ink-muted: var(--color-nav-dark-muted);
+  --menu-focus: var(--color-text-inverse);
+  --menu-aura-ink: var(--color-nav-dark-muted);
+  --menu-pill-edge: transparent;
+  --menu-shadow: none;
+}
+
+.cs-page .portfolio-nav[data-scheme='dark'] .sature-menu__bar {
+  box-shadow: none;
+}/*
+ * Figma's measurements for the bar on the case study, in both schemes. They
+ * belong to the page rather than to the dark scheme: tied to the scheme, the
+ * bar would change size at the moment it changes colour, and every label would
+ * shift. On a phone the portfolio's own tightening applies instead.
+ */
+
+
+.cs-page .portfolio-nav--case .sature-menu__bar {
+  padding: 6px;
+}
+
+@media (min-width: 641px) {
+  .cs-page .portfolio-nav--case .sature-menu {
+    --menu-text: 500 16px/24px var(--font-sans);
+    --menu-tracking: var(--text-body-tracking-tight);
+  }
+
+  .cs-page .portfolio-nav--case .sature-menu__item {
+    padding: 10px 16px;
+  }
+}/* -------------------------------------------------------------------- hero *//*
+ * The gradient is drawn by the browser, so it runs to the edges of any screen
+ * and stays sharp at any density. Figma's grain goes over it as a tiled noise
+ * texture, strongest where the gradient is, as in the frame's own filter.
+ *
+ * The product below the title is Figma's 2x render of the hero with the
+ * backdrop taken back out of it — pixel by pixel against a render of the
+ * backdrop alone — so it arrives with a transparent background and sits on
+ * this gradient rather than on a copy of it.
+ *
+ * 883px, two short of the frame: the render's last row carries the frame's
+ * dark edge.
+ */
+
+
+
+
+.cs-page .cs-hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 883px;
+  overflow: hidden;
+  background: var(--color-hero-page) var(--gradient-hero) no-repeat;
+  background-size: 100% 883px;
+  color: var(--color-text-inverse);
+  text-align: center;
+}
+
+.cs-page .cs-hero::before {
+  content: '';
   position: absolute;
   inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.04 0 0 0 0 0.04 0 0 0 0 0.04 0 0 0 -2.4 1.55'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -113,387 +1490,880 @@
   opacity: 0.55;
   -webkit-mask-image: linear-gradient(to bottom, transparent 20%, #000);
   mask-image: linear-gradient(to bottom, transparent 20%, #000);
+  pointer-events: none;
 }
 
-/* The render is drawn wider than the page and fades out at its own edges, so
-   it runs past the column rather than being capped by it. */
-.case-hero-violet .case-hero-shot {
-  width: min(1512px, 150vw);
-  max-width: none;
-  margin-top: var(--space-40);
-  border-radius: 0;
-  box-shadow: none;
-}
-
-.case-hero-inner {
+.cs-page .cs-hero > * {
   position: relative;
-  width: 100%;
+}
+
+.cs-page .cs-hero__text {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 8px;
+  padding: 127px var(--gutter) 0;
 }
 
-.case-hero-eyebrow {
-  margin: 0 0 var(--space-8);
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: var(--weight-medium);
-  font-size: var(--fs-body-lg);
-  line-height: 1.2;
-  color: var(--case-eyebrow, var(--text-on-dark-soft));
+.cs-page .cs-hero__eyebrow {
+  font: var(--text-hero-eyebrow);
+  color: var(--hero-eyebrow, var(--color-hero-eyebrow));
 }
 
-.case-hero-title {
-  margin: 0;
-  font-family: var(--font-sans);
-  font-size: clamp(30px, 4.2vw, var(--fs-display));
-  line-height: var(--lh-display);
-  /* Lighter than the landing page's headings: a case study opens on a picture
-     and the title sits over it, where medium reads as shouting. */
-  font-weight: var(--weight-regular);
-  letter-spacing: var(--ls-display);
-  text-wrap: balance;
+.cs-page .cs-hero__title {
+  font: var(--text-hero);
+  color: var(--color-text-inverse);
 }
 
-.case-hero-title em {
-  display: block;
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: var(--weight-regular);
+.cs-page .cs-hero__accent {
+  font: var(--text-hero-accent);
 }
 
-.case-hero-title span { display: block; }
-
-.case-hero-badges {
+.cs-page .cs-hero__badges {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--space-8);
-  margin: var(--space-24) 0 0;
+  gap: 8px;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.case-hero-badges li {
-  padding: var(--space-8) var(--space-16);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: var(--radius-full);
-  font-size: var(--fs-label);
-  line-height: var(--lh-label);
-  letter-spacing: var(--ls-label);
-  font-weight: var(--weight-medium);
-}
+.cs-page .cs-hero__badges li {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 16px;
+  border: 0.5px solid var(--color-hero-chip-border);
+  border-radius: var(--radius-24);
+  font: var(--text-chip);
+}/* 370px from the top of the frame, as Figma places it. */
 
-.case-hero-shot {
-  /* The ground is positioned, so the picture has to be too, or it paints
-     underneath it. */
-  position: relative;
+
+.cs-page .cs-hero__visual {
   display: block;
   flex: none;
-  width: min(922px, 100% - 2 * clamp(24px, 4vw, 64px));
+  width: 1512px;
+  max-width: none;
   height: auto;
-  margin-top: var(--space-48);
-  border-radius: var(--radius-16);
-  box-shadow: var(--shadow-lg);
+  margin-top: 55px;
+}/*
+ * The video platform's hero: a dark band with an indigo glow in its upper
+ * right, and the product picture hanging off the band's bottom edge onto the
+ * page — 116px of it below the band, as frame 247:42698 draws it.
+ *
+ * The glow is Figma's own construction rebuilt: a 1521px circle carrying the
+ * radial fill, blurred by 75px, centred 591px right of the page's middle. Drawn
+ * by the browser, it keeps its place and its sharpness on any screen width.
+ */
+
+
+.cs-page .cs-hero--band {
+  --hero-eyebrow: var(--color-hero-eyebrow-telle);
+  height: 885px;
+  background: var(--color-page);
 }
 
-/* --------------------------------------------------------------- type --- */
-
-.case-heading {
-  margin: 0 0 var(--space-16);
-  padding-inline: var(--space-20);
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: var(--weight-medium);
-  font-size: clamp(24px, 3vw, var(--fs-h2));
-  line-height: 1.2;
-  color: var(--text-secondary);
+.cs-page .cs-hero--band::before {
+  content: none;
 }
 
-.case-heading-centered { text-align: center; }
-
-.case-copy {
-  font-size: var(--fs-body);
-  line-height: var(--lh-body);
-  letter-spacing: var(--ls-body);
+.cs-page .cs-hero > .cs-hero__band {
+  position: absolute;
+  inset: 0 0 116px;
+  overflow: hidden;
+  background: var(--color-hero-band);
 }
 
-.case-copy p { margin: 0; }
-.case-copy > * + * { margin-top: var(--space-16); }
+.cs-page .cs-hero__glow {
+  position: absolute;
+  top: -560px;
+  left: calc(50% - 169px);
+  width: 1521px;
+  height: 1521px;
+  border-radius: 50%;
+  background: var(--gradient-hero-glow);
+  filter: blur(75px);
+}/* Figma's grain, over the glow only. */
 
-.case-copy ul {
-  margin: var(--space-8) 0 0;
+
+.cs-page .cs-hero__band::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.04 0 0 0 0 0.04 0 0 0 0 0.04 0 0 0 -2.4 1.55'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+  opacity: 0.5;
+  -webkit-mask-image: radial-gradient(circle 760px at calc(50% + 591px) 200px, #000 30%, transparent);
+  mask-image: radial-gradient(circle 760px at calc(50% + 591px) 200px, #000 30%, transparent);
+}
+
+.cs-page .cs-hero--band > .cs-hero__text,
+.cs-page .cs-hero--band > .cs-hero__shot {
+  z-index: 1;
+}
+
+.cs-page .cs-hero__shot {
+  --r: var(--radius-24);
+  display: block;
+  flex: none;
+  width: min(922px, calc(100% - 2 * var(--gutter)));
+  height: auto;
+  margin-top: 61px;
+  aspect-ratio: 922 / 500;
+  object-fit: cover;
+}/* ----------------------------------------------------------------- type */
+
+
+
+.cs-page .cs-heading {
+  padding-bottom: 16px;
+  font: var(--text-voice-title);
+  color: var(--color-text-secondary);
+}
+
+.cs-page .cs-heading--inset {
+  padding-inline: 20px;
+}
+
+.cs-page .cs-heading--inset-sm {
+  padding-inline: 16px;
+}
+
+.cs-page .cs-heading--centered {
+  text-align: center;
+}
+
+.cs-page .cs-lead {
+  flex: 0 0 513px;
+  font: var(--text-lead);
+  letter-spacing: var(--text-lead-tracking);
+  color: var(--color-text-primary);
+}
+
+.cs-page .cs-copy {
+  font: var(--text-body);
+  letter-spacing: var(--text-body-tracking-tight);
+}/* A blank line between paragraphs, as Figma sets them. Lists follow their
+   sentence directly, and so does the sentence after them unless it asks for
+   the gap. */
+
+
+.cs-page .cs-copy > p + p,
+.cs-page .cs-copy > .cs-copy__gap {
+  margin-top: 24px;
+}
+
+.cs-page .cs-copy ul {
+  margin: 0;
+}
+
+.cs-page .cs-copy__bullets {
+  padding-left: 24px;
+}
+
+.cs-page .cs-copy__arrows {
   padding: 0;
   list-style: none;
 }
 
-.case-copy li + li { margin-top: var(--space-4); }
-
-.case-copy-bullets li { padding-left: var(--space-20); text-indent: calc(-1 * var(--space-20)); }
-.case-copy-bullets li::before { content: "• "; }
-.case-copy-arrows li::before { content: "→ "; color: var(--text-muted); }
-
-/* A title and its copy with no card around them: the narrow column a case
-   opens with, measured for reading rather than for the picture's width. */
-.case-paragraph {
-  width: min(560px, 100%);
-  margin-inline: auto;
-  color: var(--text-primary);
+.cs-page .cs-copy__arrows li::before {
+  content: '→ ';
 }
 
-.case-paragraph-title {
-  margin: 0 0 var(--space-8);
-  font-size: var(--fs-h3);
-  line-height: var(--lh-h3);
-  letter-spacing: var(--ls-h3);
-  font-weight: var(--weight-semibold);
-}
+.cs-page .cs-copy__example {
+  font: italic 400 16px/24px var(--font-serif);
+  letter-spacing: 0;
+}/* ----------------------------------------------------------------- cards */
 
-.case-prose > .wrap {
+
+
+.cs-page .cs-card {
+  --r: var(--radius-20);
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--space-48);
+  gap: 20px;
+  padding: 21px 21px 25px;
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  color: var(--color-text-primary);
 }
 
-.case-divider {
-  width: min(605px, 100%);
+.cs-page .cs-card--dark {
+  gap: 24px;
+  padding: 20px;
+  border-color: var(--color-border-inverse);
+  background: var(--color-surface-inverse);
+  box-shadow: none;
+  color: var(--color-text-inverse);
+}
+
+.cs-page .cs-card__content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cs-page .cs-card__title {
+  font: var(--text-title);
+  letter-spacing: var(--text-title-tracking);
+}/* A soft grey chip on a white card; on the inverted card it stays white. */
+
+
+.cs-page .cs-card__tag {
+  align-self: flex-start;
+  padding: 8px;
+  border-radius: var(--radius-10);
+  background: var(--color-tag-surface);
+  font: var(--text-tag);
+  color: var(--color-tag-ink);
+}
+
+.cs-page .cs-card--dark .cs-card__tag {
+  background: var(--color-surface);
+  color: var(--color-surface-inverse);
+}
+
+.cs-page .cs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.cs-page .cs-grid--thirds {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.cs-page .cs-grid--impact .cs-card {
+  min-height: 300px;
+}
+
+.cs-page .cs-card--phase {
+  min-height: 160px;
+}
+
+.cs-page .cs-card--takeaway {
+  min-height: 168px;
+}
+
+.cs-page .cs-afterword .cs-block:first-child .cs-card--closing {
+  min-height: 336px;
+}
+
+.cs-page .cs-afterword .cs-block:nth-child(2) .cs-card--closing {
+  min-height: 270px;
+}
+
+.cs-page .cs-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}/* A title and copy with no card, centred in a 550px column. */
+
+
+.cs-page .cs-paragraph {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(550px, 100%);
+  margin-inline: auto;
+  color: var(--color-text-primary);
+}
+
+.cs-page .cs-notes .cs-card__content {
+  flex: none;
+}/* Full-width cards keep Figma's measure: its copy breaks by hand at about
+   680px, well short of the card's 880. */
+
+
+.cs-page .cs-notes .cs-copy,
+.cs-page .cs-beats > .cs-card .cs-copy,
+.cs-page .cs-scope > .cs-card .cs-copy,
+.cs-page .cs-framework > .cs-card__content .cs-copy {
+  max-width: 680px;
+}
+
+.cs-page .cs-divider {
+  width: 100%;
   height: 1px;
-  margin: 0 auto;
+  margin: 0;
   border: 0;
   background: linear-gradient(
     90deg,
     transparent,
-    var(--border-subtle) 30%,
-    var(--border-subtle) 70%,
+    var(--color-nav-hover) 30%,
+    var(--color-nav-hover) 70%,
     transparent
   );
 }
 
-/* An aside under a section's cards: quieter than the cards, centred. */
-.case-aside {
+.cs-page .cs-divider--wide {
+  width: min(605px, 100%);
+  margin-inline: auto;
+}/* ---------------------------------------------------------------- pictures */
+
+
+
+.cs-page .cs-shot {
+  --r: var(--radius-24);
+}
+
+.cs-page .cs-shot img {
+  height: auto;
+}/*
+ * The prototype in action. The browser's own controls, so play, scrub, volume
+ * and full screen behave as the reader expects on every device; the poster is a
+ * frame from the recording, so the card is never an empty box before it loads.
+ */
+
+
+.cs-page .cs-video {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+}
+
+.cs-page .cs-video__player {
+  --r: var(--radius-24);
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3444 / 2160;
+  background: var(--color-hero-page);
+  object-fit: cover;
+}
+
+.cs-page .cs-video__caption {
+  padding-inline: 20px;
+  font: var(--text-voice-small);
+  color: var(--color-text-secondary);
+}/* ------------------------------------------------------------------ bars *//*
+ * Figma's `bars`: 1px rules every 10px, barely darker than the page, faded out
+ * towards every edge. Behind the copy they sit under, never over it.
+ */
+
+
+
+
+.cs-page .cs-bars {
+  position: absolute;
+  z-index: 0;
+  width: 1271px;
+  max-width: 100vw;
+  height: 397px;
+  background: repeating-linear-gradient(
+    90deg,
+    rgb(85 85 85 / 0.06) 0 1px,
+    transparent 1px 10px
+  );
+  -webkit-mask-image: radial-gradient(closest-side, #000 20%, transparent);
+  mask-image: radial-gradient(closest-side, #000 20%, transparent);
+  pointer-events: none;
+}
+
+.cs-page .cs-bars--context {
+  top: 32px;
+  left: 50%;
+  translate: -50% 0;
+  width: 700px;
+}
+
+.cs-page .cs-bars--takeaways {
+  top: 50%;
+  left: 60px;
+  translate: 0 -50%;
+  width: 260px;
+  height: 200px;
+}
+
+.cs-page .cs-bars--phases {
+  top: 60px;
+  right: 0;
+  width: 300px;
+  height: 260px;
+}/* ---------------------------------------------------------------- sections */
+
+
+
+.cs-page .cs-context {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 48px;
+  padding-block: 120px;
+}
+
+.cs-page .cs-context__problem {
+  position: relative;
+}
+
+.cs-page .cs-card-section {
+  gap: 16px;
+  padding-bottom: 120px;
+}/* Strategic alignment: the title and its lead side by side. */
+
+
+.cs-page .cs-lead-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.cs-page .cs-lead-row .cs-heading {
+  flex: 1 1 auto;
+  padding-bottom: 0;
+}
+
+.cs-page .cs-picture-with-note {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding-bottom: 120px;
+}
+
+.cs-page .cs-picture-with-note--board {
+  margin-top: 80px;
+}
+
+.cs-page .cs-takeaways {
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+  padding-bottom: 120px;
+}
+
+.cs-page .cs-takeaways__title {
+  position: relative;
+  flex: 1 1 357px;
+  padding-block: 80px;
+}
+
+.cs-page .cs-takeaways__title .cs-heading {
+  position: relative;
+  z-index: 1;
+  max-width: 10ch;
+  padding-bottom: 0;
+}
+
+.cs-page .cs-takeaways .cs-stack {
+  flex: 0 1 545px;
+}
+
+.cs-page .cs-scope {
+  gap: 16px;
+  padding-bottom: 80px;
+}
+
+.cs-page .cs-scope .cs-heading {
+  padding-bottom: 16px;
+}
+
+.cs-page .cs-scope__intro {
+  max-width: 576px;
+  color: var(--color-text-primary);
+}
+
+.cs-page .cs-scope > .cs-card {
+  min-height: 168px;
+}/* The five findings: an inverted card floating on a lilac panel. */
+
+
+.cs-page .cs-findings {
+  --r: var(--radius-24);
+  display: grid;
+  place-items: center;
+  min-height: 600px;
+  padding: 50px 16px;
+  background: var(--color-surface-accent);
+}
+
+.cs-page .cs-findings__card {
+  --r: var(--radius-16);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: min(659px, 100%);
+  padding: 20px;
+  border: 1px solid var(--color-border-inverse);
+  background: var(--color-surface-inverse);
+  color: var(--color-text-inverse);
+}
+
+.cs-page .cs-findings__title {
+  font: var(--text-findings-title);
+  letter-spacing: -0.066px;
+}
+
+.cs-page .cs-findings__list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font: 400 16px/22px var(--font-sans);
+  letter-spacing: var(--text-body-tracking-tight);
+}
+
+.cs-page .cs-findings__list li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cs-page .cs-findings__item-title {
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-position: from-font;
+}/* Design */
+
+
+
+.cs-page .cs-phases {
+  position: relative;
+  gap: 40px;
+  padding-block: 80px;
+}
+
+.cs-page .cs-phases .cs-group {
+  position: relative;
+  z-index: 1;
+}
+
+.cs-page .cs-design > .cs-block:nth-child(2) {
+  padding-bottom: 80px;
+}
+
+.cs-page .cs-design > .cs-block:nth-child(n + 3) {
+  padding-bottom: 120px;
+}/* The proactive agent's framework: four cards on a sunken panel. */
+
+
+.cs-page .cs-framework {
+  --r: var(--radius-24);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px;
+  background: var(--color-surface-sunken);
+  color: var(--color-text-primary);
+}
+
+.cs-page .cs-grid--framework {
+  gap: 12px;
+}
+
+.cs-page .cs-card--framework {
+  min-height: 192px;
+}
+
+.cs-page .cs-card--framework.cs-card--dark {
+  --r: var(--radius-16);
+  align-self: start;
+}/*
+ * The video platform's design stories: a title, a picture and its note, 24px
+ * apart, 120px to the next story. The desktop designs pair square shots, and
+ * their second picture group sits 40px under the first note.
+ */
+
+
+.cs-page .cs-story {
+  gap: 24px;
+  padding-bottom: 120px;
+}
+
+.cs-page .cs-telle-design > .cs-story:nth-child(3) {
+  padding-bottom: 80px;
+}
+
+.cs-page .cs-picture-with-note--tight {
+  gap: 24px;
+  padding-bottom: 0;
+}
+
+.cs-page .cs-picture-with-note--follows {
+  margin-top: 16px;
+}
+
+.cs-page .cs-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.cs-page .cs-grid--process .cs-card {
+  min-height: 192px;
+}
+
+.cs-page .cs-thoughts > .cs-block:first-child {
+  padding-bottom: 80px;
+}/*
+ * The screening agent. Its hero is the video platform's with a taller product
+ * set 24px under the badges, so the header runs to the product's foot (918px)
+ * and the band stops 149px above it, where the frame's band does. The context
+ * then starts 87px lower rather than 120, as it does in the frame.
+ */
+
+
+.cs-page .cs-hero--fonte {
+  --hero-eyebrow: var(--color-hero-eyebrow-fonte);
+  height: 918px;
+}
+
+.cs-page .cs-hero--fonte > .cs-hero__band {
+  bottom: 149px;
+}
+
+.cs-page .cs-hero--fonte > .cs-hero__shot {
+  /* The frame's own 16px corner: any rounder and the corners cut into its
+     5px lilac rim, so the panels inside seem to touch the edge. */
+  --r: var(--radius-16);
+  margin-top: 24px;
+  aspect-ratio: 922 / 579;
+}
+
+.cs-page .cs-hero--fonte + .cs-main .cs-context {
+  padding-top: 87px;
+}
+
+.cs-page .cs-grid--role .cs-card {
+  min-height: 220px;
+}/* A quiet aside under a section's cards. */
+
+
+.cs-page .cs-aside {
   width: min(480px, 100%);
-  margin: var(--space-16) auto 0;
-  font-size: var(--fs-body);
-  line-height: var(--lh-body);
-  letter-spacing: var(--ls-body);
-  color: var(--text-secondary);
+  margin-inline: auto;
+  font: var(--text-body);
+  letter-spacing: var(--text-body-tracking-tight);
+  color: var(--color-text-secondary);
   text-align: center;
   text-wrap: balance;
+}/* The design story: a title, then pictures and notes 24px apart. */
+
+
+.cs-page .cs-beats {
+  gap: 24px;
 }
 
-/* -------------------------------------------------------------- cards --- */
+.cs-page .cs-fonte-design {
+  padding-bottom: 120px;
+}/* Figma leaves only the 24px rhythm before "Final designs"; a new chapter
+   gets the break the other stories get between theirs. */
 
-.case-card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-20);
-  padding: 21px 21px 25px;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-24);
-  background: var(--surface-primary);
-  box-shadow: var(--shadow-sm);
-  color: var(--text-primary);
+
+.cs-page .cs-fonte-design > .cs-beats + .cs-beats {
+  margin-top: 80px;
 }
 
-.case-card-dark {
-  gap: var(--space-24);
-  padding: var(--space-20);
-  border-color: var(--border-dark-card);
-  background: var(--background-dark-card);
-  box-shadow: none;
-  color: var(--text-on-dark);
+.cs-page .cs-lessons > .cs-block {
+  padding-bottom: 80px;
+}/* Afterword */
+
+
+
+.cs-page .cs-afterword > .cs-block:first-child {
+  padding-block: 80px;
 }
 
-.case-card-content {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  gap: var(--space-8);
-}
+.cs-page .cs-afterword > .cs-block:nth-child(2) {
+  padding-bottom: 80px;
+}/* ------------------------------------------------------------ small screens */
 
-.case-card-title {
-  margin: 0;
-  font-size: var(--fs-body-lg);
-  line-height: 1.4;
-  letter-spacing: var(--ls-body-lg);
-  font-weight: var(--weight-semibold);
-}
 
-/* Full-width cards keep a reading measure: the card is 922 wide, its copy
-   is not. */
-.case-card-note .case-copy { max-width: 680px; }
 
-.case-tag {
-  align-self: flex-start;
-  padding: var(--space-8);
-  border-radius: var(--radius-8);
-  background: var(--background-secondary);
-  font-size: 12px;
-  line-height: 14px;
-  font-weight: var(--weight-medium);
-  color: var(--text-secondary);
-}
 
-.case-card-dark .case-tag {
-  background: var(--surface-primary);
-  color: var(--text-primary);
-}
-
-.case-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-16);
-}
-
-/* ------------------------------------------------------------ pictures --- */
-
-.case-story {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-24);
-}
-
-.case-shot {
-  margin: 0;
-  overflow: hidden;
-  border-radius: var(--radius-24);
-  background: var(--background-secondary);
-}
-
-.case-shot img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-/* ------------------------------------------------------- project cards --- */
-
-.project-section { padding-bottom: var(--space-80); }
-
-.project-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-16);
-}
-
-.project-card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-24);
-  padding: var(--space-20) var(--space-20) var(--space-24);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-24);
-  background: var(--surface-primary);
-  box-shadow: var(--shadow-sm);
-  color: var(--text-primary);
-  text-decoration: none;
-}
-
-.project-card-image {
-  display: block;
-  overflow: hidden;
-  border-radius: var(--radius-16);
-  background: var(--background-secondary);
-}
-
-.project-card-image img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.project-card-copy {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-8);
-}
-
-.project-card-title {
-  font-size: var(--fs-body-lg);
-  line-height: 1.4;
-  letter-spacing: var(--ls-body-lg);
-  font-weight: var(--weight-semibold);
-}
-
-.project-card-body {
-  font-size: var(--fs-body);
-  line-height: var(--lh-body);
-  letter-spacing: var(--ls-body);
-  color: var(--text-secondary);
-}
-
-/* The whole card is the target: it lifts under the pointer and presses on
-   click, so the hit area and the thing that reacts are the same shape. */
-.project-card-link {
-  cursor: pointer;
-  transition:
-    background-color 0.2s var(--ease),
-    box-shadow 0.2s var(--ease),
-    translate 0.2s var(--ease);
-}
-
-@media (hover: hover) {
-  .project-card-link:hover {
-    background-color: var(--background-secondary);
-    box-shadow: var(--shadow-md);
-    translate: 0 -2px;
+@media (max-width: 1100px) {
+  .cs-page .cs-hero__visual {
+    width: 1300px;
   }
 }
 
-.project-card-link:active {
-  background-color: var(--background-tertiary);
-  box-shadow: var(--shadow-sm);
-  translate: 0 1px;
-  transition-duration: 90ms;
-}
-
-.project-card-link:focus-visible {
-  outline: 2px solid var(--text-primary);
-  outline-offset: 3px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .project-card-link:hover,
-  .project-card-link:active {
-    translate: none;
+@media (max-width: 760px) {
+  .cs-page .cs-hero {
+    height: auto;
   }
-}
 
-/* --------------------------------------------------- the portfolio page --- */
+  .cs-page .cs-hero--band {
+    padding-bottom: 40px;
+  }/* The band ends halfway down the picture, whatever width the picture is. */
 
-.portfolio-intro {
-  padding-top: var(--space-64);
-  padding-bottom: var(--space-48);
-}
+  
+  .cs-page .cs-hero > .cs-hero__band {
+    bottom: calc((100vw - 2 * var(--gutter)) * 500 / 922 / 2 + 40px);
+  }
 
-.portfolio-intro > .wrap {
-  max-width: calc(922px + 2 * clamp(24px, 4vw, 64px));
-}
+  .cs-page .cs-hero__shot {
+    margin-top: 32px;
+  }
 
-.portfolio-lead {
-  max-width: 560px;
-  margin: var(--space-16) 0 0;
-  font-size: var(--fs-body-lg);
-  line-height: var(--lh-body-lg);
-  letter-spacing: var(--ls-body-lg);
-  color: var(--text-secondary);
-}
+  .cs-page .cs-hero--fonte > .cs-hero__band {
+    bottom: calc((100vw - 2 * var(--gutter)) * 579 / 922 / 2 + 40px);
+  }
 
-/* -------------------------------------------------------- small screens --- */
+  .cs-page .cs-hero--fonte + .cs-main .cs-context {
+    padding-top: 80px;
+  }
 
-@media (max-width: 860px) {
-  .case-hero { padding-top: calc(var(--header-total) + var(--space-32)); }
-  .case-hero-shot { margin-top: var(--space-32); }
-  .case-section { padding-bottom: var(--space-80); }
-  .case-main > .case-section:first-child { padding-top: var(--space-48); }
-  .portfolio-intro { padding-top: var(--space-32); }
+  .cs-page .cs-fonte-design {
+    padding-bottom: 80px;
+  }
 
-  .case-grid,
-  .project-grid {
+  .cs-page .cs-lessons > .cs-block {
+    padding-bottom: 60px;
+  }
+
+  .cs-page .cs-pair {
+    gap: 12px;
+  }
+
+  .cs-page .cs-story {
+    padding-bottom: 80px;
+  }
+
+  .cs-page .cs-hero__text {
+    padding-top: 100px;
+  }
+
+  .cs-page .cs-hero__title,
+  .cs-page .cs-hero__accent {
+    font-size: 28px;
+    line-height: 38px;
+  }
+
+  .cs-page .cs-hero__visual {
+    width: 190vw;
+    margin-top: 32px;
+  }
+
+  .cs-page .cs-heading {
+    font-size: 24px;
+    line-height: 28px;
+  }
+
+  .cs-page .cs-grid,
+  .cs-page .cs-grid--thirds {
     grid-template-columns: minmax(0, 1fr);
   }
+
+  .cs-page .cs-grid--impact .cs-card,
+  .cs-page .cs-grid--role .cs-card,
+  .cs-page .cs-card--phase,
+  .cs-page .cs-card--takeaway,
+  .cs-page .cs-card--framework,
+  .cs-page .cs-afterword .cs-block .cs-card--closing,
+  .cs-page .cs-scope > .cs-card {
+    min-height: 0;
+  }
+
+  .cs-page .cs-context {
+    padding-block: 80px;
+  }
+
+  .cs-page .cs-lead-row,
+  .cs-page .cs-takeaways {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cs-page .cs-lead {
+    flex-basis: auto;
+    font-size: 18px;
+    line-height: 26px;
+  }
+
+  .cs-page .cs-takeaways__title {
+    flex-basis: auto;
+    padding-block: 0;
+  }
+
+  .cs-page .cs-takeaways .cs-stack {
+    flex-basis: auto;
+  }
+
+  .cs-page .cs-picture-with-note--board {
+    margin-top: 40px;
+  }
+
+  .cs-page .cs-card-section,
+  .cs-page .cs-picture-with-note,
+  .cs-page .cs-takeaways,
+  .cs-page .cs-design > .cs-block:nth-child(n + 3) {
+    padding-bottom: 80px;
+  }
+
+  .cs-page .cs-findings {
+    min-height: 0;
+    padding: 16px;
+  }
+
+  .cs-page .cs-bars {
+    display: none;
+  }
 }
 
-@media (max-width: 640px) {
-  .case-heading { padding-inline: 0; }
+
+/* ==========================================================================
+   In the Sature site
+
+   The case studies came from a page of their own, where the bar was fixed and
+   the page began under it. Here they sit under the site's sticky header and
+   above its footer, so the ground runs to the top of the window and the column
+   starts below the bar.
+   ========================================================================== */
+
+.cs-page {
+  --nav-clearance: calc(var(--header-total) + 24px);
+}
+
+.cs-page .cs-hero {
+  /* The header takes its height out of the flow; the ground goes back under it
+     and the title is placed clear of it again. */
+  margin-top: calc(-1 * var(--header-total));
+  padding-top: var(--header-total);
+}
+
+.cs-page .page {
+  padding-top: 0;
+}
+
+/* The work, listed */
+
+.cs-portfolio .page {
+  padding-top: 120px;
+}
+
+.cs-portfolio__intro {
+  gap: 16px;
+  padding-bottom: 24px;
+}
+
+.cs-portfolio__title {
+  font: var(--text-voice-large);
+  color: var(--color-text-primary);
+}
+
+.cs-portfolio__lead {
+  max-width: 560px;
+  font: var(--text-lead);
+  letter-spacing: var(--text-lead-tracking);
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 760px) {
+  .cs-portfolio .page {
+    padding-top: 80px;
+  }
+
+  .cs-portfolio__title {
+    font-size: 24px;
+    line-height: 36px;
+  }
 }

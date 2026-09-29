@@ -1,0 +1,18 @@
+---
+// The other projects, as the cards on the portfolio page show them.
+import { OTHER_PROJECTS_HEADING, otherProjects } from "../../data/cases";
+import ProjectCard from "./ProjectCard.astro";
+
+interface Props {
+  current: string;
+}
+
+const { current } = Astro.props;
+---
+
+<div class="cs-block cs-group cs-others">
+  <h2 class="cs-heading cs-heading--inset-sm">{OTHER_PROJECTS_HEADING}</h2>
+  <div class="cases">
+    {otherProjects(current).map((project) => <ProjectCard project={project} />)}
+  </div>
+</div>

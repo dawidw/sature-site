@@ -8,12 +8,13 @@ import { v1 as content } from "../../data/v1";
 ---
 
 <BaseLayout meta={portfolioPage.meta} footer={content.footer}>
-  <section class="portfolio-intro">
-    <div class="wrap">
-      <h1 class="section-title display">{portfolioPage.title}</h1>
-      <p class="portfolio-lead">{portfolioPage.lead}</p>
-    </div>
-  </section>
-
-  <ProjectGrid projects={projects} />
+  <div class="cs-page cs-portfolio">
+    <main class="page">
+      <section class="cs-section cs-section--column cs-portfolio__intro">
+        <h1 class="cs-portfolio__title">{portfolioPage.title}</h1>
+        <p class="cs-portfolio__lead">{portfolioPage.lead}</p>
+      </section>
+      <ProjectGrid projects={projects} />
+    </main>
+  </div>
 </BaseLayout>

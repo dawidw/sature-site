@@ -1,0 +1,17 @@
+---
+// A title and its copy with no card around them — the narrow column between
+// pictures.
+import type { Card } from "../../data/cases/types";
+import CsCopy from "./CsCopy.astro";
+
+interface Props {
+  card: Card;
+}
+
+const { card } = Astro.props;
+---
+
+<div class="cs-paragraph">
+  <h3 class="cs-card__title">{card.title}</h3>
+  <CsCopy blocks={card.body} />
+</div>

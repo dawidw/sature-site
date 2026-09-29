@@ -1,0 +1,21 @@
+---
+// A card: its title, its copy, and the chip Figma puts at the foot of an
+// outcome. `tone: "dark"` is the inverted card each group leads with.
+import type { Card } from "../../data/cases/types";
+import CsCopy from "./CsCopy.astro";
+
+interface Props {
+  card: Card;
+  class?: string;
+}
+
+const { card, class: className } = Astro.props;
+---
+
+<article class:list={["cs-card", "squircle", card.tone === "dark" && "cs-card--dark", className]}>
+  <div class="cs-card__content">
+    <h3 class="cs-card__title">{card.title}</h3>
+    {card.body.length > 0 && <CsCopy blocks={card.body} />}
+  </div>
+  {card.tag && <span class="cs-card__tag">{card.tag}</span>}
+</article>

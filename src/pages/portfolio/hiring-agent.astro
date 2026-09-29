@@ -1,0 +1,179 @@
+---
+// Frame 247:41705, section for section.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import CaseLayout from "../../components/case/CaseLayout.astro";
+import CsBars from "../../components/case/CsBars.astro";
+import CsCard from "../../components/case/CsCard.astro";
+import CsCardGrid from "../../components/case/CsCardGrid.astro";
+import CsContext from "../../components/case/CsContext.astro";
+import CsCopy from "../../components/case/CsCopy.astro";
+import CsHeading from "../../components/case/CsHeading.astro";
+import CsHero from "../../components/case/CsHero.astro";
+import CsNotes from "../../components/case/CsNotes.astro";
+import CsOtherProjects from "../../components/case/CsOtherProjects.astro";
+import CsParagraph from "../../components/case/CsParagraph.astro";
+import CsShot from "../../components/case/CsShot.astro";
+import { AFTERWORD, ALIGNMENT, CONTEXT, DESIGN, HERO, IMPACT, ROLE } from "../../data/cases/hiring-agent";
+import { asset } from "../../lib/asset";
+import { v1 as content } from "../../data/v1";
+
+const [context, problem] = CONTEXT;
+const { takeaways, scope } = ALIGNMENT;
+const { phases, explorations, final, proactive, settings } = DESIGN;
+const { finalVersion, afterword } = AFTERWORD;
+
+const meta = {
+  title: "Designing a hiring agent for a leading HR platform in EU — Sature",
+  description:
+    "Case study: designing an agentic experience for Tellent, a leading HR platform in the EU.",
+};
+---
+
+<BaseLayout meta={meta} footer={content.footer}>
+  <CaseLayout>
+    <CsHero slot="hero" content={HERO}>
+      <img
+        class="cs-hero__visual"
+        src={asset(HERO.visual)}
+        width={1512}
+        height={514}
+        alt={HERO.visualAlt}
+        fetchpriority="high"
+      />
+    </CsHero>
+
+    <CsContext context={context} problem={problem} />
+    <CsCardGrid id="impact" heading={IMPACT.heading} cards={IMPACT.cards} class="cs-grid--impact" />
+    <CsCardGrid id="role" heading={ROLE.heading} cards={ROLE.cards} />
+
+    <section id="alignment" class="cs-section cs-section--column" aria-labelledby="alignment-heading">
+      <div class="cs-block">
+        <div class="cs-lead-row">
+          <CsHeading id="alignment-heading">{ALIGNMENT.heading}</CsHeading>
+          <p class="cs-lead">{ALIGNMENT.lead}</p>
+        </div>
+        <div class="cs-picture-with-note cs-picture-with-note--board">
+          <CsShot asset={ALIGNMENT.board} />
+          <CsParagraph card={ALIGNMENT.why} />
+        </div>
+      </div>
+
+      <div class="cs-block cs-picture-with-note">
+        <CsShot asset={ALIGNMENT.research} />
+        <CsParagraph card={ALIGNMENT.researchPhase} />
+      </div>
+
+      <div class="cs-block cs-takeaways">
+        <div class="cs-takeaways__title">
+          <CsBars class="cs-bars--takeaways" />
+          <CsHeading>{takeaways.heading}</CsHeading>
+        </div>
+        <div class="cs-stack">
+          {takeaways.cards.map((card) => <CsCard card={card} class="cs-card--takeaway" />)}
+        </div>
+      </div>
+
+      <div class="cs-block cs-scope">
+        <CsHeading>{scope.heading}</CsHeading>
+        <CsCopy blocks={scope.intro} class="cs-scope__intro" />
+        <div class="cs-findings squircle">
+          <div class="cs-findings__card squircle">
+            <h3 class="cs-findings__title">{scope.findings.title}</h3>
+            <ol class="cs-findings__list">
+              {
+                scope.findings.items.map((item) => (
+                  <li>
+                    <p class="cs-findings__item-title">{item.title}</p>
+                    <p>{item.body}</p>
+                  </li>
+                ))
+              }
+            </ol>
+          </div>
+        </div>
+        <CsCard card={scope.focus} />
+      </div>
+    </section>
+
+    <section id="design" class="cs-section cs-section--column cs-design" aria-label="Design">
+      <div class="cs-block cs-phases">
+        <CsBars class="cs-bars--phases" />
+        {
+          phases.map((phase) => (
+            <div class="cs-group">
+              <CsHeading inset>{phase.heading}</CsHeading>
+              <div class="cs-grid cs-grid--thirds">
+                {phase.cards.map((card) => (
+                  <CsCard card={card} class="cs-card--phase" />
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="cs-block cs-group">
+        <CsHeading inset>{explorations.heading}</CsHeading>
+        {explorations.shots.map((shot) => <CsShot asset={shot} />)}
+        <CsNotes notes={explorations.notes} />
+        <CsShot asset={explorations.shotAfterNotes} />
+        <CsNotes notes={explorations.notesAfterShot} />
+      </div>
+
+      <div class="cs-block cs-group">
+        <CsHeading inset>{final.heading}</CsHeading>
+        <figure class="cs-video">
+          <video
+            class="cs-video__player squircle"
+            src={asset(final.video.src)}
+            poster={asset(final.video.poster)}
+            width={final.video.width}
+            height={final.video.height}
+            aria-label={final.video.label}
+            controls
+            playsinline
+            preload="metadata"></video>
+          <figcaption class="cs-video__caption">{final.video.caption}</figcaption>
+        </figure>
+        {final.shots.map((shot) => <CsShot asset={shot} />)}
+        <CsNotes notes={[final.note]} />
+        <CsShot asset={final.pipeline} />
+      </div>
+
+      <div class="cs-block cs-group">
+        <CsHeading inset>{proactive.heading}</CsHeading>
+        <CsShot asset={proactive.shot} />
+        <div class="cs-framework squircle">
+          <div class="cs-card__content">
+            <h3 class="cs-card__title">{proactive.framework.title}</h3>
+            <CsCopy blocks={[{ p: proactive.framework.intro }]} />
+          </div>
+          <div class="cs-grid cs-grid--framework">
+            {proactive.framework.cards.map((card) => <CsCard card={card} class="cs-card--framework" />)}
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-block cs-group">
+        <CsHeading inset>{settings.heading}</CsHeading>
+        {settings.shots.map((shot) => <CsShot asset={shot} />)}
+      </div>
+    </section>
+
+    <section id="afterword" class="cs-section cs-section--column cs-afterword" aria-label="Afterword">
+      {
+        [finalVersion, afterword].map((group) => (
+          <div class="cs-block cs-group">
+            <CsHeading inset>{group.heading}</CsHeading>
+            <div class="cs-grid">
+              {group.cards.map((card) => (
+                <CsCard card={card} class="cs-card--closing" />
+              ))}
+            </div>
+          </div>
+        ))
+      }
+      <CsOtherProjects current="hiring-agent" />
+    </section>
+  </CaseLayout>
+</BaseLayout>

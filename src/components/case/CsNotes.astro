@@ -1,0 +1,25 @@
+---
+// Several short notes in one card, a hairline between each.
+import type { Card } from "../../data/cases/types";
+import CsCopy from "./CsCopy.astro";
+
+interface Props {
+  notes: Card[];
+}
+
+const { notes } = Astro.props;
+---
+
+<article class="cs-card cs-notes squircle">
+  {
+    notes.map((note, index) => (
+      <Fragment>
+        {index > 0 && <hr class="cs-divider" />}
+        <div class="cs-card__content">
+          <h3 class="cs-card__title">{note.title}</h3>
+          <CsCopy blocks={note.body} />
+        </div>
+      </Fragment>
+    ))
+  }
+</article>
