@@ -2334,6 +2334,28 @@ html:has(.lightbox[open]) {
   padding-top: 0;
 }
 
+/*
+ * The bar is sticky above the hero and already holds the title clear of it, so
+ * the 127px the portfolio set under its own fixed bar is too much here.
+ *
+ * Everything under the title moves with it, and the hero's height is the
+ * frame's own, so the hero takes back whatever the change is worth: the
+ * picture keeps the same part of itself hanging below the ground it sits on.
+ */
+.cs-page .cs-hero {
+  --cs-hero-shift: calc(var(--header-total) + 40px - 127px);
+  height: calc(883px + var(--cs-hero-shift));
+  background-size: 100% calc(883px + var(--cs-hero-shift));
+}
+
+.cs-page .cs-hero--band {
+  height: calc(885px + var(--cs-hero-shift));
+}
+
+.cs-page .cs-hero__text {
+  padding-top: 40px;
+}
+
 /* The work, listed */
 
 .cs-portfolio .page {
