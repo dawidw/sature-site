@@ -45,3 +45,31 @@ Change the portfolio's stylesheet and re-scope it, or edit
 `src/styles/case-study.css` knowing the two have parted ways. Values here come
 from the Figma frames, not from the landing page's style guide — that is the
 point of the scope.
+
+## The password
+
+The work is private, and GitHub Pages has no server to check a password
+against — so the pages are encrypted instead of merely hidden.
+`scripts/protect.mjs` runs at the end of every build and replaces
+`/portfolio` and the two case studies with ciphertext (AES-GCM, key derived
+from the password with PBKDF2) plus a form. Nothing of the page is in the
+source until the password is typed, and the password itself is in neither the
+repository nor the deploy.
+
+Build it with the password in the environment:
+
+```
+SITE_PASSWORD='...' npm run build
+```
+
+Without `SITE_PASSWORD` the three pages are **removed** from `dist` rather
+than published in the clear, so a deploy that forgets it loses the work pages
+instead of leaking them. In CI the value comes from the repository secret of
+the same name — see `.github/workflows/deploy.yml`.
+
+One password opens all three pages: the first one decrypted keeps it in
+`sessionStorage` for that tab, so the links between them do not ask again.
+
+What this does not cover: the pictures are ordinary files on the same host.
+Someone who knows or guesses their paths can fetch them. It is the pages —
+the story, the numbers, the client's names — that are protected.

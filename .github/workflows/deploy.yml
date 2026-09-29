@@ -29,6 +29,11 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+        # The work pages are encrypted with this at the end of the build. Set
+        # it as a repository secret; without it those pages are dropped from
+        # the deploy rather than published in the clear.
+        env:
+          SITE_PASSWORD: ${{ secrets.SITE_PASSWORD }}
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
