@@ -42,6 +42,7 @@ export const v2: SiteContent = {
       { label: "Gulf News", className: "logo-gulfnews" },
       { label: "The Washington Post", className: "logo-wapo" },
       { label: "ZAWYA", className: "logo-zawya" },
+      { label: "Consult Port", className: "logo-consultport", mark: "/assets/img/logos/consult-port.svg" },
     ],
   },
 

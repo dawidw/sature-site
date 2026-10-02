@@ -24,6 +24,12 @@ export interface HeroLogo {
   className: string;
   /** BBC renders as three separate boxed letters rather than one word. */
   letters?: string[];
+  /**
+   * A logo drawn from its SVG instead of set in type. The file is used as a
+   * mask, so it takes the row's colour like the wordmarks beside it; its own
+   * colours never show. The label stays for screen readers.
+   */
+  mark?: string;
 }
 
 export interface Hero {

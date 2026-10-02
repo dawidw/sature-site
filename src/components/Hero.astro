@@ -42,7 +42,13 @@ const { hero } = Astro.props;
           {
             hero.logos.map((logo) => (
               <li class={logo.className}>
-                {logo.letters ? logo.letters.map((letter) => <span>{letter}</span>) : logo.label}
+                {logo.mark ? (
+                  <span class="logo-mark" style={`--logo-mark: url("${logo.mark}")`} role="img" aria-label={logo.label} />
+                ) : logo.letters ? (
+                  logo.letters.map((letter) => <span>{letter}</span>)
+                ) : (
+                  logo.label
+                )}
               </li>
             ))
           }

@@ -715,6 +715,18 @@ button {
 }
 .logo-row .logo-zawya { font-style: italic; letter-spacing: 0.04em; }
 
+/* A logo from its SVG, painted in the row's colour through a mask so it reads
+   as one of the wordmarks. Consult Port at 28px tall puts its lettering at
+   about the cap height of the 26px type beside it. */
+.logo-mark {
+  display: block;
+  height: 28px;
+  aspect-ratio: 179 / 23;
+  background: currentColor;
+  -webkit-mask: var(--logo-mark) center / contain no-repeat;
+  mask: var(--logo-mark) center / contain no-repeat;
+}
+
 .logo-throne { display: inline-flex; align-items: center; gap: 8px; }
 .logo-throne::before {
   content: "";
