@@ -1,5 +1,6 @@
 ---
 import type { Hero } from "../data/types";
+import { asset } from "../lib/asset";
 
 interface Props {
   hero: Hero;
@@ -43,9 +44,12 @@ const { hero } = Astro.props;
             hero.logos.map((logo) => (
               <li class={logo.className}>
                 {logo.mark ? (
-                  <span class="logo-mark" style={`--logo-mark: url("${logo.mark}")`} role="img" aria-label={logo.label} />
-                ) : logo.letters ? (
-                  logo.letters.map((letter) => <span>{letter}</span>)
+                  <span
+                    class="logo-mark"
+                    style={`--logo-mark: url("${asset(logo.mark.src)}"); --logo-mark-aspect: ${logo.mark.aspect}; --logo-mark-height: ${logo.mark.height}px`}
+                    role="img"
+                    aria-label={logo.label}
+                  />
                 ) : (
                   logo.label
                 )}

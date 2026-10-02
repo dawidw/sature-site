@@ -37,12 +37,10 @@ export const v2: SiteContent = {
     logosLabel: "Our designers worked with these companies:",
     logos: [
       { label: "Throne", className: "logo-throne" },
-      { label: "BBC", className: "logo-bbc", letters: ["B", "B", "C"] },
-      { label: "WIRED", className: "logo-wired" },
-      { label: "Gulf News", className: "logo-gulfnews" },
-      { label: "The Washington Post", className: "logo-wapo" },
-      { label: "ZAWYA", className: "logo-zawya" },
-      { label: "Consult Port", className: "logo-consultport", mark: "/assets/img/logos/consult-port.svg" },
+      { label: "Consult Port", className: "logo-consultport", mark: { src: "/assets/img/logos/consult-port.svg", aspect: 179 / 23, height: 25 } },
+      { label: "Samsung", className: "logo-samsung", mark: { src: "/assets/img/logos/samsung.svg", aspect: 7051.4 / 1080, height: 20 } },
+      { label: "Tellent", className: "logo-tellent", mark: { src: "/assets/img/logos/tellent.svg", aspect: 107.556 / 23.069, height: 24 } },
+      { label: "Keller Williams", className: "logo-kellerwilliams", mark: { src: "/assets/img/logos/keller-williams.svg", aspect: 389.52 / 52.3, height: 25 } },
     ],
   },
 
