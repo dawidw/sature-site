@@ -33,6 +33,7 @@ const DIST = join(ROOT, "dist");
 const PROTECTED = [
   "portfolio/index.html",
   "portfolio/hiring-agent/index.html",
+  "portfolio/throne/index.html",
   "portfolio/video-platform/index.html",
 ];
 

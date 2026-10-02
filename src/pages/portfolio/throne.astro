@@ -1,0 +1,163 @@
+---
+// Frame 423:94337, in the template the other two case studies use.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import CaseLayout from "../../components/case/CaseLayout.astro";
+import CsCard from "../../components/case/CsCard.astro";
+import CsCardGrid from "../../components/case/CsCardGrid.astro";
+import CsContext from "../../components/case/CsContext.astro";
+import CsCopy from "../../components/case/CsCopy.astro";
+import CsHeading from "../../components/case/CsHeading.astro";
+import CsHero from "../../components/case/CsHero.astro";
+import CsNotes from "../../components/case/CsNotes.astro";
+import CsOtherProjects from "../../components/case/CsOtherProjects.astro";
+import CsParagraph from "../../components/case/CsParagraph.astro";
+import CsShot from "../../components/case/CsShot.astro";
+import {
+  AFTERWORD,
+  ALIGNMENT,
+  CONTEXT,
+  DESIGN,
+  FOUNDER,
+  HERO,
+  IMPACT,
+  ROLE,
+  UX_WORK,
+} from "../../data/cases/throne";
+import { asset } from "../../lib/asset";
+import { v1 as content } from "../../data/v1";
+
+const [context, problem] = CONTEXT;
+const { takeaways, scope } = ALIGNMENT;
+
+const meta = {
+  title: "Designing a consumer product that reads gut and hydration health — Sature",
+  description:
+    "Case study: Throne, a sensor that reads gut, hydration and urinary health — and the interface that makes a clinical number mean something.",
+};
+---
+
+<BaseLayout meta={meta} footer={content.footer}>
+  <CaseLayout>
+    {/* The picture is the hero's ground, so it is drawn by the stylesheet
+        rather than placed here; the title sits on the sky above the phones. */}
+    <CsHero slot="hero" content={HERO} class="cs-hero--throne">
+      <img
+        class="cs-hero__shot squircle"
+        src={asset(HERO.shot.src)}
+        width={HERO.shot.width}
+        height={HERO.shot.height}
+        alt={HERO.shot.alt}
+        fetchpriority="high"
+      />
+    </CsHero>
+
+    <CsContext context={context} problem={problem} />
+    <CsCardGrid id="impact" heading={IMPACT.heading} cards={IMPACT.cards} class="cs-grid--impact" />
+    <CsCardGrid id="role" heading={ROLE.heading} cards={ROLE.cards} />
+
+    <section id="founder" class="cs-section cs-section--column cs-founder" aria-label="Working with the founder">
+      <div class="cs-block">
+        <CsParagraph card={FOUNDER.intro} />
+      </div>
+
+      <div class="cs-block cs-stats">
+        {
+          FOUNDER.stats.map((stat) => (
+            <article class="cs-stat squircle">
+              <p class="cs-stat__figure">{stat.figure}</p>
+              <p class="cs-stat__label">{stat.label}</p>
+              <p class="cs-stat__note">{stat.note}</p>
+            </article>
+          ))
+        }
+      </div>
+
+      <div class="cs-block">
+        <article class="cs-statement squircle">
+          <p class="cs-statement__eyebrow">{FOUNDER.statement.eyebrow}</p>
+          <p class="cs-statement__figure">{FOUNDER.statement.figure}</p>
+          <p class="cs-statement__note">{FOUNDER.statement.note}</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="alignment" class="cs-section cs-section--column cs-alignment" aria-labelledby="alignment-heading">
+      <div class="cs-block">
+        <div class="cs-lead-row">
+          <CsHeading id="alignment-heading">{ALIGNMENT.heading}</CsHeading>
+          <p class="cs-lead">{ALIGNMENT.lead}</p>
+        </div>
+      </div>
+
+      <div class="cs-block cs-alignment__why">
+        <CsParagraph card={ALIGNMENT.why} />
+      </div>
+
+      {/* The hairline the other case studies set between two pieces of prose. */}
+      <hr class="cs-divider cs-divider--wide cs-alignment__rule" />
+
+      <div class="cs-block cs-picture-with-note">
+        <CsParagraph card={ALIGNMENT.research} />
+      </div>
+
+      <div class="cs-block cs-takeaways">
+        <div class="cs-takeaways__title">
+          <CsHeading>{takeaways.heading}</CsHeading>
+        </div>
+        <div class="cs-stack">
+          {takeaways.cards.map((card) => <CsCard card={card} class="cs-card--takeaway" />)}
+        </div>
+      </div>
+
+      <div class="cs-block cs-scope">
+        <CsHeading>{scope.heading}</CsHeading>
+        <CsCopy blocks={scope.intro} class="cs-scope__intro" />
+        <CsNotes notes={[scope.sensor]} />
+        <CsCard card={scope.focus} />
+      </div>
+    </section>
+
+    <section id="design" class="cs-section cs-section--column cs-throne-design" aria-label="Design">
+      <div class="cs-block cs-group">
+        <CsHeading inset>{UX_WORK.heading}</CsHeading>
+        <div class="cs-grid">
+          {UX_WORK.cards.map((card) => <CsCard card={card} class="cs-card--phase" />)}
+        </div>
+      </div>
+
+      <div class="cs-block cs-group">
+        <CsHeading inset>{UX_WORK.execution.heading}</CsHeading>
+        <CsNotes notes={UX_WORK.execution.notes} />
+      </div>
+
+      {
+        DESIGN.map((part) => (
+          <div class="cs-block cs-group">
+            <CsHeading inset>{part.heading}</CsHeading>
+            <CsNotes notes={[part.intro]} />
+            {part.shots.map((image) => (
+              <CsShot asset={image} />
+            ))}
+            <CsNotes notes={part.notes} />
+          </div>
+        ))
+      }
+    </section>
+
+    <section id="afterword" class="cs-section cs-section--column cs-afterword" aria-label="Afterword">
+      <div class="cs-block cs-group">
+        <CsHeading inset>{AFTERWORD.finalVersion.heading}</CsHeading>
+        <div class="cs-grid">
+          {AFTERWORD.finalVersion.cards.map((card) => <CsCard card={card} class="cs-card--closing" />)}
+        </div>
+      </div>
+
+      <div class="cs-block cs-group">
+        <CsHeading inset>{AFTERWORD.afterword.heading}</CsHeading>
+        <CsNotes notes={AFTERWORD.afterword.notes} />
+      </div>
+
+      <CsOtherProjects current="throne" />
+    </section>
+  </CaseLayout>
+</BaseLayout>

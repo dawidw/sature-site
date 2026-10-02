@@ -2389,3 +2389,190 @@ html:has(.lightbox[open]) {
     line-height: 36px;
   }
 }
+
+/* --------------------------------------------------------------- Throne ---
+   The client's name in the orange its frame sets it in, and two blocks the
+   first two case studies had no use for: the row of figures from the founder
+   section, and the statement that carries the round. All from the case
+   studies' own tokens. */
+
+.cs-page .cs-hero--throne {
+  --hero-eyebrow: #ff773b;
+  /*
+   * The hero is the frame's own picture: the photograph with the row of
+   * phones already on it, cropped from the top exactly as frame 423:94338
+   * crops it. 1129px is that frame's height; the rest is the room our sticky
+   * bar and the 40px over the title take, which the frame did not need.
+   */
+  /*
+   * The picture is the frame's hero, cropped to its own height, so the hero is
+   * exactly as tall as the picture at this width and the whole composition is
+   * shown — sized by width rather than cropped to fill, which is what keeps
+   * the phones under the title at every window width. Our sticky bar takes
+   * more room over the title than the frame's own bar did, and the picture's
+   * sky has it to give.
+   */
+  height: calc(100vw * 1129 / 1511);
+  background: var(--color-hero-page) url("/assets/img/cases/throne/hero/hero.jpg") no-repeat center
+    top / 100% auto;
+}
+
+/* The ramp and the grain belong to the other hero; this one has a photograph. */
+.cs-page .cs-hero--throne::before {
+  content: none;
+}
+
+/*
+ * The design section's rhythm. The hiring agent's leans on which block is
+ * which — its first one carries the phases and their own spacing — so this
+ * case has its own: every group 120px from the next, and the pictures and
+ * notes inside a group 24px apart.
+ */
+.cs-page .cs-throne-design > .cs-block {
+  gap: 24px;
+  padding-bottom: 120px;
+}
+
+/* Execution carries on from the cards above it rather than opening a new part
+   of the story, so it keeps less room than a new group takes — the same 80px
+   the Why? paragraph keeps under the lead it answers. */
+.cs-page .cs-throne-design > .cs-block:nth-child(1) {
+  padding-bottom: 80px;
+}
+
+.cs-page .cs-throne-design > .cs-block:last-child {
+  padding-bottom: 0;
+}
+
+@media (max-width: 760px) {
+  .cs-page .cs-throne-design > .cs-block {
+    padding-bottom: 80px;
+  }
+}
+
+/* The Why? answers the lead above it, so it keeps closer to it than a new
+   part of the section would. */
+.cs-page .cs-alignment > .cs-block:first-child {
+  padding-bottom: 80px;
+}
+
+/* Two pieces of prose, a hairline between them and room on either side of it,
+   as the context section sets its own pair. */
+.cs-page .cs-alignment__why {
+  padding-bottom: 80px;
+}
+
+.cs-page .cs-alignment__rule {
+  margin-bottom: 80px;
+}
+
+/* On a wide screen the picture already carries the phones. */
+.cs-page .cs-hero--throne .cs-hero__shot {
+  display: none;
+  margin-top: 40px;
+  aspect-ratio: 922 / 607;
+}
+
+/*
+ * Narrow enough and the picture's phones come out too small to read, so the
+ * hero splits in two below 960: the photograph stays as the ground, and one
+ * screen is shown at the column's width underneath the title.
+ */
+@media (max-width: 960px) {
+  .cs-page .cs-hero--throne {
+    height: auto;
+    padding-bottom: 40px;
+    background-image: url("/assets/img/cases/throne/hero/sky.jpg");
+    background-size: cover;
+  }
+
+  .cs-page .cs-hero--throne .cs-hero__shot {
+    display: block;
+  }
+}
+
+
+.cs-founder > .cs-block + .cs-block {
+  margin-top: 40px;
+}
+
+.cs-founder {
+  padding-bottom: 120px;
+}
+
+.cs-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.cs-stat {
+  --r: var(--radius-20);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 24px 21px 25px;
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  color: var(--color-text-primary);
+}
+
+.cs-stat__figure {
+  font: 400 56px/1 var(--font-sans);
+  letter-spacing: -0.022em;
+}
+
+.cs-stat__label {
+  margin-top: 8px;
+  font: var(--text-title);
+  letter-spacing: var(--text-title-tracking);
+}
+
+.cs-stat__note {
+  font: var(--text-body);
+  letter-spacing: var(--text-body-tracking-tight);
+  color: var(--color-text-secondary);
+}
+
+/* The round, said once and large. */
+.cs-statement {
+  --r: var(--radius-24);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 64px 21px 72px;
+  border: 1px solid var(--color-border-inverse);
+  background: var(--color-surface-inverse);
+  color: var(--color-text-inverse);
+  text-align: center;
+}
+
+.cs-statement__eyebrow {
+  font: 500 12px/14px var(--font-sans);
+  letter-spacing: 0.12em;
+  color: var(--color-nav-dark-muted);
+}
+
+.cs-statement__figure {
+  font: 400 clamp(64px, 12vw, 120px)/1 var(--font-sans);
+  letter-spacing: -0.03em;
+}
+
+.cs-statement__note {
+  max-width: 420px;
+  font: var(--text-lead);
+  letter-spacing: var(--text-lead-tracking);
+  color: var(--color-nav-dark-muted);
+}
+
+@media (max-width: 760px) {
+  .cs-stats {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cs-statement {
+    padding: 40px 20px 48px;
+  }
+}

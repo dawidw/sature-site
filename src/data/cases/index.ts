@@ -27,6 +27,19 @@ export const projects: Project[] = [
     href: "/portfolio/hiring-agent",
   },
   {
+    slug: "throne",
+    title: "Designing the first consumer product that reads gut, hydration and urinary health",
+    body: "Throne's sensor clips onto a toilet rim and reads what the body leaves behind. The hard problem was never the sensor — it was the sentence the sensor produces.",
+    image: {
+      src: "/assets/img/cases/covers/throne.jpg",
+      width: 1644,
+      height: 1220,
+      full: { src: "/assets/img/cases/covers/throne.jpg", width: 1644, height: 1220 },
+      alt: "Throne's onboarding screen beside a dashboard reading 92% hydrated",
+    },
+    href: "/portfolio/throne",
+  },
+  {
     slug: "video-platform",
     title:
       "Design & Frontend implementation of a video platform for sales team.",
