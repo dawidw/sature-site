@@ -23,7 +23,7 @@ export const HERO: HeroContent & { shot: Asset } = {
   badges: ["Consumer health", "2026", "UX", "From pivot to Seed A"],
   shot: shot(
     "trends-1",
-    607,
+    600,
     "Two phones showing the gut health trend: a gauge reading 93 beside the same screen at 69",
   ),
 };
@@ -336,12 +336,12 @@ export const DESIGN: Part[] = [
     shots: [
       shot(
         "trends-2",
-        607,
+        600,
         "Hydration in the same layout, scored 32% “Dehydrated” and 54% “Thirsty”, with osmolality under the gauge",
       ),
       shot(
         "trends-3",
-        602,
+        600,
         "Bathroom habits in that layout, scored in words rather than a number: Poor beside Fair",
       ),
     ],

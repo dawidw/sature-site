@@ -715,6 +715,18 @@ button {
 }
 .logo-row .logo-zawya { font-style: italic; letter-spacing: 0.04em; }
 
+/* A logo from its SVG, painted in the row's colour through a mask so it reads
+   as one of the wordmarks. Consult Port at 28px tall puts its lettering at
+   about the cap height of the 26px type beside it. */
+.logo-mark {
+  display: block;
+  height: 28px;
+  aspect-ratio: 179 / 23;
+  background: currentColor;
+  -webkit-mask: var(--logo-mark) center / contain no-repeat;
+  mask: var(--logo-mark) center / contain no-repeat;
+}
+
 .logo-throne { display: inline-flex; align-items: center; gap: 8px; }
 .logo-throne::before {
   content: "";
@@ -1260,7 +1272,8 @@ button {
 
 .work-carousel {
   display: flex;
-  gap: 20px;
+  /* Figma workSample (1:7334): 922px cards on a 938px pitch. */
+  gap: 16px;
   /* The leading offset is a margin on the first card, not padding on the row:
      this container clamps scrollLeft to its own start padding, so a padded row
      still shows the first card flush against the edge. The snap port has to be
@@ -1274,12 +1287,11 @@ button {
 }
 .work-card {
   flex: 0 0 auto;
-  /* 680 + 20%. The vw term still governs anything narrow, so this is a
-     desktop-only change. */
-  width: min(816px, 74vw);
-  /* The card in the design is 925x600, and the screens are exported at that
-     proportion, so cover has nothing left to crop. */
-  aspect-ratio: 925 / 600;
+  /* One height for the row; each card takes its width from its own frame
+     (aspect-ratio set inline from the image size), so a square shot sits as a
+     narrower card instead of being cropped. 600 is the design's 922x600 card;
+     48.16vw is that card at 74vw wide, so anything narrow scales as before. */
+  height: min(600px, 48.16vw);
   background: var(--background-dark);
   border-radius: var(--radius-24);
   overflow: hidden;
@@ -1746,7 +1758,7 @@ button {
   .story-copy p { max-width: none; }
 
   .testimonial-grid { grid-template-columns: 1fr; }
-  .work-card { width: 86vw; }
+  .work-card { height: 55.97vw; } /* a 922x600 card at 86vw */
   .footer-top { grid-template-columns: 1fr; gap: 32px; }
 }
 

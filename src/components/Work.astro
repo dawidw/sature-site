@@ -41,8 +41,14 @@ const { work } = Astro.props;
     <ul class="work-carousel" id="work-carousel">
       {
         work.images.map((image) => (
-          <li class="work-card">
-            <img src={asset(image.src)} alt={image.alt} loading="lazy" />
+          <li class="work-card" style={`aspect-ratio: ${image.width ?? 922} / ${image.height ?? 600}`}>
+            <img
+              src={asset(image.src)}
+              alt={image.alt}
+              width={image.width ?? 922}
+              height={image.height ?? 600}
+              loading="lazy"
+            />
           </li>
         ))
       }

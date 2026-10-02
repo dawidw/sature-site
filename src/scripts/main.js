@@ -122,12 +122,17 @@
   const workNext = document.getElementById("work-next");
   if (workViewport && workCarousel && workNext) {
     workNext.addEventListener("click", () => {
-      const card = workCarousel.querySelector(".work-card");
-      if (!card) return;
-      const step = card.getBoundingClientRect().width + 20; // card width + gap
+      const cards = [...workCarousel.querySelectorAll(".work-card")];
+      if (!cards.length) return;
+      // Cards differ in width, so step to the next card's own offset rather
+      // than by a fixed pitch. Offsets are measured from the first card, which
+      // is where scrollLeft 0 puts it.
+      const origin = cards[0].getBoundingClientRect().left + workViewport.scrollLeft;
+      const offsets = cards.map((c) => c.getBoundingClientRect().left + workViewport.scrollLeft - origin);
+      const next = offsets.find((x) => x > workViewport.scrollLeft + 1);
       const atEnd = workViewport.scrollLeft + workViewport.clientWidth >= workViewport.scrollWidth - 10;
       workViewport.scrollTo({
-        left: atEnd ? 0 : workViewport.scrollLeft + step,
+        left: atEnd || next === undefined ? 0 : next,
         behavior: "smooth",
       });
     });
