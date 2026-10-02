@@ -82,6 +82,10 @@ export interface Testimonial {
 export interface WorkImage {
   src: string;
   alt: string;
+  /** Natural size, in design pixels. Cards share one height and take their
+      width from this, so a square frame stays square. Defaults to 922x600. */
+  width?: number;
+  height?: number;
 }
 
 export interface Faq {
