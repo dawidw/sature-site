@@ -81,7 +81,7 @@ const meta = {
       </div>
     </section>
 
-    <section id="alignment" class="cs-section cs-section--column" aria-labelledby="alignment-heading">
+    <section id="alignment" class="cs-section cs-section--column cs-alignment" aria-labelledby="alignment-heading">
       <div class="cs-block">
         <div class="cs-lead-row">
           <CsHeading id="alignment-heading">{ALIGNMENT.heading}</CsHeading>
@@ -89,9 +89,12 @@ const meta = {
         </div>
       </div>
 
-      <div class="cs-block cs-picture-with-note">
+      <div class="cs-block cs-alignment__why">
         <CsParagraph card={ALIGNMENT.why} />
       </div>
+
+      {/* The hairline the other case studies set between two pieces of prose. */}
+      <hr class="cs-divider cs-divider--wide cs-alignment__rule" />
 
       <div class="cs-block cs-picture-with-note">
         <CsParagraph card={ALIGNMENT.research} />
@@ -114,7 +117,7 @@ const meta = {
       </div>
     </section>
 
-    <section id="design" class="cs-section cs-section--column cs-design" aria-label="Design">
+    <section id="design" class="cs-section cs-section--column cs-throne-design" aria-label="Design">
       <div class="cs-block cs-group">
         <CsHeading inset>{UX_WORK.heading}</CsHeading>
         <div class="cs-grid">

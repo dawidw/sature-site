@@ -2405,12 +2405,14 @@ html:has(.lightbox[open]) {
    * bar and the 40px over the title take, which the frame did not need.
    */
   /*
-   * The picture carries the composition, so it is sized by width rather than
-   * cropped to fill: the phones then sit under the title at every width, as
-   * the frame draws them. The hero is as tall as the picture at that width,
-   * plus the room our sticky bar and the 40px over the title take.
+   * The picture is the frame's hero, cropped to its own height, so the hero is
+   * exactly as tall as the picture at this width and the whole composition is
+   * shown — sized by width rather than cropped to fill, which is what keeps
+   * the phones under the title at every window width. Our sticky bar takes
+   * more room over the title than the frame's own bar did, and the picture's
+   * sky has it to give.
    */
-  height: calc(100vw * 1129 / 1511 + var(--header-total) + 40px - 63px);
+  height: calc(100vw * 1129 / 1511);
   background: var(--color-hero-page) url("/assets/img/cases/throne/hero/hero.jpg") no-repeat center
     top / 100% auto;
 }
@@ -2418,6 +2420,50 @@ html:has(.lightbox[open]) {
 /* The ramp and the grain belong to the other hero; this one has a photograph. */
 .cs-page .cs-hero--throne::before {
   content: none;
+}
+
+/*
+ * The design section's rhythm. The hiring agent's leans on which block is
+ * which — its first one carries the phases and their own spacing — so this
+ * case has its own: every group 120px from the next, and the pictures and
+ * notes inside a group 24px apart.
+ */
+.cs-page .cs-throne-design > .cs-block {
+  gap: 24px;
+  padding-bottom: 120px;
+}
+
+/* Execution carries on from the cards above it rather than opening a new part
+   of the story, so it keeps less room than a new group takes — the same 80px
+   the Why? paragraph keeps under the lead it answers. */
+.cs-page .cs-throne-design > .cs-block:nth-child(1) {
+  padding-bottom: 80px;
+}
+
+.cs-page .cs-throne-design > .cs-block:last-child {
+  padding-bottom: 0;
+}
+
+@media (max-width: 760px) {
+  .cs-page .cs-throne-design > .cs-block {
+    padding-bottom: 80px;
+  }
+}
+
+/* The Why? answers the lead above it, so it keeps closer to it than a new
+   part of the section would. */
+.cs-page .cs-alignment > .cs-block:first-child {
+  padding-bottom: 80px;
+}
+
+/* Two pieces of prose, a hairline between them and room on either side of it,
+   as the context section sets its own pair. */
+.cs-page .cs-alignment__why {
+  padding-bottom: 80px;
+}
+
+.cs-page .cs-alignment__rule {
+  margin-bottom: 80px;
 }
 
 /* On a wide screen the picture already carries the phones. */
@@ -2466,9 +2512,10 @@ html:has(.lightbox[open]) {
   flex-direction: column;
   gap: 4px;
   padding: 24px 21px 25px;
-  border: 1px solid var(--color-border-inverse);
-  background: var(--color-surface-inverse);
-  color: var(--color-text-inverse);
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  color: var(--color-text-primary);
 }
 
 .cs-stat__figure {
@@ -2485,7 +2532,7 @@ html:has(.lightbox[open]) {
 .cs-stat__note {
   font: var(--text-body);
   letter-spacing: var(--text-body-tracking-tight);
-  color: var(--color-nav-dark-muted);
+  color: var(--color-text-secondary);
 }
 
 /* The round, said once and large. */
