@@ -8,7 +8,9 @@ import About from "../components/About.astro";
 import Team from "../components/Team.astro";
 import Services from "../components/Services.astro";
 import Stages from "../components/Stages.astro";
-import Testimonials from "../components/Testimonials.astro";
+// Testimonials are off the page for now. The component, its content and
+// its CSS stay where they are, so the section comes back by restoring
+// this import and the line below Services.
 import Work from "../components/Work.astro";
 import Cta from "../components/Cta.astro";
 import Faq from "../components/Faq.astro";
@@ -22,7 +24,6 @@ import { v1 as content } from "../data/v1";
   <Stages stages={content.stages} />
   <Team team={content.team} />
   <Services services={content.services} />
-  <Testimonials testimonials={content.testimonials} />
   <Work work={content.work} />
   <Cta cta={content.cta} />
   <Faq faq={content.faq} />
