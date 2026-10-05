@@ -676,9 +676,9 @@ button {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  /* At 32px tall the wordmarks need the tighter column gap to hold one row
-     at the 1432px layout width; below that they wrap, which is fine. */
-  gap: var(--space-24);
+  /* Logo-wall spacing: wide enough that each mark reads on its own. Below
+     the width that holds the row on one line they wrap, which is fine. */
+  gap: var(--space-24) var(--space-48);
 }
 .logo-row li {
   display: inline-flex;
@@ -689,39 +689,16 @@ button {
   letter-spacing: -0.01em;
   color: rgba(255, 255, 255, 0.45);
 }
-.logo-row .logo-wired,
-.logo-row .logo-gulfnews,
-.logo-row .logo-wapo,
-.logo-row .logo-wsj {
-  font-family: var(--font-serif);
-  font-weight: 600;
-}
-.logo-row .logo-wired { letter-spacing: 0.06em; }
-.logo-row .logo-bbc {
-  display: inline-flex;
-  gap: 3px;
-}
-.logo-row .logo-bbc span {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 30px;
-  background: rgba(255, 255, 255, 0.45);
-  color: var(--text-primary);
-  font-size: 19px;
-  font-weight: 800;
-  border-radius: 3px;
-}
-.logo-row .logo-zawya { font-style: italic; letter-spacing: 0.04em; }
 
 /* A logo from its SVG, painted in the row's colour through a mask so it reads
-   as one of the wordmarks. Consult Port at 28px tall puts its lettering at
-   about the cap height of the 26px type beside it. */
+   as one of the wordmarks. Height comes from the data, per logo, balanced so
+   each covers about the same visual area: h = 42 / sqrt(aspect) / ink^0.3,
+   where ink is the share of its box the mark fills. Wide, thin marks come out
+   lower than a short, heavy one would at the same height. */
 .logo-mark {
   display: block;
-  height: 28px;
-  aspect-ratio: 179 / 23;
+  height: var(--logo-mark-height);
+  aspect-ratio: var(--logo-mark-aspect);
   background: currentColor;
   -webkit-mask: var(--logo-mark) center / contain no-repeat;
   mask: var(--logo-mark) center / contain no-repeat;
