@@ -241,7 +241,6 @@ export const v1: SiteContent = {
     title: "Our design work",
     hint: "Click or swipe right",
     images: [
-      { src: "/assets/img/work/showcase-02.webp", alt: "Interview scenario document with the agent chat panel alongside", width: 3160, height: 1800 },
       { src: "/assets/img/work/showcase-03.webp", alt: "Light-mode home with the assistant prompt over the recent conversations list", width: 3162, height: 1800 },
       { src: "/assets/img/work/showcase-04.webp", alt: "Invite people to your session dialog with access levels per person", width: 1800, height: 1800 },
       { src: "/assets/img/work/showcase-05.webp", alt: "Prompt field with the skills dropdown open by category", width: 2840, height: 1800 },
@@ -252,7 +251,6 @@ export const v1: SiteContent = {
       { src: "/assets/img/work/design-05.webp", alt: "Throne app hydration dashboard and session details", width: 2868, height: 1800 },
       { src: "/assets/img/work/design-06.webp", alt: "Throne app onboarding and daily hydration score", width: 2868, height: 1800 },
       { src: "/assets/img/work/design-07.webp", alt: "Throne Journal onboarding for the gut health coach", width: 2898, height: 1800 },
-      { src: "/assets/img/work/design-08.webp", alt: "Hiring agent dashboard with chat and candidate pipeline", width: 2876, height: 1800 },
     ],
   },
 
