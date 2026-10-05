@@ -247,8 +247,8 @@ export const v2: SiteContent = {
       body: "We designed Tellent's video interview experience end to end — from screen recording setup to review and collaborative feedback — helping hiring teams evaluate candidates without scheduling a live call.",
     },
     images: [
-      { src: "/assets/img/work/showcase-01.webp", alt: "Hiring workspace home with events, tasks, candidate sources and the assistant prompt", width: 1054, height: 600 },
-      { src: "/assets/img/work/showcase-02.webp", alt: "Interview scenario document with the agent chat panel alongside", width: 1054, height: 600 },
+      { src: "/assets/img/work/showcase-01.webp", alt: "Hiring workspace home with events, tasks, candidate sources and the assistant prompt", width: 1053, height: 600 },
+      { src: "/assets/img/work/showcase-02.webp", alt: "Interview scenario document with the agent chat panel alongside", width: 1053, height: 600 },
       { src: "/assets/img/work/showcase-03.webp", alt: "Light-mode home with the assistant prompt over the recent conversations list", width: 1054, height: 600 },
       { src: "/assets/img/work/showcase-04.webp", alt: "Invite people to your session dialog with access levels per person", width: 600, height: 600 },
       { src: "/assets/img/work/showcase-05.webp", alt: "Prompt field with the skills dropdown open by category", width: 946, height: 600 },
