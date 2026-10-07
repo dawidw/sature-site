@@ -31,6 +31,7 @@ export const v1: SiteContent = {
       { label: "Throne", className: "logo-throne" },
       { label: "Consult Port", className: "logo-consultport", mark: { src: "/assets/img/logos/consult-port.svg", aspect: 179 / 23, height: 25 } },
       { label: "Samsung", className: "logo-samsung", mark: { src: "/assets/img/logos/samsung.svg", aspect: 7051.4 / 1080, height: 20 } },
+      { label: "Google", className: "logo-google", mark: { src: "/assets/img/logos/google.svg", aspect: 272 / 92, height: 36 } },
       { label: "Tellent", className: "logo-tellent", mark: { src: "/assets/img/logos/tellent.svg", aspect: 107.556 / 23.069, height: 24 } },
       { label: "Keller Williams", className: "logo-kellerwilliams", mark: { src: "/assets/img/logos/keller-williams.svg", aspect: 389.52 / 52.3, height: 25 } },
     ],
