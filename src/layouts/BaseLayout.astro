@@ -3,6 +3,7 @@ import "../styles/global.css";
 import type { SiteContent } from "../data/types";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
+import { asset } from "../lib/asset";
 
 interface Props {
   meta: SiteContent["meta"];
@@ -10,6 +11,13 @@ interface Props {
 }
 
 const { meta, footer } = Astro.props;
+
+// The card a link turns into when it is pasted somewhere. Without these the
+// head said nothing a scraper could use, so LinkedIn took the title from the
+// <h1> and the picture from whichever portrait it found first on the page.
+// Both have to be absolute — a scraper does not resolve a relative path.
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(asset("/assets/og/sature.jpg"), Astro.site);
 
 // The mark from the wordmark, on its own: the same two paths BrandLogo draws,
 // cropped to the 80x80 the tile occupies in that file's 320x100 box. Taking the
@@ -29,7 +37,23 @@ const favicon =
     <title>{meta.title}</title>
     <meta name="description" content={meta.description} />
     <meta name="theme-color" content="#0a0a0a" />
+    <link rel="canonical" href={canonical} />
     <link rel="icon" href={favicon} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Sature" />
+    <meta property="og:title" content={meta.title} />
+    <meta property="og:description" content={meta.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="The Sature wordmark on the studio's dark ground" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={meta.title} />
+    <meta name="twitter:description" content={meta.description} />
+    <meta name="twitter:image" content={ogImage} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
