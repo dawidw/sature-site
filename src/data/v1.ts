@@ -247,9 +247,6 @@ export const v1: SiteContent = {
     title: "Our design work",
     hint: "Click or swipe right",
     images: [
-      { src: "/assets/img/work/showcase-03.webp", alt: "Light-mode home with the assistant prompt over the recent conversations list", width: 3162, height: 1800 },
-      { src: "/assets/img/work/showcase-04.webp", alt: "Invite people to your session dialog with access levels per person", width: 1800, height: 1800 },
-      { src: "/assets/img/work/showcase-05.webp", alt: "Prompt field with the skills dropdown open by category", width: 2840, height: 1800 },
       { src: "/assets/img/work/design-01.webp", alt: "Telle video library, dark desktop interface", width: 2838, height: 1800 },
       { src: "/assets/img/work/design-02.webp", alt: "Tellent Videos welcome screen with the recording setup", width: 2880, height: 1800 },
       { src: "/assets/img/work/design-03.webp", alt: "Telle video review with the comment activity panel", width: 2838, height: 1800 },
@@ -257,6 +254,11 @@ export const v1: SiteContent = {
       { src: "/assets/img/work/design-05.webp", alt: "Throne app hydration dashboard and session details", width: 2868, height: 1800 },
       { src: "/assets/img/work/design-06.webp", alt: "Throne app onboarding and daily hydration score", width: 2868, height: 1800 },
       { src: "/assets/img/work/design-07.webp", alt: "Throne Journal onboarding for the gut health coach", width: 2898, height: 1800 },
+      { src: "/assets/img/work/design-08.webp", alt: "Hiring agent dashboard with chat and candidate pipeline", width: 2876, height: 1800 },
+      { src: "/assets/img/work/design-09.webp", alt: "Candidate pipeline for an open role, sourced through to on-site interview", width: 2768, height: 1800 },
+      { src: "/assets/img/work/design-10.webp", alt: "Deal board with the getting-started checklist and a first-workflow prompt", width: 2768, height: 1800 },
+      { src: "/assets/img/work/design-11.webp", alt: "Light-mode sales pipeline from lead to negotiation, with values and owners", width: 2766, height: 1800 },
+      { src: "/assets/img/work/showcase-05.webp", alt: "Prompt field with the skills dropdown open by category", width: 2840, height: 1800 },
     ],
   },
 
