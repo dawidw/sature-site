@@ -57,6 +57,11 @@ export interface MiniQuote {
   /** Whose avatars sit next to the quote. */
   people: TeamMemberId[];
   text: string;
+  /**
+   * The work the quote points at, one per line under it. The label is what
+   * the page shows — these are read as addresses, so it is the address.
+   */
+  links?: { label: string; href: string }[];
 }
 
 export interface Service {

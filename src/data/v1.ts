@@ -79,18 +79,18 @@ export const v1: SiteContent = {
     title: "Our services",
     items: [
       {
-        id: "svc-discovery",
-        navLabel: "Product discovery",
-        title: "Product Discovery",
+        id: "svc-building",
+        navLabel: "Product building",
+        title: "Product building",
         intro:
-          "We work alongside your team to align and understand what problem needs to be solved and how we want to solve it. Outcome of this phase is a prototype in Claude Code.",
+          "We work alongside you to build a feasible prototype that can be further developed or tested with our users to find product market fit.",
         groups: [
           {
-            label: "Design workshops",
+            label: "Build your idea with us",
             items: [
-              "Agenda tailored to your needs",
+              "Gather requirements and understand business",
               "In-depth interviews with users / potential users",
-              "Rapid prototyping with Claude Code",
+              "Prototype with Claude Code",
             ],
           },
           {
@@ -98,6 +98,7 @@ export const v1: SiteContent = {
             items: [
               "User interviews",
               "Stakeholder interviews",
+              "Design workshops",
               "In-depth interviews with users / potential users",
               "Rapid prototyping with Claude Code",
             ],
@@ -106,11 +107,15 @@ export const v1: SiteContent = {
         quotes: [
           {
             people: ["dawid"],
-            text: "Dawid is a workshop expert who's helped >50 companies across Europe, USA and Asia discover successful projects.",
+            text: "Dawid builds products everyday, most recently:",
+            links: [
+              { label: "https://studyofspace.gallery", href: "https://studyofspace.gallery" },
+              { label: "https://getgrippy.app", href: "https://getgrippy.app" },
+            ],
           },
           {
             people: ["maciej"],
-            text: "Maciej has conducted >100 user interviews at leading B2B SaaS serving over 6000 companies.",
+            text: "Maciej has conducted > 100 user interviews at leading B2B SAAS serving over 6000 companies",
           },
         ],
       },
@@ -242,9 +247,6 @@ export const v1: SiteContent = {
     title: "Our design work",
     hint: "Click or swipe right",
     images: [
-      { src: "/assets/img/work/showcase-03.webp", alt: "Light-mode home with the assistant prompt over the recent conversations list", width: 3162, height: 1800 },
-      { src: "/assets/img/work/showcase-04.webp", alt: "Invite people to your session dialog with access levels per person", width: 1800, height: 1800 },
-      { src: "/assets/img/work/showcase-05.webp", alt: "Prompt field with the skills dropdown open by category", width: 2840, height: 1800 },
       { src: "/assets/img/work/design-01.webp", alt: "Telle video library, dark desktop interface", width: 2838, height: 1800 },
       { src: "/assets/img/work/design-02.webp", alt: "Tellent Videos welcome screen with the recording setup", width: 2880, height: 1800 },
       { src: "/assets/img/work/design-03.webp", alt: "Telle video review with the comment activity panel", width: 2838, height: 1800 },
@@ -252,6 +254,11 @@ export const v1: SiteContent = {
       { src: "/assets/img/work/design-05.webp", alt: "Throne app hydration dashboard and session details", width: 2868, height: 1800 },
       { src: "/assets/img/work/design-06.webp", alt: "Throne app onboarding and daily hydration score", width: 2868, height: 1800 },
       { src: "/assets/img/work/design-07.webp", alt: "Throne Journal onboarding for the gut health coach", width: 2898, height: 1800 },
+      { src: "/assets/img/work/design-08.webp", alt: "Hiring agent dashboard with chat and candidate pipeline", width: 2876, height: 1800 },
+      { src: "/assets/img/work/design-09.webp", alt: "Candidate pipeline for an open role, sourced through to on-site interview", width: 2768, height: 1800 },
+      { src: "/assets/img/work/design-10.webp", alt: "Deal board with the getting-started checklist and a first-workflow prompt", width: 2768, height: 1800 },
+      { src: "/assets/img/work/design-11.webp", alt: "Light-mode sales pipeline from lead to negotiation, with values and owners", width: 2766, height: 1800 },
+      { src: "/assets/img/work/showcase-05.webp", alt: "Prompt field with the skills dropdown open by category", width: 2840, height: 1800 },
     ],
   },
 

@@ -1136,6 +1136,26 @@ button {
   line-height: var(--lh-body);
   color: var(--text-primary);
 }
+/* The addresses under a quote: a list, because they are several, and one per
+   line because each is a separate piece of work. They carry the quote's own
+   colour — underlined is enough to say "link" inside a tinted box. */
+.mini-quote-links {
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.mini-quote-links a {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.mini-quote-links a:hover {
+  text-decoration-thickness: 2px;
+}
+
 .mini-avatars {
   display: flex;
   flex: none;
