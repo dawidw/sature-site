@@ -52,7 +52,20 @@ const { services } = Astro.props;
                       <img src={asset(TEAM[id].photo)} alt="" />
                     ))}
                   </span>
-                  <p>{quote.text}</p>
+                  <div>
+                    <p>{quote.text}</p>
+                    {quote.links && (
+                      <ul class="mini-quote-links">
+                        {quote.links.map((link) => (
+                          <li>
+                            <a href={link.href} target="_blank" rel="noopener noreferrer">
+                              {link.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
                 </blockquote>
               ))}
             </article>

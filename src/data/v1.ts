@@ -79,18 +79,18 @@ export const v1: SiteContent = {
     title: "Our services",
     items: [
       {
-        id: "svc-discovery",
-        navLabel: "Product discovery",
-        title: "Product Discovery",
+        id: "svc-building",
+        navLabel: "Product building",
+        title: "Product building",
         intro:
-          "We work alongside your team to align and understand what problem needs to be solved and how we want to solve it. Outcome of this phase is a prototype in Claude Code.",
+          "We work alongside you to build a feasible prototype that can be further developed or tested with our users to find product market fit.",
         groups: [
           {
-            label: "Design workshops",
+            label: "Build your idea with us",
             items: [
-              "Agenda tailored to your needs",
+              "Gather requirements and understand business",
               "In-depth interviews with users / potential users",
-              "Rapid prototyping with Claude Code",
+              "Prototype with Claude Code",
             ],
           },
           {
@@ -98,6 +98,7 @@ export const v1: SiteContent = {
             items: [
               "User interviews",
               "Stakeholder interviews",
+              "Design workshops",
               "In-depth interviews with users / potential users",
               "Rapid prototyping with Claude Code",
             ],
@@ -106,11 +107,15 @@ export const v1: SiteContent = {
         quotes: [
           {
             people: ["dawid"],
-            text: "Dawid is a workshop expert who's helped >50 companies across Europe, USA and Asia discover successful projects.",
+            text: "Dawid builds products everyday, most recently:",
+            links: [
+              { label: "https://studyofspace.gallery", href: "https://studyofspace.gallery" },
+              { label: "https://getgrippy.app", href: "https://getgrippy.app" },
+            ],
           },
           {
             people: ["maciej"],
-            text: "Maciej has conducted >100 user interviews at leading B2B SaaS serving over 6000 companies.",
+            text: "Maciej has conducted > 100 user interviews at leading B2B SAAS serving over 6000 companies",
           },
         ],
       },
