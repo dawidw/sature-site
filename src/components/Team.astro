@@ -29,7 +29,7 @@ const { team } = Astro.props;
         team.photo.portraits.map((portrait) => (
           <li>
             <figure>
-              <img src={asset(portrait.src)} alt={portrait.alt} width="732" height="908" loading="lazy" />
+              <img src={asset(portrait.src)} alt={portrait.alt} width="900" height="900" loading="lazy" />
               <figcaption>{portrait.name}</figcaption>
             </figure>
           </li>
