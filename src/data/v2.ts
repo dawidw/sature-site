@@ -36,7 +36,7 @@ export const v2: SiteContent = {
     //   - Jeśli szablon demo: usunąć sekcję całkowicie
     logosLabel: "Our designers worked with these companies:",
     logos: [
-      { label: "Throne", className: "logo-throne" },
+      { label: "Throne", mark: { src: "/assets/img/logos/throne.svg", aspect: 386 / 91.5, height: 30 } },
       { label: "Consult Port", className: "logo-consultport", mark: { src: "/assets/img/logos/consult-port.svg", aspect: 179 / 23, height: 25 } },
       { label: "Samsung", className: "logo-samsung", mark: { src: "/assets/img/logos/samsung.svg", aspect: 7051.4 / 1080, height: 20 } },
       { label: "Google", className: "logo-google", mark: { src: "/assets/img/logos/google.svg", aspect: 272 / 92, height: 36 } },
