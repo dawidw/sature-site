@@ -705,14 +705,16 @@ button {
 }
 
 .logo-throne { display: inline-flex; align-items: center; gap: 8px; }
+/* The mark on its own, lifted out of logos/throne.svg — the attribution
+   sets the company name itself, so only the glyph is wanted here. */
 .logo-throne::before {
   content: "";
   display: inline-block;
   width: 24px;
   height: 24px;
   background: currentColor;
-  -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect x="1" y="4" width="2" height="8" rx="1"/><rect x="5.5" y="1.5" width="2" height="13" rx="1"/><rect x="10" y="5" width="2" height="6" rx="1"/></svg>') center / contain no-repeat;
-  mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect x="1" y="4" width="2" height="8" rx="1"/><rect x="5.5" y="1.5" width="2" height="13" rx="1"/><rect x="10" y="5" width="2" height="6" rx="1"/></svg>') center / contain no-repeat;
+  -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="20.5 28 77 91.6"><path d="M30.5635 35.9746L20.5082 38.8321L31.891 80.2222C33.0582 84.458 33.1259 88.9122 32.0856 93.1814L27.7897 110.906L37.8955 113.771L42.9274 93.0302C43.9675 88.7525 43.8913 84.2899 42.7244 80.0459L30.572 35.9746H30.5635Z"/><path d="M97.5327 38.8319L87.52 35.9912L75.3507 79.9615C74.1836 84.1973 74.1074 88.6515 75.1308 92.9207L80.1542 113.771L90.26 110.906L85.9639 93.1896C84.9322 88.9204 84.9997 84.4662 86.1584 80.2306L97.5412 38.8403L97.5327 38.8319Z"/><path d="M64.2723 118.285V29.386L60.7373 28.386C59.6125 28.0666 58.4285 28.0666 57.3039 28.386L53.7689 29.386V118.285L57.3039 119.285C58.4285 119.604 59.6125 119.604 60.7373 119.285L64.2723 118.285Z"/></svg>') center / contain no-repeat;
+  mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="20.5 28 77 91.6"><path d="M30.5635 35.9746L20.5082 38.8321L31.891 80.2222C33.0582 84.458 33.1259 88.9122 32.0856 93.1814L27.7897 110.906L37.8955 113.771L42.9274 93.0302C43.9675 88.7525 43.8913 84.2899 42.7244 80.0459L30.572 35.9746H30.5635Z"/><path d="M97.5327 38.8319L87.52 35.9912L75.3507 79.9615C74.1836 84.1973 74.1074 88.6515 75.1308 92.9207L80.1542 113.771L90.26 110.906L85.9639 93.1896C84.9322 88.9204 84.9997 84.4662 86.1584 80.2306L97.5412 38.8403L97.5327 38.8319Z"/><path d="M64.2723 118.285V29.386L60.7373 28.386C59.6125 28.0666 58.4285 28.0666 57.3039 28.386L53.7689 29.386V118.285L57.3039 119.285C58.4285 119.604 59.6125 119.604 60.7373 119.285L64.2723 118.285Z"/></svg>') center / contain no-repeat;
 }
 
 /* ==========================================================================
