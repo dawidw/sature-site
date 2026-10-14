@@ -361,23 +361,14 @@ export const v1: SiteContent = {
       "Our projects are loved by their users and succeed in the market.",
     ],
     socials: [
-      { label: "Sature on LinkedIn", href: "#", icon: "linkedin" },
-      { label: "Sature on X", href: "#", icon: "x" },
+      { label: "Sature on LinkedIn", href: "https://www.linkedin.com/company/sature-studio", icon: "linkedin" },
+      { label: "Sature on X", href: "https://x.com/SatureStudio", icon: "x" },
     ],
     columns: [
       [
         { label: "About us", href: "#about" },
-        { label: "Contact", href: "#contact" },
-        { label: "Career", href: "#contact" },
-      ],
-      [
         { label: "Services", href: "#services" },
-        { label: "Linkedin", href: "#" },
-      ],
-      [
-        { label: "Our roadmap", href: "#" },
-        { label: "Newsletter", href: "#" },
-        { label: "Help centre", href: "#" },
+        { label: "Contact", href: "#contact" },
       ],
     ],
     copyright: "Sature Studio. All rights reserved.",

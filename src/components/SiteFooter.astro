@@ -8,9 +8,13 @@ interface Props {
 
 const { footer } = Astro.props;
 
-// Two columns sit on a tighter grid than three.
+// One column sits on the right edge. Two sit tighter than three.
 const navClass =
-  footer.columns.length === 2 ? "footer-nav footer-nav-compact" : "footer-nav";
+  footer.columns.length === 1
+    ? "footer-nav footer-nav-single"
+    : footer.columns.length === 2
+      ? "footer-nav footer-nav-compact"
+      : "footer-nav";
 
 const SOCIAL_PATHS = {
   linkedin:
@@ -28,7 +32,13 @@ const SOCIAL_PATHS = {
         <div class="social-links">
           {
             footer.socials.map((social) => (
-              <a href={social.href} aria-label={social.label}>
+              <a
+                href={social.href}
+                aria-label={social.label}
+                {...(social.href.startsWith("http")
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
+              >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d={SOCIAL_PATHS[social.icon]} fill="currentColor" />
                 </svg>
