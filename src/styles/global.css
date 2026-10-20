@@ -729,6 +729,25 @@ button {
 
 /* Full bleed, like the hero: the band escapes the layout width while its
    contents keep it. */
+/* Hero and team on one ground.
+   The band takes the dark surface, the slide up under the sticky bar, and the
+   gradient canvas; the two sections inside it go transparent so nothing draws
+   a second field or a seam between them. */
+.intro-band {
+  position: relative;
+  overflow: hidden;
+  background: var(--background-dark);
+  margin-top: calc(-1 * var(--header-total));
+}
+.intro-band > :not(.bg-canvas) {
+  position: relative;
+  z-index: 1;
+}
+/* The slide belongs to the band now, and the surfaces to nothing. */
+.intro-band .hero-wrap { margin-top: 0; }
+.intro-band .hero,
+.intro-band .section-dark { background: transparent; }
+
 .team-wrap {
   max-width: none;
   padding-inline: 0;
