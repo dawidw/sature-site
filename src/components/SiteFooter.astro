@@ -53,7 +53,16 @@ const SOCIAL_PATHS = {
 
     <div class="footer-bottom">
       <p><span id="year"></span> {footer.copyright}</p>
-      <a href={footer.legal.href}>{footer.legal.label}</a>
+      <div class="footer-legal">
+        <a href={footer.legal.href}>{footer.legal.label}</a>
+        <button type="button" class="footer-cookies" id="cookie-settings">Cookie settings</button>
+      </div>
     </div>
   </div>
 </footer>
+
+<script>
+  import { reopenConsent } from "../scripts/consent.js";
+
+  document.getElementById("cookie-settings")?.addEventListener("click", reopenConsent);
+</script>

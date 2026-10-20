@@ -20,8 +20,11 @@ export interface Action {
 export interface HeroLogo {
   /** Text shown in the row; each logo has its own type treatment in CSS. */
   label: string;
-  /** The .logo-* class carrying that treatment. */
-  className: string;
+  /**
+   * The .logo-* class carrying that treatment. Only a logo still set in type
+   * needs one — a logo drawn from its own file carries no type to treat.
+   */
+  className?: string;
   /**
    * A logo drawn from its SVG instead of set in type. The file is used as a
    * mask, so it takes the row's colour like the wordmarks beside it; its own

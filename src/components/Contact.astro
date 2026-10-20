@@ -17,51 +17,72 @@ const { contact } = Astro.props;
       <p class="contact-note"><RichText text={contact.note} /></p>
     </div>
     <div class="contact-visual">
-      <div id="cal-inline" class="contact-cal"></div>
+      <div id="cal-inline" class="contact-cal">
+        {/* Until the visitor allows Cal.com's cookies the calendar doesn't
+            load, and this stands in its place. Cal replaces it on load. */}
+        <div class="contact-cal-gate" id="cal-gate">
+          <p class="contact-cal-gate-title">The calendar is waiting for your OK</p>
+          <p>It’s run by Cal.com, which sets its own cookies.</p>
+          <div class="contact-cal-gate-actions">
+            <button type="button" class="btn btn-sm btn-dark" id="cal-allow">Show the calendar</button>
+            <a class="btn btn-sm btn-light" href="https://cal.com/dawoz/30min" target="_blank" rel="noopener">Book on cal.com</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <script>
-  (function (C: any, A: string, L: string) {
-    let p = function (a: any, ar: any) { a.q.push(ar); };
-    let d = C.document;
-    C.Cal = C.Cal || function (...ar: any[]) {
-      let cal = C.Cal;
-      if (!cal.loaded) {
-        cal.ns = {};
-        cal.q = cal.q || [];
-        d.head.appendChild(d.createElement("script")).src = A;
-        cal.loaded = true;
-      }
-      if (ar[0] === L) {
-        const api = function (...apiAr: any[]) { p(api, apiAr); };
-        const namespace = ar[1];
-        api.q = api.q || [];
-        if (typeof namespace === "string") {
-          cal.ns[namespace] = cal.ns[namespace] || api;
-          p(cal.ns[namespace], ar);
-          p(cal, ["initNamespace", namespace]);
-        } else p(cal, ar);
-        return;
-      }
-      p(cal, ar);
-    };
-  })(window, "https://app.cal.com/embed/embed.js", "init");
+  import { setConsent, whenAccepted } from "../scripts/consent.js";
 
-  // @ts-expect-error — Cal is attached to window by the snippet above
-  Cal("init", "30min", { origin: "https://cal.com" });
+  document.getElementById("cal-allow")?.addEventListener("click", () => setConsent("accepted"));
 
-  // @ts-expect-error
-  Cal.ns["30min"]("inline", {
-    elementOrSelector: "#cal-inline",
-    calLink: "dawoz/30min",
-    config: { layout: "month_view" },
-  });
+  whenAccepted(loadCal);
 
-  // @ts-expect-error
-  Cal.ns["30min"]("ui", {
-    hideEventTypeDetails: false,
-    layout: "month_view",
-  });
+  function loadCal() {
+    document.getElementById("cal-gate")?.remove();
+
+    (function (C: any, A: string, L: string) {
+      let p = function (a: any, ar: any) { a.q.push(ar); };
+      let d = C.document;
+      C.Cal = C.Cal || function (...ar: any[]) {
+        let cal = C.Cal;
+        if (!cal.loaded) {
+          cal.ns = {};
+          cal.q = cal.q || [];
+          d.head.appendChild(d.createElement("script")).src = A;
+          cal.loaded = true;
+        }
+        if (ar[0] === L) {
+          const api = function (...apiAr: any[]) { p(api, apiAr); };
+          const namespace = ar[1];
+          api.q = api.q || [];
+          if (typeof namespace === "string") {
+            cal.ns[namespace] = cal.ns[namespace] || api;
+            p(cal.ns[namespace], ar);
+            p(cal, ["initNamespace", namespace]);
+          } else p(cal, ar);
+          return;
+        }
+        p(cal, ar);
+      };
+    })(window, "https://app.cal.com/embed/embed.js", "init");
+
+    // @ts-expect-error — Cal is attached to window by the snippet above
+    Cal("init", "30min", { origin: "https://cal.com" });
+
+    // @ts-expect-error
+    Cal.ns["30min"]("inline", {
+      elementOrSelector: "#cal-inline",
+      calLink: "dawoz/30min",
+      config: { layout: "month_view" },
+    });
+
+    // @ts-expect-error
+    Cal.ns["30min"]("ui", {
+      hideEventTypeDetails: false,
+      layout: "month_view",
+    });
+  }
 </script>
