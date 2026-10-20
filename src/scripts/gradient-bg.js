@@ -35,6 +35,7 @@
   };
 
   const TARGETS = [
+    { selector: ".intro-band", seed: 12.5 },
     { selector: ".hero", seed: 12.5 },
     { selector: ".section-dark", seed: 41 },
     { selector: ".cta-band", seed: 67 },
@@ -49,8 +50,14 @@
   // band like the CTA. Each card now derives its own scale from its size.
   const FEATURE_PX = 558;
 
-  const hosts = TARGETS.flatMap(({ selector, seed, override }) =>
+  const found = TARGETS.flatMap(({ selector, seed, override }) =>
     Array.from(document.querySelectorAll(selector), (el) => ({ el, seed, override }))
+  );
+  // A card inside another card does not get a field of its own: where the hero
+  // and the team share one band, the band draws and they stay transparent.
+  // Elsewhere — /v2 keeps them apart — each is its own outermost host.
+  const hosts = found.filter(
+    ({ el }) => !found.some(({ el: other }) => other !== el && other.contains(el))
   );
   if (!hosts.length) return;
 
@@ -210,13 +217,30 @@ void main(){
       return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255];
     }
 
+    // What one card may cost per frame. Taken from the hero at the layout
+    // width — 1512 x 950 at the ratio below — because that is the card this
+    // effect was tuned on and it ran well. A card is only ever as expensive as
+    // the shader's output, so capping the output caps the cost no matter how
+    // tall the card grows: the band holding the hero and the team is 2414px
+    // and would otherwise ask for 8.2 megapixels a frame, two and a half
+    // times what the hero asked for on its own.
+    const MAX_PIXELS = 3.5e6;
+
     function resize() {
       // A soft gradient carries almost no detail that a second device pixel
       // would resolve; the only thing that changes is the grain, which gets
       // marginally coarser. Cuts the pixels drawn and composited by 44%.
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-      const w = Math.max(1, Math.round((canvas.clientWidth || 1) * dpr));
-      const h = Math.max(1, Math.round((canvas.clientHeight || 1) * dpr));
+      let w = Math.max(1, Math.round((canvas.clientWidth || 1) * dpr));
+      let h = Math.max(1, Math.round((canvas.clientHeight || 1) * dpr));
+      // Over the ceiling the buffer is scaled down and stretched back by CSS.
+      // On a warped gradient that is invisible; on the grain it is a slightly
+      // softer speckle, which is the cheaper thing to give up.
+      const over = Math.sqrt(MAX_PIXELS / (w * h));
+      if (over < 1) {
+        w = Math.max(1, Math.round(w * over));
+        h = Math.max(1, Math.round(h * over));
+      }
       if (canvas.width !== w || canvas.height !== h) {
         canvas.width = w;
         canvas.height = h;

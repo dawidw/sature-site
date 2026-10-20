@@ -19,10 +19,15 @@ import { v1 as content } from "../data/v1";
 ---
 
 <BaseLayout meta={content.meta} footer={content.footer}>
-  <Hero hero={content.hero} />
+  {/* The hero and the team read as one dark field rather than two cards with
+      a seam between them, so they share a background: the band carries it and
+      both of them sit on it transparent. */}
+  <div class="intro-band">
+    <Hero hero={content.hero} />
+    <Team team={content.team} />
+  </div>
   <About industries={content.industries} />
   <Stages stages={content.stages} />
-  <Team team={content.team} />
   <Services services={content.services} />
   <Work work={content.work} />
   <Cta cta={content.cta} />
