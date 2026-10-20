@@ -1,0 +1,65 @@
+---
+// Asks once whether the booking calendar may load (see scripts/consent.js for
+// why that is the whole of what is being asked). Rendered hidden and revealed
+// by script, so a visitor without JavaScript never sees a question nothing
+// could act on — and without JavaScript the calendar can't load either.
+---
+
+<section
+  class="cookie-banner"
+  id="cookie-banner"
+  role="region"
+  aria-labelledby="cookie-banner-title"
+  hidden
+>
+  <h2 class="cookie-banner-title" id="cookie-banner-title">Cookies</h2>
+  <p class="cookie-banner-body">
+    We don’t track you. The only cookies come from Cal.com, which runs the
+    booking calendar — it loads once you allow it.
+  </p>
+  <div class="cookie-banner-actions">
+    <button type="button" class="btn btn-sm btn-light" data-consent="accepted">Allow</button>
+    <button type="button" class="btn btn-sm btn-outline-light" data-consent="rejected">Decline</button>
+  </div>
+</section>
+
+<script>
+  import { getConsent, setConsent } from "../scripts/consent.js";
+
+  const banner = document.getElementById("cookie-banner");
+
+  if (banner) {
+    let opener: Element | null = null;
+
+    const show = () => {
+      opener = document.activeElement;
+      banner.hidden = false;
+      // One frame hidden=false with the resting state, then the class, so the
+      // entrance has a start to transition from.
+      requestAnimationFrame(() => banner.classList.add("is-open"));
+    };
+
+    const hide = () => {
+      banner.classList.remove("is-open");
+      banner.hidden = true;
+      // Reopened from the footer: hand focus back to the link that opened it
+      // rather than dropping it on <body>.
+      if (opener instanceof HTMLElement && opener !== document.body) opener.focus();
+      opener = null;
+    };
+
+    banner.querySelectorAll<HTMLButtonElement>("[data-consent]").forEach((button) => {
+      button.addEventListener("click", () => {
+        setConsent(button.dataset.consent);
+        hide();
+      });
+    });
+
+    document.addEventListener("sature:consent-open", () => {
+      show();
+      banner.querySelector<HTMLButtonElement>("[data-consent]")?.focus();
+    });
+
+    if (getConsent() === null) show();
+  }
+</script>

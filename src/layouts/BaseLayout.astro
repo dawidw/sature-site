@@ -3,6 +3,7 @@ import "../styles/global.css";
 import type { SiteContent } from "../data/types";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
+import CookieBanner from "../components/CookieBanner.astro";
 import { asset } from "../lib/asset";
 
 interface Props {
@@ -71,6 +72,8 @@ const favicon =
     </main>
 
     <SiteFooter footer={footer} />
+
+    <CookieBanner />
 
     <script>
       import "../scripts/main.js";
