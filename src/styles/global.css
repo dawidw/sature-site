@@ -1577,6 +1577,10 @@ button {
   gap: 24px;
 }
 .footer-nav-compact { grid-template-columns: repeat(2, minmax(120px, 160px)); }
+.footer-nav-single {
+  grid-template-columns: max-content;
+  justify-content: end;
+}
 .footer-col { display: flex; flex-direction: column; gap: 12px; }
 .footer-col a {
   font-size: var(--fs-body);
@@ -1924,6 +1928,7 @@ button {
   .testimonial-grid { grid-template-columns: 1fr; }
   .work-card { height: 55.97vw; } /* a 922x600 card at 86vw */
   .footer-top { grid-template-columns: 1fr; gap: 32px; }
+  .footer-nav-single { justify-content: start; }
 }
 
 /* --- <= 720: phone -------------------------------------------------------- */
@@ -2038,7 +2043,7 @@ button {
      shown. Legibility belongs to an art-directed source, not to a crop. */
   .carousel-hint { min-height: 44px; }
 
-  .footer-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .footer-nav:not(.footer-nav-single) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   /* 21px tall as inline text. Blocked out, they clear the touch minimum and
      the column reads as a list. */
   .footer-col a { display: block; padding-block: 11px; }

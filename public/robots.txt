@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sature.studio/sitemap-index.xml
