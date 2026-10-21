@@ -317,6 +317,13 @@ button {
   text-wrap: balance;
 }
 .section-title.on-dark { color: var(--text-on-dark); margin-bottom: 44px; }
+/* Opens its section from the page's first column, like the leads in the band
+   above — the same 80 in from the gutter the services grid under it takes. */
+.services-title {
+  text-align: left;
+  padding-left: 80px;
+  max-width: calc(560px + 80px);
+}
 
 /* Buttons */
 .btn {
@@ -816,7 +823,12 @@ button {
  * The rule itself is .band-seam, a row of its own between the two sections.
  */
 .field-band > .section-industries { padding-bottom: 140px; }
-.field-band > .stages { padding-top: 140px; }
+.field-band > .stages {
+  padding-top: 140px;
+  /* The band closes on less than a section's default 200: the services below
+     open on their own 120, and stacked those two made 320 of nothing. */
+  padding-bottom: 100px;
+}
 .band-seam > span {
   display: block;
   height: 1px;
@@ -1048,14 +1060,16 @@ button {
    pushed the reading column half the menu's width off centre. */
 .services-layout {
   display: grid;
-  grid-template-columns: 1fr 552px 1fr;
+  /* 384 is the menu's 264 plus the 120 that holds the reading column off it;
+     stating the first track rather than splitting the slack keeps that
+     distance fixed instead of letting it breathe with the window. The
+     reading column keeps its 552; the spacer on the right takes the rest. */
+  grid-template-columns: 384px 552px 1fr;
   align-items: start;
   /* The menu starts on the same line as the headings in the band above — the
-     page's first column, 80 in from the gutter. The whole grid moves, not the
-     menu alone: shifting the menu by itself would leave 20px between it and
-     the reading column. The spacer on the right absorbs the difference. */
+     page's first column, 80 in from the gutter. */
   padding-left: 80px;
-  /* 320 was the air under a five-line display heading. "Our services" is one
+  /* 320 was the air under a five-line display heading. The opener is one
      48px line, and holding the old figure left a void under it. */
   margin-top: 80px;
 }
@@ -1905,6 +1919,7 @@ button {
      the content beneath it.
      320px, meanwhile, is the air the design leaves under the section title on
      a desktop; held literally it was most of a phone screen of nothing. */
+  .services-title { padding-left: 0; max-width: none; }
   .services-layout {
     display: block;
     /* Stacked, there is no second column for the menu to line up against. */

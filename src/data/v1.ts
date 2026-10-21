@@ -76,7 +76,7 @@ export const v1: SiteContent = {
   },
 
   services: {
-    title: "Our services",
+    title: "Hire us for",
     items: [
       {
         id: "svc-building",
