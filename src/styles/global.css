@@ -1050,6 +1050,11 @@ button {
   display: grid;
   grid-template-columns: 1fr 552px 1fr;
   align-items: start;
+  /* The menu starts on the same line as the headings in the band above — the
+     page's first column, 80 in from the gutter. The whole grid moves, not the
+     menu alone: shifting the menu by itself would leave 20px between it and
+     the reading column. The spacer on the right absorbs the difference. */
+  padding-left: 80px;
   /* 320 was the air under a five-line display heading. "Our services" is one
      48px line, and holding the old figure left a void under it. */
   margin-top: 80px;
@@ -1902,6 +1907,8 @@ button {
      a desktop; held literally it was most of a phone screen of nothing. */
   .services-layout {
     display: block;
+    /* Stacked, there is no second column for the menu to line up against. */
+    padding-left: 0;
     /* The clamp existed only to escape the desktop 320. At 80 the base figure
        suits the phone as well, and the clamp's own ceiling would have run
        higher than the desktop it was scaling down from. */
