@@ -271,7 +271,7 @@ export const v2: SiteContent = {
   },
 
   stages: {
-    lead: "We come in at two moments, and the work looks different in each:",
+    lead: "We come in before there is a product, and after there is one to protect:",
     items: [
       {
         eyebrow: "0 → 1 & Product discovery",
