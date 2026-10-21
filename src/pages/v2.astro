@@ -18,8 +18,17 @@ import { v2 as content } from "../data/v2";
 
 <BaseLayout meta={content.meta} footer={content.footer}>
   <Hero hero={content.hero} />
-  <About industries={content.industries} />
-  <Stages stages={content.stages} />
+  {/* The industries and the stages read as one field: who we design for, then
+      who we help. The dot texture belongs to the pair, so the band carries it
+      and both sections sit on it transparent. */}
+  <div class="field-band">
+    <About industries={content.industries} />
+    {/* The seam. It lives inside the same wrap as the columns, so it takes the
+        page gutter instead of restating it, and can be masked at its ends —
+        a border on the section itself always runs the full bleed. */}
+    <div class="wrap wrap-gutter-80 band-seam" aria-hidden="true"><span></span></div>
+    <Stages stages={content.stages} />
+  </div>
   <Team team={content.team} />
   <Services services={content.services} />
   <Work work={content.work} />

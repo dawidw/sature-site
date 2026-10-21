@@ -8,14 +8,10 @@ interface Props {
 const { stages } = Astro.props;
 ---
 
-{/*
-  The band the gradient canvas is painted into — gradient-bg.js targets .stages
-  and appends a .bg-canvas, which is why the section is a positioned, clipped
-  box and everything that is not that canvas is lifted above it. Same
-  arrangement the hero and the CTA band use.
-*/}
 <section class="section stages" id="stages">
   <div class="wrap wrap-gutter-80">
+    {/* Opens the section in the same voice as the industries lead above it. */}
+    <p class="stages-lead">{stages.lead}</p>
     <ul class="stage-list">
       {
         stages.items.map((stage) => (
@@ -27,13 +23,12 @@ const { stages } = Astro.props;
               </div>
               <p class="stage-body">{stage.body}</p>
             </div>
-            <div class="stage-points">
-              <ul class="check-list">
-                {stage.points.map((point) => (
-                  <li>{point}</li>
-                ))}
-              </ul>
-            </div>
+            {/* The same list the industries use: labels, not sentences. */}
+            <ul class="stage-points">
+              {stage.points.map((point) => (
+                <li>{point}</li>
+              ))}
+            </ul>
           </li>
         ))
       }

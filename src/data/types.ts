@@ -172,6 +172,8 @@ export interface SiteContent {
   };
   /** Engagement stages, each a copy column beside its own checklist. */
   stages: {
+    /** Opens the section, in the voice the industries lead above it uses. */
+    lead: string;
     items: {
       eyebrow: string;
       title: string;

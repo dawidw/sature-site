@@ -1,6 +1,5 @@
 ---
 import type { SiteContent } from "../data/types";
-import { asset } from "../lib/asset";
 
 interface Props {
   industries: SiteContent["industries"];
@@ -16,25 +15,13 @@ const { industries } = Astro.props;
     <div class="about-grid">
       <div class="about-copy">
         <p>{industries.lead}</p>
-        <ul class="tag-list" aria-label="Industries">
+      </div>
+      {/* Two columns held by the grid alone. The names are not links and the
+          set is not ordered, so there is nothing to draw between them. */}
+      <div class="industry-field">
+        <ul class="industry-list" aria-label="Industries">
           {industries.tags.map((tag) => <li>{tag}</li>)}
         </ul>
-      </div>
-      {/* Decorative, and silent — the file carries no audio track. Nothing is
-          autoplayed from the markup: about-video.js starts it only once the
-          slot is near the viewport and only when motion is welcome, so the
-          2.3MB never loads for a reader who does not get this far. */}
-      <div class="about-visual" aria-hidden="true">
-        <video
-          class="about-video"
-          poster={asset("/assets/video/office-portrait-poster.webp")}
-          preload="none"
-          muted
-          loop
-          playsinline
-        >
-          <source src={asset("/assets/video/office-portrait.mp4")} type="video/mp4" />
-        </video>
       </div>
     </div>
   </div>
