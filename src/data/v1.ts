@@ -270,6 +270,7 @@ export const v1: SiteContent = {
   },
 
   stages: {
+    lead: "We come in at two moments, and the work looks different in each:",
     items: [
       {
         eyebrow: "0 → 1 & Product discovery",
@@ -277,10 +278,10 @@ export const v1: SiteContent = {
         body:
           "We collaborate with founders and stakeholders to create innovative solution at the forefront of design and technology. We iterate relentlessly with speed and wit to meet high standards of our clients. All that with care needed to retain happy customers.",
         points: [
-          "Visualize your ideas and test with your users",
-          "Rapid prototyping and design iterations",
-          "Design leadership for your team",
-          "Support with finding traction and product-market fit",
+          "Prototyping",
+          "User testing",
+          "Design leadership",
+          "Product-market fit",
         ],
       },
       {
@@ -289,10 +290,10 @@ export const v1: SiteContent = {
         body:
           "We step inside businesses and move fast where it matters. We move without disturbing existing businesses to help them on their growth trajectory by optimizing their core flows, building scalable design systems and improving existing design processes.",
         points: [
-          "Revamp product experience to help with growth",
-          "Streamline design system solutions",
-          "Increase customer satisfaction by addressing pain points",
-          "Support with finding traction and product-market fit",
+          "Product revamp",
+          "Design systems",
+          "Customer satisfaction",
+          "Product-market fit",
         ],
       },
     ],
@@ -368,16 +369,10 @@ export const v1: SiteContent = {
       [
         { label: "About us", href: "#about" },
         { label: "Contact", href: "#contact" },
-        { label: "Career", href: "#contact" },
       ],
       [
         { label: "Services", href: "#services" },
         { label: "Linkedin", href: "#" },
-      ],
-      [
-        { label: "Our roadmap", href: "#" },
-        { label: "Newsletter", href: "#" },
-        { label: "Help centre", href: "#" },
       ],
     ],
     copyright: "Sature Studio. All rights reserved.",

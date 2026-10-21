@@ -271,6 +271,7 @@ export const v2: SiteContent = {
   },
 
   stages: {
+    lead: "We come in at two moments, and the work looks different in each:",
     items: [
       {
         eyebrow: "0 → 1 & Product discovery",
@@ -278,10 +279,10 @@ export const v2: SiteContent = {
         body:
           "We collaborate with founders and stakeholders to create innovative solution at the forefront of design and technology. We iterate relentlessly with speed and wit to meet high standards of our clients. All that with care needed to retain happy customers.",
         points: [
-          "Visualize your ideas and test with your users",
-          "Rapid prototyping and design iterations",
-          "Design leadership for your team",
-          "Support with finding traction and product-market fit",
+          "Prototyping",
+          "User testing",
+          "Design leadership",
+          "Product-market fit",
         ],
       },
       {
@@ -290,10 +291,10 @@ export const v2: SiteContent = {
         body:
           "We step inside businesses and move fast where it matters. We move without disturbing existing businesses to help them on their growth trajectory by optimizing their core flows, building scalable design systems and improving existing design processes.",
         points: [
-          "Revamp product experience to help with growth",
-          "Streamline design system solutions",
-          "Increase customer satisfaction by addressing pain points",
-          "Support with finding traction and product-market fit",
+          "Product revamp",
+          "Design systems",
+          "Customer satisfaction",
+          "Product-market fit",
         ],
       },
     ],
@@ -367,15 +368,10 @@ export const v2: SiteContent = {
       { label: "Sature on LinkedIn", href: "#", icon: "linkedin" },
       { label: "Sature on X", href: "#", icon: "x" },
     ],
-    // TODO: "Our roadmap", "Newsletter", "Help centre" usunięte jako
-    // nierelewantne dla 3-osobowego, dopiero startującego studia. "Career"
-    // zostawić tylko jeśli faktycznie planujecie rekrutację w najbliższym
-    // czasie — inaczej usunąć.
     columns: [
       [
         { label: "About us", href: "#about" },
         { label: "Contact", href: "#contact" },
-        { label: "Career", href: "#contact" },
       ],
       [
         { label: "Services", href: "#services" },

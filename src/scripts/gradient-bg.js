@@ -13,34 +13,12 @@
 
   // Every dark card gets the same field, sampled at a different offset so the
   // four don't repeat one formation down the page.
-  // The stages band is the one light card on the page, so it carries its own
-  // ramp and its own authored figures rather than the dark set below.
-  const LIGHT = {
-    stops: [
-      { c: "#545454", p: 0 },
-      { c: "#D1D1D1", p: 0.499 },
-      { c: "#F2F2F2", p: 1 },
-    ],
-    warp: 1.5,
-    speed: 0.31,
-    contrast: 1.46,
-    angle: 131,
-    grain: 0.005,
-    vignette: 0.37,
-    blend: 0.76,
-    // Authored at scale 2.53 where the dark set is 1.3, so a feature here is
-    // roughly half the size. Expressed as its own FEATURE_PX below rather than
-    // as a scale, because scale is derived from the card and would be ignored.
-    featurePx: 287,
-  };
-
   const TARGETS = [
     { selector: ".intro-band", seed: 12.5 },
     { selector: ".hero", seed: 12.5 },
     { selector: ".section-dark", seed: 41 },
     { selector: ".cta-band", seed: 67 },
     { selector: ".site-footer", seed: 88 },
-    { selector: ".stages", seed: 44.16, override: LIGHT },
   ];
 
   // One unit of the field spans this many CSS pixels, on every card. Taken from
